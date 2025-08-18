@@ -57,8 +57,13 @@ const Footer = () => {
               className="text-lg transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
             >
               Contact Us
+            </Link> */}
+            <Link
+              href="mailto:tania@scaremoor.com"
+              className="text-lg transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
+            >
+              Contact Us
             </Link>
-            <Link href="mailto:info@scaremoor.com">info@scaremoor.com</Link> */}
           </div>
           <div className="flex flex-col lg:flex-row gap-1.5 order-1 md:order-3">
             <FooterIcon

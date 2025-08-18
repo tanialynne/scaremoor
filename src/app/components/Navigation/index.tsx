@@ -69,6 +69,7 @@ const Nav = () => {
               href="https://www.amazon.com/dp/B0DKLDSJBC"
               className="cursor-pointer"
               rel="noopener"
+              target="_blank"
             >
               <Image src={ShopIcon} alt="shopIcon" className="w-10" />
             </Link>

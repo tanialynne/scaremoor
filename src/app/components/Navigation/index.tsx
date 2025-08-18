@@ -1,0 +1,124 @@
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+import { NAV_ITEMS } from "@/app/constants/NavLinks";
+import NavLink from "./NavLink";
+
+import { AlignRight, X } from "lucide-react";
+
+import Logo from "../../../../public/images/logo.png";
+import ShopIcon from "../../../../public/images/shop.svg";
+import EmailIcon from "../../../../public/images/email.svg";
+import HandGrab from "../../../../public/images/hand_grab.svg";
+import Star from "../../../../public/images/starsIcon.svg";
+
+const Nav = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMenuOpen]);
+
+  return (
+    <div>
+      <div className={`flex justify-between bg-transparent  relative z-50 transition-transform duration-500 ease-in-out`}>
+        <Link href="/" className="w-25 lg:w-30 ">
+          <Image src={Logo} alt="brand logo" className="inline-block object-cover w-full h-full" />
+        </Link>
+
+        <div className="flex items-center">
+          <div className="hidden lg:flex gap-4 mr-12">
+            {NAV_ITEMS.map((link, idx) => (
+              <NavLink key={link.name} text={link.name} href={link.href} index={idx + 1} />
+            ))}
+          </div>
+
+          <button onClick={toggleMenu} className="lg:hidden mr-5 text-white hover:text-gray-300 transition-colors z-20 cursor-pointer">
+            <AlignRight className="text-white cursor-pointer" size={35} />
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            <Link href="https://www.amazon.com/dp/B0DKLDSJBC" className="cursor-pointer" rel="noopener">
+              <Image src={ShopIcon} alt="shopIcon" className="w-10" />
+            </Link>
+            <Link href="/contact" className="cursor-pointer">
+              <Image src={EmailIcon} alt="emailIcon" className="w-10" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`fixed lg:hidden inset-0 z-90 bg-black 
+        transition-all duration-700 ease-in-out 
+        ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+        <div
+          className={`absolute rounded-full transition-all duration-700 ease-in-out
+            ${isMenuOpen ? "w-[200vmax] h-[100vmax] -top-[100vmax] -right-[100vmax]" : "w-0 h-0 top-8 right-8"}`}
+          style={{
+            transformOrigin: "top right",
+            backgroundImage: `url(${Star.src})`,
+            backgroundPosition: "bottom",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        <div
+          className={`relative z-10 flex flex-col items-center justify-center h-full 
+            transition-all duration-500 ease-in-out
+            ${isMenuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+          <button onClick={toggleMenu} className="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors z-20 cursor-pointer">
+            <X size={35} />
+          </button>
+
+          <div className="flex flex-col items-center space-y-8">
+            {NAV_ITEMS.map((link, idx) => (
+              <div
+                key={link.name}
+                className={`transform transition-all duration-500 ease-in-out
+                  ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+                style={{
+                  transitionDelay: `${(idx + 1) * 80 + 300}ms`,
+                }}>
+                <NavLink text={link.name} href={link.href} index={idx + 1} />
+              </div>
+            ))}
+
+            <div
+              className={`flex items-center gap-6 mt-12 transition-all duration-500 ease-in-out
+                ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+              style={{
+                transitionDelay: `${NAV_ITEMS.length * 80 + 500}ms`,
+              }}>
+              <Link className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300" href="https://www.amazon.com/dp/B0DKLDSJBC" rel="noopener">
+                <Image src={ShopIcon} alt="shopIcon" className="w-8" />
+              </Link>
+              <Link href="/contact" className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300">
+                <Image src={EmailIcon} alt="emailIcon" className="w-8" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-0">
+          <Image src={HandGrab} alt="star" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Nav;

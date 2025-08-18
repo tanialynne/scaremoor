@@ -16,7 +16,8 @@ const Footer = () => {
   return (
     <div
       className={`relative flex flex-col justify-end  bg-cover bg-repeat leading-none min-h-screen text-white overflow-hidden after:content-[" "] after:bg-black after:absolute after:bottom-0 after:left-0 after:right-0 after:h-40`}
-      style={{ backgroundImage: `url(${footerBg.src})` }}>
+      style={{ backgroundImage: `url(${footerBg.src})` }}
+    >
       <div className="p-8 md:p-20 ">
         <Image src={Eye} alt="eye" className="absolute top-3/4 right-2/5" />
         <Image src={Eye} alt="eye" className="absolute top-20" />
@@ -24,13 +25,26 @@ const Footer = () => {
         <Image src={Eye} alt="eye" className="absolute right-20 bottom-2/5" />
         <div className="relative flex items-start gap-x-20  pb-12 z-50">
           <div className="relative isolate">
-            <Image src={LeftGhosted} alt="ghost" className="absolute -left-10 -top-30 md:-top-50 -z-10 w-2/4" />
-            <Image src={RightGhosted} alt="ghost" className="absolute -right-10 -top-30 md:-top-50 -z-10 w-2/4" />
+            <Image
+              src={LeftGhosted}
+              alt="ghost"
+              className="absolute -left-10 -top-30 md:-top-50 -z-10 w-2/4"
+            />
+            <Image
+              src={RightGhosted}
+              alt="ghost"
+              className="absolute -right-10 -top-30 md:-top-50 -z-10 w-2/4"
+            />
             <RandomMessage />
           </div>
           <div className="hidden lg:grid grid-cols-2 gap-y-4">
             {NAV_ITEMS.map((link, idx) => (
-              <NavLink key={link.name} text={link.name} href={link.href} index={idx + 1} />
+              <NavLink
+                key={link.name}
+                text={link.name}
+                href={link.href}
+                index={idx + 1}
+              />
             ))}
           </div>
         </div>
@@ -38,15 +52,27 @@ const Footer = () => {
         <div className="relative flex justify-between flex-col md:flex-row md:items-end gap-12 z-50">
           <p className="order-3 md:order-1">©{getCurrentYear()} Scaremoor.</p>
           <div className="tracking-wide order-2 flex flex-col gap-4">
-            <Link href="/contact" className="text-lg transition-colors duration-300 ease-in-out hover:text-[#F54F02]">
+            <Link
+              href="/contact"
+              className="text-lg transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
+            >
               Contact Us
             </Link>
-            <Link href="mailto:info@scaremoor.com">info@scaremoor.com</Link>
+            {/* <Link href="mailto:info@scaremoor.com">info@scaremoor.com</Link> */}
           </div>
           <div className="flex flex-col lg:flex-row gap-1.5 order-1 md:order-3">
-            <FooterIcon text="Instagram" href="https://www.instagram.com/scaremoor/" />
-            <FooterIcon text="Facebook" href="https://www.facebook.com/scaremoor/" />
-            <FooterIcon text="Amazon" href="https://www.amazon.com/dp/B0DKLDSJBC" />
+            <FooterIcon
+              text="Instagram"
+              href="https://www.instagram.com/scaremoor/"
+            />
+            <FooterIcon
+              text="Facebook"
+              href="https://www.facebook.com/scaremoor/"
+            />
+            <FooterIcon
+              text="Amazon"
+              href="https://www.amazon.com/dp/B0DKLDSJBC"
+            />
           </div>
         </div>
       </div>

@@ -34,29 +34,47 @@ const Nav = () => {
 
   return (
     <div>
-      <div className={`flex justify-between bg-transparent  relative z-50 transition-transform duration-500 ease-in-out`}>
+      <div
+        className={`flex justify-between bg-transparent  relative z-50 transition-transform duration-500 ease-in-out`}
+      >
         <Link href="/" className="w-25 lg:w-30 ">
-          <Image src={Logo} alt="brand logo" className="inline-block object-cover w-full h-full" />
+          <Image
+            src={Logo}
+            alt="brand logo"
+            className="inline-block object-cover w-full h-full"
+          />
         </Link>
 
         <div className="flex items-center">
           <div className="hidden lg:flex gap-4 mr-12">
             {NAV_ITEMS.map((link, idx) => (
-              <NavLink key={link.name} text={link.name} href={link.href} index={idx + 1} />
+              <NavLink
+                key={link.name}
+                text={link.name}
+                href={link.href}
+                index={idx + 1}
+              />
             ))}
           </div>
 
-          <button onClick={toggleMenu} className="lg:hidden mr-5 text-white hover:text-gray-300 transition-colors z-20 cursor-pointer">
+          <button
+            onClick={toggleMenu}
+            className="lg:hidden mr-5 text-white hover:text-gray-300 transition-colors z-20 cursor-pointer"
+          >
             <AlignRight className="text-white cursor-pointer" size={35} />
           </button>
 
           <div className="flex items-center gap-1.5">
-            <Link href="https://www.amazon.com/dp/B0DKLDSJBC" className="cursor-pointer" rel="noopener">
+            <Link
+              href="https://www.amazon.com/dp/B0DKLDSJBC"
+              className="cursor-pointer"
+              rel="noopener"
+            >
               <Image src={ShopIcon} alt="shopIcon" className="w-10" />
             </Link>
-            <Link href="/contact" className="cursor-pointer">
+            {/* <Link href="/contact" className="cursor-pointer">
               <Image src={EmailIcon} alt="emailIcon" className="w-10" />
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
@@ -64,7 +82,8 @@ const Nav = () => {
       <div
         className={`fixed lg:hidden inset-0 z-90 bg-black 
         transition-all duration-700 ease-in-out 
-        ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+        ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      >
         <div
           className={`absolute rounded-full transition-all duration-700 ease-in-out
             ${isMenuOpen ? "w-[200vmax] h-[100vmax] -top-[100vmax] -right-[100vmax]" : "w-0 h-0 top-8 right-8"}`}
@@ -79,8 +98,12 @@ const Nav = () => {
         <div
           className={`relative z-10 flex flex-col items-center justify-center h-full 
             transition-all duration-500 ease-in-out
-            ${isMenuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
-          <button onClick={toggleMenu} className="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors z-20 cursor-pointer">
+            ${isMenuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+        >
+          <button
+            onClick={toggleMenu}
+            className="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors z-20 cursor-pointer"
+          >
             <X size={35} />
           </button>
 
@@ -92,7 +115,8 @@ const Nav = () => {
                   ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
                 style={{
                   transitionDelay: `${(idx + 1) * 80 + 300}ms`,
-                }}>
+                }}
+              >
                 <NavLink text={link.name} href={link.href} index={idx + 1} />
               </div>
             ))}
@@ -102,11 +126,19 @@ const Nav = () => {
                 ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
               style={{
                 transitionDelay: `${NAV_ITEMS.length * 80 + 500}ms`,
-              }}>
-              <Link className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300" href="https://www.amazon.com/dp/B0DKLDSJBC" rel="noopener">
+              }}
+            >
+              <Link
+                className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300"
+                href="https://www.amazon.com/dp/B0DKLDSJBC"
+                rel="noopener"
+              >
                 <Image src={ShopIcon} alt="shopIcon" className="w-8" />
               </Link>
-              <Link href="/contact" className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300">
+              <Link
+                href="/contact"
+                className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300"
+              >
                 <Image src={EmailIcon} alt="emailIcon" className="w-8" />
               </Link>
             </div>

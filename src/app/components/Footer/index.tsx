@@ -52,13 +52,13 @@ const Footer = () => {
         <div className="relative flex justify-between flex-col md:flex-row md:items-end gap-12 z-50">
           <p className="order-3 md:order-1">©{getCurrentYear()} Scaremoor.</p>
           <div className="tracking-wide order-2 flex flex-col gap-4">
-            <Link
+            {/* <Link
               href="/contact"
               className="text-lg transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
             >
               Contact Us
             </Link>
-            {/* <Link href="mailto:info@scaremoor.com">info@scaremoor.com</Link> */}
+            <Link href="mailto:info@scaremoor.com">info@scaremoor.com</Link> */}
           </div>
           <div className="flex flex-col lg:flex-row gap-1.5 order-1 md:order-3">
             <FooterIcon

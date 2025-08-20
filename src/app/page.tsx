@@ -55,13 +55,13 @@ const HomePage = () => {
                 />
               </Link>
 
-              <Link href="/scaremoor">
+              {/*<Link href="/scaremoor">
                 <Button
                   buttonImage={YellowBackground}
                   altText="see-series"
                   text="See the Full Series"
                 />
-              </Link>
+              </Link>*/}
             </div>
           </div>
           {/*<div className="relative flex justify-center items-center ">
@@ -113,12 +113,20 @@ const HomePage = () => {
                   of that.
                 </p>
 
-                <div className="pt-12">
+                <div className="flex flex-col md:flex-row gap-4 pt-8">
                   <Link href="/scaremoor">
                     <Button
                       buttonImage={OrangeBackground}
                       altText="learn-more"
                       text="Learn More"
+                    />
+                  </Link>
+                  <Link href="/books">
+                    <Button
+                      buttonImage={YellowBackground}
+                      altText="the-books"
+                      textColor="text-black"
+                      text="Explore the series"
                     />
                   </Link>
                 </div>
@@ -139,13 +147,13 @@ const HomePage = () => {
           <div className="relative z-50">
             <BookList />
           </div>
-          <Link href="/books">
+          {/*<Link href="/books">
             <Button
               buttonImage={OrangeBackgroundMd}
               altText="look-inside"
               text="Explore The Series"
             />
-          </Link>
+          </Link>*/}
 
           <Image
             src={CloudRight}

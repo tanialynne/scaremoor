@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import SpookyToast from "./components/SpookyToast";

@@ -1,11 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import type { Book } from "@/app/constants/Books";
 import Button from "../Button";
 
 import YellowBackground from "../../../../public/images/yellowBackgroundSmall.png";
 import OrangeBackground from "../../../../public/images/orangeBackground.png";
-import Link from "next/link";
 
 type BookCardProps = Book & {
   buttonText?: string;
@@ -18,87 +18,75 @@ const BookCard: React.FC<BookCardProps> = ({
   bookSlug,
   bookTitle,
   bookSubHeading,
-  buttonText,
-  type,
   purchaseLink,
+  type,
   cardWidth = "max-w-sm",
 }) => {
   return (
     <figure
-      className={`group relative ${cardWidth} rounded-xl overflow-hidden shadow-lg mx-auto w-full`}
+      className={`group relative ${cardWidth} rounded-xl overflow-hidden shadow-lg mx-auto w-full flex flex-col justify-between min-h-[280px] sm:min-h-[400px] md:min-h-[520px] lg:min-h-[660px]`}
     >
-      <div
-        className={`${!buttonText && "rounded-md  hover:p-2  active:border-white active:p-2"} transition-transform duration-500 `}
-      >
+      <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] relative">
         {bookImage[type] && (
-          <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] relative ">
-            <Image
-              src={bookImage[type]}
-              alt={bookSlug}
-              fill
-              className="w-auto h-auto object-contain"
-            />
-          </div>
-        )}
-
-        {!buttonText && (
-          <Link
-            href={`/book/${bookSlug}`}
-            className="md:hidden absolute top-1/2 -translate-y-1/2 -translate-x-3/5 left-1/2 flex flex-col justify-center items-center p-4 text-center"
-          >
-            <Button
-              buttonImage={YellowBackground}
-              altText="learn-more"
-              text="Learn More"
-              textColor="text-black"
-            />
-          </Link>
-        )}
-
-        {!buttonText && (
-          <div className="hidden md:block">
-            <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-80 transition-opacity duration-300 rounded-2xl"></div>
-            <Link
-              href={`/book/${bookSlug}`}
-              className="absolute inset-0 flex flex-col justify-center items-center text-white opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 p-4 text-center"
-            >
-              <Button
-                buttonImage={YellowBackground}
-                altText="learn-more"
-                text="Learn More"
-                textColor="text-black"
-              />
-            </Link>
-          </div>
+          <Image
+            src={bookImage[type]}
+            alt={bookSlug}
+            fill
+            className="object-contain p-5"
+          />
         )}
       </div>
 
-      <figcaption className=" text-center md:space-y-3 pt-2">
-        <h3 className="text-2xl md:text-3xl font-(family-name:--trickOrDead) font-normal">
-          {bookTitle}
-        </h3>
-        <p className="text-[#808080] text-sm">{bookSubHeading}</p>
-      </figcaption>
+      <figcaption className="flex flex-col flex-grow justify-between text-center px-4 py-6 space-y-3">
+        <div>
+          <h3 className="text-2xl md:text-3xl font-(family-name:--trickOrDead) font-normal">
+            {bookTitle}
+          </h3>
+          <p className="text-[#808080] text-sm mt-2">{bookSubHeading}</p>
+        </div>
 
-      {buttonText && (
-        <div className="pt-4 pb-8">
-          {purchaseLink ? (
-            <Link href={purchaseLink} rel="noreferrer" target="_blank">
-              <Button
-                buttonImage={OrangeBackground}
-                altText="get-the-book"
-                text="GET THE BOOK"
-              />
-            </Link>
+        <div className="mt-auto flex flex-col flex-row justify-center gap-4 pt-6">
+          {type === "open" ? (
+            <>
+              {purchaseLink && (
+                <Link href={purchaseLink} rel="noreferrer" target="_blank">
+                  <Button buttonImage={OrangeBackground} altText="buy-book">
+                    Get the Book
+                  </Button>
+                </Link>
+              )}
+              <Link href={`/book/${bookSlug}`}>
+                <Button
+                  buttonImage={YellowBackground}
+                  altText="learn-more"
+                  textColor="text-black"
+                >
+                  Details
+                </Button>
+              </Link>
+            </>
           ) : (
-            <Button
-              buttonImage={OrangeBackground}
-              altText="get-the-book"
-              text="GET THE BOOK"
-            />
+            <>
+              {purchaseLink && (
+                <Link href={purchaseLink} rel="noreferrer" target="_blank">
+                  <Button buttonImage={OrangeBackground} altText="buy-book">
+                    <i className="fa-brands fa-amazon"></i>
+                  </Button>
+                </Link>
+              )}
+              <Link href={`/book/${bookSlug}`}>
+                <Button
+                  buttonImage={YellowBackground}
+                  altText="learn-more"
+                  textColor="text-black"
+                >
+                  <i className="fa-solid fa-circle-info"></i>
+                </Button>
+              </Link>
+            </>
           )}
         </div>
-      )}
+      </figcaption>
     </figure>
   );
 };

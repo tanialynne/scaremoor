@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 @layer base {
   p {
@@ -17,8 +18,8 @@
 
 :root {
   --track: #0a070a;
-  --thumb: #8b0000;
-  --blood-glow: #f54f02;
+  --thumb: #fb5300;
+  --blood-glow: #8b0000;
 }
 
 /* Firefox */

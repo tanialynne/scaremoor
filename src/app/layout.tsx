@@ -73,22 +73,23 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="canonical" href="https://www.scaremoor.com/" />
-        <Script type="application/ld+json">
-          {`
-            {
+        <Script
+          id="ld-bookseries-json"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "BookSeries",
-              "name": "Scaremoor",
-              "url": "https://www.scaremoor.com",
-              "genre": "Middle Grade Horror",
-              "author": {
-                "@type": "Person",
-                "name": "Tania Lynne"
-              },
-              "publisher": "Scaremoor Books"
-            }
-          `}
-        </Script>
+              name: "Scaremoor",
+              url: "https://www.scaremoor.com",
+              genre: "Middle Grade Horror",
+              author: { "@type": "Person", name: "Tania Lynne" },
+              publisher: "Scaremoor Books",
+            }),
+          }}
+        />
+
         {/* Google Tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4TBCBRHFNR"

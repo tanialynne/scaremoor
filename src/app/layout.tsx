@@ -72,6 +72,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta
+          name="x-build"
+          content={process.env.VERCEL_GIT_COMMIT_SHA ?? "local"}
+        />
+        <meta name="x-layout" content="ROOT-LAYOUT-2025-08-20-A" />
         <link rel="canonical" href="https://www.scaremoor.com/" />
         <Script
           id="ld-bookseries-json"

@@ -89,7 +89,7 @@ export default function RootLayout({
               name: "Scaremoor",
               url: "https://www.scaremoor.com",
               genre: "Middle Grade Horror",
-              author: { "@type": "Person", name: "Tania Lynne" },
+              author: { "@type": "Person", name: "T.L. Griffith" },
               publisher: "Scaremoor Books",
             }),
           }}

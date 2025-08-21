@@ -69,10 +69,11 @@ const HomePage = () => {
           </div>*/}
           <div className="relative flex justify-center items-center">
             <video
-              className="w-4/5 md:w-3/5 lg:w-4/5 rounded-lg shadow-lg"
+              className="w-full lg:w-[90%] max-w-screen-md rounded-lg shadow-lg"
               src="/videos/themaskroom_trailer.mp4"
               autoPlay
               playsInline
+              muted
               controls
             />
           </div>

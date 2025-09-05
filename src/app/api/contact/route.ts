@@ -8,7 +8,7 @@ async function sendEmailViaNodemailer({ to, subject, text, replyTo }: {
   text: string;
   replyTo: string;
 }) {
-  const transporter = nodemailer.createTransporter({
+  const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || '465'),
     secure: process.env.SMTP_SECURE === 'true', // true for 465, false for 587

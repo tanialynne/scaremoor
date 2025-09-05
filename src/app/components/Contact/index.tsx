@@ -91,6 +91,7 @@ const ContactForm = () => {
               onChange={(value: string) => setFormData({ ...formData, name: value })}
               isLabel={true}
               backgroungType="dark"
+              name="name"
             />
             <InputField
               labelText="Email Address"
@@ -99,6 +100,7 @@ const ContactForm = () => {
               onChange={(value: string) => setFormData({ ...formData, emailAddress: value })}
               isLabel={true}
               backgroungType="dark"
+              name="email"
             />
           </div>
           <div className="relative mt-14 text-white">
@@ -108,10 +110,12 @@ const ContactForm = () => {
 
             <div className="relative ">
               <textarea
+                name="message"
                 className="w-full h-40 px-4 py-3  bg-transparent border-0 rounded-lg focus:outline-none focus:ring-0 relative z-10"
                 aria-label="Message"
                 value={formData.message}
                 placeholder="Enter your message"
+                autoComplete="off"
                 onChange={(value: ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, message: value.target.value })}></textarea>
 
               <svg className="absolute inset-0 w-full h-full -z-10" viewBox="0 0 830 260" preserveAspectRatio="none" aria-hidden="true">

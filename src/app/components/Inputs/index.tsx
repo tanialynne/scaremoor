@@ -8,9 +8,10 @@ interface InputFieldProps {
   isLabel?: boolean;
   isImportant?: boolean;
   backgroungType?: "dark" | "light";
+  name?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ labelText, inputType, value, onChange, isLabel = false, backgroungType = "light", isImportant = true }) => {
+const InputField: React.FC<InputFieldProps> = ({ labelText, inputType, value, onChange, isLabel = false, backgroungType = "light", isImportant = true, name }) => {
   const inputId = React.useId();
 
   return (
@@ -22,12 +23,14 @@ const InputField: React.FC<InputFieldProps> = ({ labelText, inputType, value, on
       <div className="relative">
         <input
           id={inputId}
+          name={name || labelText.toLowerCase().replace(/\s+/g, '-')}
           type={inputType}
           placeholder={labelText}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={`w-full h-15  px-4 text-sm font-medium ${backgroungType === "dark" ? "text-white" : "text-black"} bg-transparent border-0 focus:outline-none focus:ring-0 relative z-10`}
           aria-label={labelText}
+          autoComplete={inputType === 'email' ? 'email' : inputType === 'text' ? 'name' : 'off'}
         />
 
         {backgroungType === "dark" && (

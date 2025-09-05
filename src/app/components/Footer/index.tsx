@@ -59,7 +59,7 @@ const Footer = () => {
               Contact Us
             </Link> */}
             <Link
-              href="mailto:tania@scaremoor.com"
+              href="/contact"
               className="text-lg transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
             >
               Contact Us

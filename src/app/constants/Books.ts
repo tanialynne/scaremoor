@@ -26,6 +26,8 @@ export type Book = {
   bookSubHeading: string;
   purchaseLink: string;
   bookDescription?: string;
+  videoPreview?: string;
+  leadMagnetId?: string;
 };
 
 const Books: Book[] = [
@@ -131,6 +133,8 @@ Because some words don't just have meaning. They have a mind of their own.
     },
     bookSubHeading: "Put one on—and lose yourself forever.",
     purchaseLink: "https://www.amazon.com/dp/B0FMQF5L3H",
+    videoPreview: "/videos/themaskroom_trailer.mp4",
+    leadMagnetId: "8524362",
     bookDescription: `
 There's a room backstage no one talks about. No door number. No record it ever existed. Until Natalie finds it. Inside? Shelves lined with old masks. Some stitched. Some cracked. Some smiling way too wide. All waiting.
 

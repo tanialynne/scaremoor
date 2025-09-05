@@ -9,6 +9,8 @@ import Markdown from "react-markdown";
 import Books from "@/app/constants/Books";
 import Button from "@/app/components/Button";
 import Herobox from "@/app/components/Herobox";
+import VideoPreview from "@/app/components/VideoPreview";
+import ChapterLeadMagnet from "@/app/components/ChapterLeadMagnet";
 
 import BackgroundImage from "../../../../public/images/singleBookBackground.png";
 import CloudRight from "../../../../public/images/cloudRightTop.png";
@@ -41,35 +43,44 @@ const BookPage = ({ params }: { params: Promise<{ slug: string }> }) => {
         backgroundImage={BackgroundImage}
         contentPaddingTop=" lg:pt-22 xl:pt-2"
       >
-        <div className="relative overflow-hidden grid fgrid-col-1 xl:grid-cols-[1fr_600px] gap-8 items-start z-10">
+        <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-[2fr_1fr] xl:grid-cols-[1fr_500px] gap-8 items-start z-10">
           <div className="space-y-5 ">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
-              <p className="text-3xl md:text-5xl leading-10">
-                {selectedBook?.bookSubHeading}
-              </p>
-              <h1 className="text-5xl md:text-7xl">
-                {selectedBook?.bookTitle}
-              </h1>
-            </div>
+            {selectedBook?.leadMagnetId ? (
+              <ChapterLeadMagnet
+                bookTitle={selectedBook.bookTitle}
+                leadMagnetId={selectedBook.leadMagnetId}
+              />
+            ) : (
+              <>
+                <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+                  <p className="text-3xl md:text-5xl leading-10">
+                    {selectedBook?.bookSubHeading}
+                  </p>
+                  <h1 className="text-5xl md:text-7xl">
+                    {selectedBook?.bookTitle}
+                  </h1>
+                </div>
 
-            <div className="text-lg max-w-[80ch] font-light space-y-4">
-              <Markdown>{selectedBook?.bookDescription}</Markdown>
-            </div>
-            <div className="mt-8">
-              <Link
-                href={selectedBook?.purchaseLink}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <Button
-                  buttonImage={OrangeBackground}
-                  altText="get-book"
-                  text="Get The Book"
-                />
-              </Link>
-            </div>
+                <div className="text-lg max-w-[80ch] font-light space-y-4">
+                  <Markdown>{selectedBook?.bookDescription}</Markdown>
+                </div>
+                <div className="mt-8">
+                  <Link
+                    href={selectedBook?.purchaseLink}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <Button
+                      buttonImage={OrangeBackground}
+                      altText="get-book"
+                      text="Get The Book"
+                    />
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
-          <div className="relative w-full max-w-[600px] mx-auto">
+          <div className="relative w-full max-w-[500px] lg:max-w-[400px] xl:max-w-[500px] mx-auto">
             <Image
               src={bookImage}
               alt="Tania Griffith"
@@ -99,7 +110,92 @@ const BookPage = ({ params }: { params: Promise<{ slug: string }> }) => {
           alt="cloud"
           className="absolute bottom-0 left-0"
         />
-        <section className="relative flex flex-col justify-center items-center text-center space-y-12 h-150 z-50">
+        <section className="relative flex flex-col justify-center items-center text-center space-y-12 min-h-150 z-50 py-20">
+          {selectedBook?.leadMagnetId && selectedBook?.videoPreview ? (
+            <div className="w-full max-w-7xl mx-auto mb-16">
+              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)] text-center mb-12">
+                <p className="text-3xl md:text-5xl leading-10">
+                  {selectedBook?.bookSubHeading}
+                </p>
+                <h2 className="text-5xl md:text-7xl">
+                  {selectedBook?.bookTitle}
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+                <div className="text-left space-y-6">
+                  <div className="text-lg max-w-[80ch] font-light space-y-4">
+                    <Markdown>{selectedBook?.bookDescription}</Markdown>
+                  </div>
+                </div>
+
+                <div>
+                  <VideoPreview
+                    videoSrc={selectedBook.videoPreview}
+                    title={`${selectedBook.bookTitle} Preview`}
+                  />
+                  <div className="text-center mt-8">
+                    <Link
+                      href={selectedBook?.purchaseLink}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <Button
+                        buttonImage={OrangeBackground}
+                        altText="get-book"
+                        text="Get The Book"
+                      />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              {selectedBook?.videoPreview && !selectedBook?.leadMagnetId && (
+                <div className="w-full max-w-4xl mx-auto mb-32">
+                  <VideoPreview
+                    videoSrc={selectedBook.videoPreview}
+                    title={`${selectedBook.bookTitle} Preview`}
+                  />
+                </div>
+              )}
+
+              {selectedBook?.leadMagnetId && !selectedBook?.videoPreview && (
+                <div className="max-w-4xl mx-auto mb-32 text-left">
+                  <div className="space-y-6">
+                    <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)] text-center">
+                      <p className="text-3xl md:text-5xl leading-10">
+                        {selectedBook?.bookSubHeading}
+                      </p>
+                      <h2 className="text-5xl md:text-7xl">
+                        {selectedBook?.bookTitle}
+                      </h2>
+                    </div>
+
+                    <div className="text-lg max-w-[80ch] font-light space-y-4 mx-auto">
+                      <Markdown>{selectedBook?.bookDescription}</Markdown>
+                    </div>
+
+                    <div className="text-center mt-8">
+                      <Link
+                        href={selectedBook?.purchaseLink}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <Button
+                          buttonImage={OrangeBackground}
+                          altText="get-book"
+                          text="Get The Book"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
           <div>
             <h2 className="font-(family-name:--trickOrDead) font-normal  text-4xl md:text-7xl text-center block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
               Perfect for fans of
@@ -126,7 +222,7 @@ const BookPage = ({ params }: { params: Promise<{ slug: string }> }) => {
                 text="See More Scaremoor Books"
               />
             </Link>
-            <Link href="/club">
+            <Link href="/society">
               <Button
                 buttonImage={OrangeBackgroundLg}
                 altText="join-scaremoor"

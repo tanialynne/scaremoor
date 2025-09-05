@@ -76,7 +76,7 @@ const BooksPage = () => {
             <p className="max-w-[45ch]">Sign up for the Scaremoor Society to get early access, bonus reads, and secret scares.</p>
 
             <div className="pt-5 ">
-              <Link href="/club">
+              <Link href="/society">
                 <Button buttonImage={OrangeBackground} altText="join-club" text="Join The Club" />
               </Link>
             </div>

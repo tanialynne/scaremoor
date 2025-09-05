@@ -20,7 +20,7 @@ const AuthorPage = () => {
   return (
     <>
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop=" lg:pt-22 xl:pt-2">
-        <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_500px] items-center">
+        <div className="relative overflow-hidden grid grid-cols-1 md:grid-cols-[2fr_1fr] lg:grid-cols-[1fr_400px] items-center">
           <div className="space-y-5 ">
             <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-5xl">About the Author.</p>
@@ -44,7 +44,7 @@ const AuthorPage = () => {
               </p>
             </div>
           </div>
-          <div className="relative mx-auto  max-w-[500px]">
+          <div className="relative mx-auto max-w-[400px] md:max-w-[300px] lg:max-w-[400px]">
             <Image src={AuthorImage} alt="Tania Griffith" className="inline-block h-auto w-full object-contain " />
           </div>
         </div>
@@ -62,7 +62,7 @@ const AuthorPage = () => {
               <Button buttonImage={OrangeBackground} altText="send-email" text="Send an Email " />
             </Link>
 
-            <Link href="/club">
+            <Link href="/society">
               <Button buttonImage={YellowBackground} altText="join-scaremoor" text="Join the Scaremoor Society" />
             </Link>
           </div>

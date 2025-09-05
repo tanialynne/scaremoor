@@ -73,7 +73,7 @@ const Nav = () => {
             >
               <Image src={ShopIcon} alt="shopIcon" className="w-10" />
             </Link>
-            <Link href="mailto:tania@scaremoor.com" className="cursor-pointer">
+            <Link href="/contact" className="cursor-pointer">
               <Image src={EmailIcon} alt="emailIcon" className="w-10" />
             </Link>
           </div>

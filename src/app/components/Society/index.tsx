@@ -34,7 +34,7 @@ const Society = () => {
         </div>
 
         <div className="pt-12">
-          <Link href="/club">
+          <Link href="/society">
             <Button buttonImage={OrangeBackground} altText="join-club" text="Join The Club" />
           </Link>
         </div>

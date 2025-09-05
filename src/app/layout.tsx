@@ -22,10 +22,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: {
     template: "Scaremoor | %s",
-    default: "Scaremoor | Creepy Middle Grade Horror Books for Kids 10–13",
+    default: "Scaremoor | Creepy Middle Grade Horror Books for Kids 8–13",
   },
   description:
-    "Cinematic. Creepy. Kid-safe horror books that hook readers 10–13. Perfect for fans of Goosebumps and Coraline.",
+    "Cinematic. Creepy. Kid-safe horror books that hook readers 8–13. Perfect for fans of Goosebumps and Coraline.",
   icons: {
     icon: "favicon_io/favicon.ico",
     shortcut: "/shortcut-icon.png",
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Scaremoor | Creepy Middle Grade Horror Books for Kids 10–13",
+    title: "Scaremoor | Creepy Middle Grade Horror Books for Kids 8–13",
     description:
-      "Cinematic. Creepy. Kid-safe horror books that hook readers 10–13. Perfect for fans of Goosebumps and Coraline.",
+      "Cinematic. Creepy. Kid-safe horror books that hook readers 8–13. Perfect for fans of Goosebumps and Coraline.",
     url: "https://www.scaremoor.com",
     siteName: "Scaremoor",
     images: [

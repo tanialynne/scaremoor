@@ -160,11 +160,13 @@ const HomePage = () => {
             src={CloudRight}
             alt="cloud"
             className="absolute top-10 right-0 -z-10"
+            loading="lazy"
           />
           <Image
             src={CloudBottom}
             alt="cloud"
             className="absolute bottom-0 left-0 -z-10"
+            loading="lazy"
           />
         </section>
 

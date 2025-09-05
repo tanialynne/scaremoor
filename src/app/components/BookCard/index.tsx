@@ -26,13 +26,12 @@ const BookCard: React.FC<BookCardProps> = ({
     <figure
       className={`group relative ${cardWidth} rounded-xl overflow-hidden shadow-lg mx-auto w-full flex flex-col justify-between min-h-[280px] sm:min-h-[400px] md:min-h-[520px] lg:min-h-[660px]`}
     >
-      <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] relative">
+      <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] flex items-center justify-center p-5">
         {bookImage[type] && (
           <Image
             src={bookImage[type]}
-            alt={bookSlug}
-            fill
-            className="object-contain p-5"
+            alt={`${bookTitle} - ${bookSubHeading}`}
+            className="w-full h-full object-contain"
           />
         )}
       </div>

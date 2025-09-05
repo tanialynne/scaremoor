@@ -12,7 +12,12 @@ const BookDetails: React.FC<BookDetailsProp> = ({ bookDetailImage, imageAltText,
   return (
     <>
       <div className="flex justify-center">
-        <Image src={bookDetailImage} alt={imageAltText} className="w-full  h-auto" />
+        <Image 
+          src={bookDetailImage} 
+          alt={imageAltText} 
+          className="w-full h-auto" 
+          loading="lazy"
+        />
       </div>
 
       <div>{children}</div>

@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Scaremoor | Middle Grade Horror Books",
     description:
-      "Creepy, kid-safe horror books for ages 10–13. One read and you're hooked.",
+      "Creepy, kid-safe horror books for ages 8–13. One read and you're hooked.",
     images: ["https://www.scaremoor.com/images/share-image.png"],
   },
   metadataBase: new URL("https://www.scaremoor.com"),

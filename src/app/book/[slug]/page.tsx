@@ -7,6 +7,8 @@ import Image, { StaticImageData } from "next/image";
 import Markdown from "react-markdown";
 
 import Books from "@/app/constants/Books";
+
+// Metadata generation function (but since this is client component, favicon should inherit from layout)
 import Button from "@/app/components/Button";
 import Herobox from "@/app/components/Herobox";
 import VideoPreview from "@/app/components/VideoPreview";
@@ -20,7 +22,6 @@ import OrangeBackground from "../../../../public/images/orangeBackground.png";
 import OrangeBackgroundLg from "../../../../public/images/orangeBackgroundLg.png";
 import BlurLayer from "../../../../public/images/blurLayer.png";
 import PumpkinSpooky from "../../../../public/images/pumpkinSpooky.svg";
-import Head from "next/head";
 
 const BookPage = ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = use(params);

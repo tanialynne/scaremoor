@@ -27,12 +27,12 @@ export const metadata: Metadata = {
   description:
     "Cinematic. Creepy. Kid-safe horror books that hook readers 8–13. Perfect for fans of Goosebumps and Coraline.",
   icons: {
-    icon: "favicon_io/favicon.ico",
+    icon: "/favicon_io/favicon.ico",
     shortcut: "/shortcut-icon.png",
-    apple: "favicon_io/apple-touch-icon.png",
+    apple: "/favicon_io/apple-touch-icon.png",
     other: {
       rel: "apple-touch-icon",
-      url: "favicon_io/apple-touch-icon.png",
+      url: "/favicon_io/apple-touch-icon.png",
     },
   },
   openGraph: {

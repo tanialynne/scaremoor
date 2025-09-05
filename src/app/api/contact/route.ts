@@ -8,6 +8,14 @@ async function sendEmailViaNodemailer({ to, subject, text, replyTo }: {
   text: string;
   replyTo: string;
 }) {
+  console.log('🔧 Creating transporter with config:', {
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '465'),
+    secure: process.env.SMTP_SECURE === 'true',
+    hasUser: !!process.env.SMTP_USER,
+    hasPass: !!process.env.SMTP_PASS,
+  });
+
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || '465'),
@@ -18,13 +26,29 @@ async function sendEmailViaNodemailer({ to, subject, text, replyTo }: {
     },
   });
 
-  await transporter.sendMail({
+  // Test connection
+  console.log('🔍 Testing SMTP connection...');
+  await transporter.verify();
+  console.log('✅ SMTP connection verified');
+
+  const mailOptions = {
     from: process.env.MAIL_FROM || process.env.SMTP_USER,
     to: to || process.env.MAIL_TO,
     subject,
     text,
     replyTo,
+  };
+
+  console.log('📧 Sending email with options:', {
+    from: mailOptions.from,
+    to: mailOptions.to,
+    subject: mailOptions.subject,
+    replyTo: mailOptions.replyTo,
   });
+
+  const result = await transporter.sendMail(mailOptions);
+  console.log('📬 Email sent result:', result);
+  return result;
 }
 
 export async function POST(request: NextRequest) {
@@ -67,34 +91,37 @@ ${message}
 Submitted at: ${new Date().toLocaleString()}
     `.trim();
 
-    // Try to send email using Resend (popular Next.js email service)
-    // You'll need to install and configure this: npm install resend
+    // Send email via Nodemailer
+    console.log('Attempting to send email with config:', {
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: process.env.SMTP_SECURE,
+      user: process.env.SMTP_USER,
+      to: process.env.MAIL_TO,
+      from: process.env.MAIL_FROM,
+    });
+    
     try {
-      // Uncomment and configure when you set up Resend:
-      /*
-      const { Resend } = require('resend');
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      
-      await resend.emails.send({
-        from: 'noreply@yourdomain.com', // Must be verified domain
-        to: 'your-email@yourdomain.com', // Your inbox
-        subject: emailSubject,
-        text: emailBody,
-        reply_to: emailAddress,
-      });
-      */
-      
-      // Send via Nodemailer using your existing env vars
       await sendEmailViaNodemailer({
         to: process.env.MAIL_TO || 'tania@scaremoor.com',
         subject: emailSubject,
         text: emailBody,
         replyTo: emailAddress,
       });
+      console.log('✅ Email sent successfully');
       
     } catch (emailError) {
-      console.error('Email sending failed:', emailError);
-      // Don't fail the request if email fails - still log the submission
+      console.error('❌ Email sending failed with detailed error:', {
+        error: emailError,
+        message: emailError instanceof Error ? emailError.message : 'Unknown error',
+        stack: emailError instanceof Error ? emailError.stack : undefined,
+      });
+      
+      // Return error to user if email fails
+      return NextResponse.json(
+        { error: 'Failed to send email. Please try again or contact us directly.' },
+        { status: 500 }
+      );
     }
 
     // Log the submission for backup

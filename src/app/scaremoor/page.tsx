@@ -17,7 +17,7 @@ import CloudBottom from "../../../public/images/cloudBottomLeft.png";
 import CloudBottomMiddle from "../../../public/images/cloudBottomMiddle.png";
 import BookIcon from "../../../public/images/icons/bookIcon.svg";
 import FamilyIcon from "../../../public/images/icons/family-icon.png";
-import HunterBook from "../../../public/images/more-stories.png";
+import HauntedBook from "../../../public/images/more-stories.png";
 import HunterLockerBook from "../../../public/images/forgotten-door-free.png";
 import OrangeBackgroundLg from "../../../public/images/orangeBackgroundLg.png";
 
@@ -37,14 +37,21 @@ const ScaremoorPage = () => {
               className=" max-w-[58ch] font-light space-y-6 "
               style={{
                 textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
-              }}>
+              }}
+            >
               <span className="block">
-                Scaremoor is a spooky, suspenseful book series for brave middle grade readers—especially kids ages 8–12—who love page-turning stories, eerie mysteries, and just the right amount of
-                scare.
+                Scaremoor is a spooky, suspenseful book series for brave middle
+                grade readers—especially kids ages 8–12—who love page-turning
+                stories, eerie mysteries, and just the right amount of scare.
               </span>
-              <span className="block">Think Goosebumps, Coraline, and Stranger Things—but written in a smart, cinematic voice that speaks directly to today’s readers.</span>
               <span className="block">
-                Each story is standalone. But they’re all part of the same strange universe, where doors whisper, portraits shift, vines creep, and something is always watching.
+                Think Goosebumps, Coraline, and Stranger Things—but written in a
+                smart, cinematic voice that speaks directly to today’s readers.
+              </span>
+              <span className="block">
+                Each story is standalone. But they’re all part of the same
+                strange universe, where doors whisper, portraits shift, vines
+                creep, and something is always watching.
               </span>
             </p>
           </div>
@@ -71,26 +78,61 @@ const ScaremoorPage = () => {
             </div>
           </div>
 
-          <Image src={CloudRight} alt="cloud" className="absolute top-10 right-0" />
-          <Image src={CloudBottom} alt="cloud" className="absolute bottom-0 left-0" />
-          <Image src={CloudBottomMiddle} alt="cloud" className="absolute bottom-1/2 -translate-y-1/2 right-60" />
+          <Image
+            src={CloudRight}
+            alt="cloud"
+            className="absolute top-10 right-0"
+          />
+          <Image
+            src={CloudBottom}
+            alt="cloud"
+            className="absolute bottom-0 left-0"
+          />
+          <Image
+            src={CloudBottomMiddle}
+            alt="cloud"
+            className="absolute bottom-1/2 -translate-y-1/2 right-60"
+          />
 
           <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize flex flex-col bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
             What makes it different?
           </h2>
           <div className="flex flex-col justify-center items-center mt-10">
             <div className="flex flex-col gap-8">
-              {ListItems.length > 0 && ListItems.map((list) => <ListCard key={list.cardTitle} cardIcon={list.cardIcon} cardTitle={list.cardTitle} cardDescription={list.cardDescription} />)}
+              {ListItems.length > 0 &&
+                ListItems.map((list) => (
+                  <ListCard
+                    key={list.cardTitle}
+                    cardIcon={list.cardIcon}
+                    cardTitle={list.cardTitle}
+                    cardDescription={list.cardDescription}
+                  />
+                ))}
             </div>
           </div>
           <div className="py-30 relative z-50">
-            <BookInfo title="Sample Storylines" bookImage={HunterBook}>
+            <BookInfo title="Sample Storylines" bookImage={HauntedBook}>
               <ul className="mt-4 list-disc space-y-4 text-lg pl-5">
-                <li>A girl opens a mysterious supply closet door—and starts disappearing from her own life.</li>
-                <li>A school locker holds a secret so dark… it never should&apos;ve been opened.</li>
-                <li>Two best friends discover vines in the garden that move.</li>
-                <li>A forgotten playground in the woods calls to the living—but it was never meant to be found again.</li>
-                <li> An old painting in a mansion museum begins changing. And watching.</li>
+                <li>
+                  A girl opens a mysterious supply closet door—and starts
+                  disappearing from her own life.
+                </li>
+                <li>
+                  A school locker holds a secret so dark… it never
+                  should&apos;ve been opened.
+                </li>
+                <li>
+                  Two best friends discover vines in the garden that move.
+                </li>
+                <li>
+                  A forgotten playground in the woods calls to the living—but it
+                  was never meant to be found again.
+                </li>
+                <li>
+                  {" "}
+                  An old painting in a mansion museum begins changing. And
+                  watching.
+                </li>
               </ul>
             </BookInfo>
           </div>
@@ -100,17 +142,26 @@ const ScaremoorPage = () => {
 
         <section className="px-8 md:px-20 py-20 h-full  relative  overflow-hidden">
           <div className="relative z-50">
-            <BookInfo title="Start With a Free Story" bookImage={HunterLockerBook}>
+            <BookInfo
+              title="Start With a Free Story"
+              bookImage={HunterLockerBook}
+            >
               <div className="space-y-8 pt-5">
                 <p className="font-bold">Want to try it out?</p>
                 <p className="max-w-[50ch]">
-                  Read <span className="font-bold">“The Forgotten Door”</span>—a creepy short story about a girl, a glowing hallway, and the price of wanting a better life.
+                  Read <span className="font-bold">“The Forgotten Door”</span>—a
+                  creepy short story about a girl, a glowing hallway, and the
+                  price of wanting a better life.
                 </p>
               </div>
 
               <div className="mt-10">
                 <Link href="/free-story">
-                  <Button buttonImage={OrangeBackgroundLg} altText="free-story" text="Get the free story here" />
+                  <Button
+                    buttonImage={OrangeBackgroundLg}
+                    altText="free-story"
+                    text="Get the free story here"
+                  />
                 </Link>
               </div>
             </BookInfo>

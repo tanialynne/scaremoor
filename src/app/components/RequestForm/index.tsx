@@ -4,30 +4,42 @@ import { useState } from "react";
 import Button from "../Button";
 import InputField from "../Inputs";
 import { spookyToast } from "../SpookyToast";
+import { trackFormStart, trackFormSubmit, trackLeadMagnetSignup } from "@/app/utils/analytics";
 
 import OrangeBackground from "../../../../public/images/orangeBackground.png";
 
 type RequestFormProp = {
   buttonText?: string;
   requestId?: string;
+  bookTitle?: string;
 };
 
-const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId }) => {
+const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId, bookTitle }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  const handleFieldFocus = () => {
+    if (!hasStarted) {
+      setHasStarted(true);
+      trackFormStart('Lead Magnet Form', bookTitle || 'Unknown Book');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email.trim() || !name.trim()) {
       spookyToast.error("The spell ingredients are missing! Fill in both magical fields! 🧙‍♀️");
+      trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', false);
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       spookyToast.error("That email looks cursed! Check your magical address! 📧✨");
+      trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', false);
       return;
     }
 
@@ -51,11 +63,19 @@ const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId }) => {
         spookyToast.success("Email potion brewed and delivered perfectly! 🧪📧");
         setEmail("");
         setName("");
+        
+        // Track successful lead magnet signup
+        if (requestId && bookTitle) {
+          trackLeadMagnetSignup(requestId, bookTitle);
+        }
+        trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', true);
       } else {
         spookyToast.error(`💀 Spell Failed: ${data.message}`);
+        trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', false);
       }
     } catch (_) {
       spookyToast.error("💀 Something spooky went wrong!");
+      trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', false);
     } finally {
       setLoading(false);
     }
@@ -64,8 +84,8 @@ const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId }) => {
   return (
     <form>
       <div className="flex flex-col md:flex-row pt-8 gap-5 w-full">
-        <InputField labelText="Email Address" inputType="email" value={email} onChange={setEmail} />
-        <InputField labelText="Name" inputType="text" value={name} onChange={setName} />
+        <InputField labelText="Email Address" inputType="email" value={email} onChange={setEmail} onFocus={handleFieldFocus} />
+        <InputField labelText="Name" inputType="text" value={name} onChange={setName} onFocus={handleFieldFocus} />
         <div className="shrink-0">
           <Button buttonImage={OrangeBackground} altText="join-now" text={buttonText ? buttonText : "Join Now"} onClick={(e) => handleSubmit(e)} loading={loading} />
         </div>

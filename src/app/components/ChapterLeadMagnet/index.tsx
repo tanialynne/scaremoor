@@ -36,7 +36,7 @@ const ChapterLeadMagnet: React.FC<ChapterLeadMagnetProps> = ({
       </div>
       
       <div className="w-full max-w-[300px] sm:max-w-1/2 md:max-w-[700px]">
-        <RequestForm buttonText="Send My Chapter" requestId={leadMagnetId} />
+        <RequestForm buttonText="Send My Chapter" requestId={leadMagnetId} bookTitle={bookTitle} />
       </div>
 
       <ul className="flex gap-4 pt-4 flex-col md:flex-row">

@@ -2,14 +2,14 @@ import { StaticImageData } from "next/image";
 
 import { slugify } from "../utils";
 
-import HunterBook from "../../../public/images/books/haunted-locker-carousel.png";
+import HauntedBook from "../../../public/images/books/haunted-locker-carousel.png";
 import PhantomGround from "../../../public/images/books/phantom-playground-carousel.png";
 import LivingVine from "../../../public/images/books/living-vines-carousel.png";
 import ChangingPortrait from "../../../public/images/books/changing-portrait-carousel.png";
 import VanishingWords from "../../../public/images/books/vanishing-words-carousel.png";
 import MaskRoom from "../../../public/images/books/mask-room-carousel.png";
 
-import HunterBookFlat from "../../../public/images/books/haunted-locker-flat.png";
+import HauntedBookFlat from "../../../public/images/books/haunted-locker-flat.png";
 import PhantomGroundFlat from "../../../public/images/books/phantom-playground-flat.png";
 import LivingVineFlat from "../../../public/images/books/living-vines-flat.png";
 import ChangingPortraitFlat from "../../../public/images/books/changing-portrait-flat.png";
@@ -35,8 +35,8 @@ const Books: Book[] = [
     bookTitle: "The Haunted Locker",
     bookSlug: slugify("The Haunted Locker"),
     bookImage: {
-      open: HunterBookFlat,
-      close: HunterBook,
+      open: HauntedBookFlat,
+      close: HauntedBook,
     },
     bookSubHeading: "Some doors should never be opened",
     purchaseLink: "https://www.amazon.com/gp/product/B0DKLP6KCT",

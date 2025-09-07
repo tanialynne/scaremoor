@@ -80,7 +80,7 @@ const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId, bookTit
         spookyToast.error(`💀 Spell Failed: ${data.message}`);
         trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', false);
       }
-    } catch (_) {
+    } catch {
       spookyToast.error("💀 Something spooky went wrong!");
       trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', false);
     } finally {

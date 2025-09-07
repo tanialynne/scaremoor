@@ -23,8 +23,8 @@ interface BlogPostClientProps {
 const BlogPostClient: React.FC<BlogPostClientProps> = ({ selectedPost }) => {
   useEffect(() => {
     // Track blog post view
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "page_view", {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "page_view", {
         page_title: selectedPost.title,
         page_location: window.location.href,
         content_group1: "Blog Post",

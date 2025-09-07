@@ -12,21 +12,20 @@ import VideoPreview from "@/app/components/VideoPreview";
 import { BookCTATest } from "@/app/components/ABTestExamples/BookCTATest";
 import { LeadMagnetTest } from "@/app/components/ABTestExamples/LeadMagnetTest";
 import ABTestDebug from "@/app/components/ABTestDebug";
-import { 
-  trackBookPageView, 
-  trackPurchaseClick, 
-  trackButtonClick, 
-  trackLeadMagnetView 
+import {
+  trackBookPageView,
+  trackPurchaseClick,
+  trackButtonClick,
+  trackLeadMagnetView,
 } from "@/app/utils/analytics";
 
-import BackgroundImage from "../../../../public/images/singleBookBackground.png";
+import BackgroundImage from "../../../../public/images/bookspage-image.png";
 import CloudRight from "../../../../public/images/cloudRightTop.png";
 import CloudBottom from "../../../../public/images/cloudBottomLeft.png";
 import YellowBackground from "../../../../public/images/yellowBackground.png";
 import OrangeBackground from "../../../../public/images/orangeBackground.png";
 import OrangeBackgroundLg from "../../../../public/images/orangeBackgroundLg.png";
 import BlurLayer from "../../../../public/images/blurLayer.png";
-import PumpkinSpooky from "../../../../public/images/pumpkinSpooky.svg";
 
 interface BookPageClientProps {
   selectedBook: Book;
@@ -46,23 +45,32 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
   }, [selectedBook]);
 
   const handlePurchaseClick = () => {
-    trackPurchaseClick(selectedBook.bookTitle, selectedBook.bookSlug, selectedBook.purchaseLink);
+    trackPurchaseClick(
+      selectedBook.bookTitle,
+      selectedBook.bookSlug,
+      selectedBook.purchaseLink
+    );
   };
 
   const handleButtonClick = (buttonText: string, destination: string) => {
-    trackButtonClick(buttonText, `Book Page - ${selectedBook.bookTitle}`, destination);
+    trackButtonClick(
+      buttonText,
+      `Book Page - ${selectedBook.bookTitle}`,
+      destination
+    );
   };
 
   return (
     <>
       <ABTestDebug testId="book_cta_buttons" position="fixed" />
       {selectedBook?.leadMagnetId && (
-        <ABTestDebug testId="lead_magnet_layout" position="fixed" className="top-64" />
+        <ABTestDebug
+          testId="lead_magnet_layout"
+          position="fixed"
+          className="top-64"
+        />
       )}
-      <Herobox
-        backgroundImage={BackgroundImage}
-        contentPaddingTop=" lg:pt-22 xl:pt-2"
-      >
+      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-[2fr_1fr] xl:grid-cols-[1fr_500px] gap-8 items-start z-10">
           <div className="space-y-5 ">
             {selectedBook?.leadMagnetId ? (
@@ -77,7 +85,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                     {selectedBook?.bookSubHeading}
                   </p>
                   <h1 className="text-5xl md:text-7xl">
-                    {selectedBook?.bookTitle}
+                    {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                   </h1>
                 </div>
 
@@ -104,12 +112,6 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
             />
           </div>
         </div>
-        <Image
-          src={PumpkinSpooky}
-          alt="pumpkin-spooky"
-          className="hidden lg:inline-block absolute bottom-0 left-1/2 -translate-x-1/2 -z-2 max-w-3xs"
-          loading="lazy"
-        />
         <Image
           src={BlurLayer}
           alt="blur-layer"
@@ -138,7 +140,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                   {selectedBook?.bookSubHeading}
                 </p>
                 <h2 className="text-5xl md:text-7xl">
-                  {selectedBook?.bookTitle}
+                  {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                 </h2>
               </div>
 
@@ -185,7 +187,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                         {selectedBook?.bookSubHeading}
                       </p>
                       <h2 className="text-5xl md:text-7xl">
-                        {selectedBook?.bookTitle}
+                        {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                       </h2>
                     </div>
 
@@ -218,21 +220,37 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
           </div>
 
           <div className="flex gap-5 items-center justify-center flex-col lg:flex-row">
-            <Link href="/free-story" onClick={() => handleButtonClick("READ A FREE STORY", "/free-story")}>
+            <Link
+              href="/free-story"
+              onClick={() =>
+                handleButtonClick("READ A FREE STORY", "/free-story")
+              }
+            >
               <Button
                 buttonImage={OrangeBackground}
                 altText="read-story"
                 text="READ A FREE STORY"
               />
             </Link>
-            <Link href="/scaremoor" onClick={() => handleButtonClick("See More Scaremoor Books", "/scaremoor")}>
+            <Link
+              href="/scaremoor"
+              onClick={() =>
+                handleButtonClick("See More Scaremoor Books", "/scaremoor")
+              }
+            >
               <Button
                 buttonImage={YellowBackground}
                 altText="see-more"
                 text="See More Scaremoor Books"
+                textColor="text-black"
               />
             </Link>
-            <Link href="/society" onClick={() => handleButtonClick("Join the Scaremoor Society", "/society")}>
+            <Link
+              href="/society"
+              onClick={() =>
+                handleButtonClick("Join the Scaremoor Society", "/society")
+              }
+            >
               <Button
                 buttonImage={OrangeBackgroundLg}
                 altText="join-scaremoor"

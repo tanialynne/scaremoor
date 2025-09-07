@@ -35,7 +35,7 @@ const HomePage = () => {
       >
         <div className="lg:grid lg:grid-cols-2 items-center space-y-12">
           <div className="space-y-5 lg:pt-10">
-            <div className="font-(family-name:--trickOrDead) font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-6xl">Middle Grade Horror.</p>
               <h1 className="text-5xl md:text-7xl">Maximum Grade Chills.</h1>
             </div>
@@ -142,7 +142,7 @@ const HomePage = () => {
           </BookDetails>
         </section>
 
-        <section className="px-8 md:px-20 py-20 min-h-180 h-full text-center relative overflow-hidden space-y-6">
+        <section className="px-8 md:px-20 py-30 min-h-180 h-full text-center relative overflow-hidden space-y-6">
           <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
             Monster Must Reads
           </h2>
@@ -151,7 +151,7 @@ const HomePage = () => {
             perfect for young readers who love little thrill!
           </p>
 
-          <div className="relative z-50">
+          <div className="relative z-50 pt-8">
             <BookList />
           </div>
           {/*<Link href="/books">

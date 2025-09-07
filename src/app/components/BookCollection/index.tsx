@@ -10,6 +10,7 @@ const BookCollection = () => {
             key={book.bookTitle}
             type="open"
             cardWidth="max-w-lg"
+            bookNumber={book.bookNumber}
             bookTitle={book.bookTitle}
             bookImage={book.bookImage}
             bookSlug={book.bookSlug}

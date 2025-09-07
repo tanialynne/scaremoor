@@ -27,7 +27,7 @@ const BookList = () => {
           }}>
           {Books.map((book) => (
             <SwiperSlide key={book.bookTitle}>
-              <BookCard type="close" bookTitle={book.bookTitle} bookImage={book.bookImage} bookSlug={book.bookSlug} purchaseLink={book.purchaseLink} bookSubHeading={book.bookSubHeading} />
+              <BookCard type="close" bookNumber={book.bookNumber} bookTitle={book.bookTitle} bookImage={book.bookImage} bookSlug={book.bookSlug} purchaseLink={book.purchaseLink} bookSubHeading={book.bookSubHeading} />
             </SwiperSlide>
           ))}
         </Swiper>

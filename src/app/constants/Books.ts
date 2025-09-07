@@ -21,6 +21,7 @@ export type Book = {
     open?: StaticImageData;
     close?: StaticImageData;
   };
+  bookNumber: number;
   bookSlug: string;
   bookTitle: string;
   bookSubHeading: string;
@@ -32,6 +33,7 @@ export type Book = {
 
 const Books: Book[] = [
   {
+    bookNumber: 1,
     bookTitle: "The Haunted Locker",
     bookSlug: slugify("The Haunted Locker"),
     bookImage: {
@@ -49,6 +51,7 @@ Now, Ben and Mia must race against time to stop the spirits from escaping, but t
     `.trim(),
   },
   {
+    bookNumber: 2,
     bookTitle: "The Night of the Living Vines",
     bookSlug: slugify("The Night of the Living Vines"),
     bookImage: {
@@ -68,6 +71,7 @@ Will they find a way to stop the ancient force before it's too late? Or will the
     `.trim(),
   },
   {
+    bookNumber: 3,
     bookTitle: "The Phantom Playground",
     bookSlug: slugify("The Phantom Playground"),
     bookImage: {
@@ -87,6 +91,7 @@ If Emily and her friends can't uncover the truth—and survive it—they might b
     `.trim(),
   },
   {
+    bookNumber: 4,
     bookTitle: "The Changing Portrait",
     bookSlug: slugify("The Changing Portrait"),
     bookImage: {
@@ -106,6 +111,7 @@ As the past bleeds into the present, Haley must solve the mystery before the man
     `.trim(),
   },
   {
+    bookNumber: 5,
     bookTitle: "The Vanishing Words",
     bookSlug: slugify("The Vanishing Words"),
     bookImage: {
@@ -125,6 +131,7 @@ Because some words don't just have meaning. They have a mind of their own.
     `.trim(),
   },
   {
+    bookNumber: 6,
     bookTitle: "The Mask Room",
     bookSlug: slugify("The Mask Room"),
     bookImage: {

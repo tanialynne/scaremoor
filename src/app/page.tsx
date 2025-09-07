@@ -15,7 +15,6 @@ import { HomeHeroTest } from "./components/ABTestExamples/HomeHeroTest";
 import ABTestDebug from "./components/ABTestDebug";
 
 import BackgroundImage from "../../public/images/landingpage-Image.png";
-import BookImageRight from "../../public/images/home-hero-comingsoon.png";
 import HunterLockerBook from "../../public/images/books/hunterlocker-book.png";
 import MonsterBackground from "../../public/images/monsterBackground.png";
 import OrangeBackground from "../../public/images/orangeBackground.png";

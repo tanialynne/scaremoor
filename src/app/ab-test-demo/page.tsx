@@ -136,9 +136,9 @@ const ABTestDemoPage = () => {
         <div className="mt-12 bg-blue-900/30 p-6 rounded-lg border border-blue-500/50">
           <h3 className="text-xl font-bold text-blue-200 mb-4">How to See Different Variants:</h3>
           <div className="text-blue-100 space-y-2">
-            <p><strong>1. Click "Reset User"</strong> - This clears your user ID and assigns you to a new test group</p>
+            <p><strong>1. Click &quot;Reset User&quot;</strong> - This clears your user ID and assigns you to a new test group</p>
             <p><strong>2. Refresh the page</strong> - You might see different button text, layouts, or form copy</p>
-            <p><strong>3. Try multiple times</strong> - The system uses statistical distribution, so you'll see different variants</p>
+            <p><strong>3. Try multiple times</strong> - The system uses statistical distribution, so you&apos;ll see different variants</p>
             <p><strong>4. Check the dashboard</strong> - See which tests are active and their configuration</p>
           </div>
         </div>
@@ -149,9 +149,9 @@ const ABTestDemoPage = () => {
           <div className="text-yellow-100 space-y-3">
             <p>To activate these tests on your real site, simply replace the existing components:</p>
             <div className="bg-gray-800 p-4 rounded mt-4 font-mono text-sm">
-              <p className="text-green-400">// In your book pages, replace:</p>
+              <p className="text-green-400">{/* In your book pages, replace: */}</p>
               <p className="text-gray-300">{'<Button text="Get The Book" />'}</p>
-              <p className="text-green-400">// With:</p>
+              <p className="text-green-400">{/* With: */}</p>
               <p className="text-gray-300">{'<BookCTATest purchaseLink={book.purchaseLink} bookTitle={book.title} />'}</p>
             </div>
           </div>

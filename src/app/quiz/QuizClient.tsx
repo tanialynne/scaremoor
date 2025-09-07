@@ -269,7 +269,7 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       },
       {
         id: "b",
-        text: "👁️ Being watched by things that shouldn't exist",
+        text: "👁️ Being watched by things that shouldn&apos;t exist",
         points: {
           the_haunted_locker: 2,
           the_night_of_the_living_vines: 2,
@@ -426,7 +426,6 @@ const getFormIdForBook = (bookTitle: string): string => {
 
 const QuizClient = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, string>>({});
   const [scores, setScores] = useState<Record<string, number>>({});
   const [showResult, setShowResult] = useState(false);
   const [showEmailCapture, setShowEmailCapture] = useState(false);
@@ -449,9 +448,6 @@ const QuizClient = () => {
 
     const answer = question.answers.find((a) => a.id === answerId);
     if (!answer) return;
-
-    // Update answers
-    setAnswers((prev) => ({ ...prev, [questionId]: answerId }));
 
     // Update scores
     setScores((prev) => {
@@ -505,7 +501,6 @@ const QuizClient = () => {
 
   const restartQuiz = () => {
     setCurrentQuestion(0);
-    setAnswers({});
     setScores({});
     setShowResult(false);
     setShowEmailCapture(false);
@@ -641,9 +636,9 @@ const QuizClient = () => {
                       Enter Your Email to See Your Results
                     </h3>
                     <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-                      We'll instantly send you your personalized book
+                      We&apos;ll instantly send you your personalized book
                       recommendation plus the first chapter to read in your
-                      inbox! You'll also get exclusive Scaremoor content and
+                      inbox! You&apos;ll also get exclusive Scaremoor content and
                       updates on new releases!
                     </p>
                   </div>

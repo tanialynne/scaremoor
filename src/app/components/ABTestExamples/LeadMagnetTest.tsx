@@ -21,7 +21,7 @@ export const LeadMagnetTest: React.FC<LeadMagnetTestProps> = ({
   leadMagnetId,
   className = "",
 }) => {
-  const { trackConversion } = useABTest("lead_magnet_layout");
+  useABTest("lead_magnet_layout");
 
   return (
     <div className={`space-y-5 lg:pt-10 ${className}`}>
@@ -93,7 +93,7 @@ export const LeadMagnetTest: React.FC<LeadMagnetTestProps> = ({
                   absolutely FREE!
                 </p>
                 <p>
-                  Join thousands of young readers who can't put these books
+                  Join thousands of young readers who can&apos;t put these books
                   down. Perfect for fans of Goosebumps!
                 </p>
               </div>
@@ -130,15 +130,15 @@ export const LeadMagnetTest: React.FC<LeadMagnetTestProps> = ({
               >
                 <div className="bg-gray-800/50 p-4 rounded-lg border-l-4 border-orange-400">
                   <p className="italic">
-                    "My kids devoured this book in one sitting! Perfect scary
-                    story for middle schoolers."
+                    &quot;My kids devoured this book in one sitting! Perfect scary
+                    story for middle schoolers.&quot;
                   </p>
                   <p className="text-sm text-gray-300 mt-2">
                     — Sarah M., Parent
                   </p>
                 </div>
                 <p>
-                  Want to see why kids can't stop reading? Get Chapter 1 of{" "}
+                  Want to see why kids can&apos;t stop reading? Get Chapter 1 of{" "}
                   <span className="font-bold">{bookTitle}</span> FREE.
                 </p>
               </div>

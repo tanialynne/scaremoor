@@ -20,12 +20,6 @@ const Button: React.FC<ButtonProps> = ({
   loading,
   children,
 }) => {
-  const contentToRender = loading ? (
-    <span className="animate-pulse">Summoning…</span>
-  ) : (
-    children || text || "Click"
-  );
-
   return (
     <button
       type="submit"

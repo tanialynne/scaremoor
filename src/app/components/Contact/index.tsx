@@ -59,7 +59,7 @@ const ContactForm = () => {
       } else {
         spookyToast.error(`💀 Spell Failed: ${data.error || 'Something went wrong'}`);
       }
-    } catch (error) {
+    } catch {
       spookyToast.error("💀 The spirits are restless! Please try again later.");
     } finally {
       setLoading(false);

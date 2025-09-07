@@ -9,7 +9,6 @@ import { Book } from "@/app/constants/Books";
 import Button from "@/app/components/Button";
 import Herobox from "@/app/components/Herobox";
 import VideoPreview from "@/app/components/VideoPreview";
-import ChapterLeadMagnet from "@/app/components/ChapterLeadMagnet";
 import { BookCTATest } from "@/app/components/ABTestExamples/BookCTATest";
 import { LeadMagnetTest } from "@/app/components/ABTestExamples/LeadMagnetTest";
 import ABTestDebug from "@/app/components/ABTestDebug";

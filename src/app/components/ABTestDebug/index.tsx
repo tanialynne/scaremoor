@@ -3,6 +3,12 @@
 import { useState, useEffect } from "react";
 import { generateVariantLinks, isDebugMode, useABTest } from "@/app/utils/abTesting";
 
+interface VariantLink {
+  variant: string;
+  url: string;
+  name: string;
+}
+
 interface ABTestDebugProps {
   testId: string;
   position?: 'top' | 'bottom' | 'fixed';
@@ -20,7 +26,7 @@ export const ABTestDebug: React.FC<ABTestDebugProps> = ({
   className = ''
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [variantLinks, setVariantLinks] = useState<any[]>([]);
+  const [variantLinks, setVariantLinks] = useState<VariantLink[]>([]);
   const { variant, isInTest, isHydrated } = useABTest(testId);
 
   useEffect(() => {

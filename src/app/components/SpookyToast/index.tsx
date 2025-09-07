@@ -51,6 +51,8 @@ export default function SpookyToast() {
   }, []);
 
   useEffect(() => {
+    const timeouts = timeoutsRef.current;
+    
     enqueueExternal = (toast) => {
       const id = `spooky-${idRef.current++}`;
       const newToast = { id, ...toast };
@@ -59,14 +61,14 @@ export default function SpookyToast() {
 
       if (toast.duration) {
         const timeout = setTimeout(() => removeToast(id), toast.duration);
-        timeoutsRef.current.set(id, timeout);
+        timeouts.set(id, timeout);
       }
     };
 
     return () => {
       enqueueExternal = null;
-      timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
-      timeoutsRef.current.clear();
+      timeouts.forEach((timeout) => clearTimeout(timeout));
+      timeouts.clear();
     };
   }, [removeToast]);
 

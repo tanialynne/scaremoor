@@ -435,7 +435,7 @@ export const trackQuizComplete = (recommendedBook: string, timeSpent?: number) =
   }
 };
 
-export const trackQuizEmailSignup = (recommendedBook: string, email?: string) => {
+export const trackQuizEmailSignup = (recommendedBook: string) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'generate_lead', {
       currency: 'USD',

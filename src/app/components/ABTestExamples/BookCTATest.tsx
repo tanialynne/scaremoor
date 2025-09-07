@@ -18,7 +18,6 @@ interface BookCTATestProps {
  */
 export const BookCTATest: React.FC<BookCTATestProps> = ({ 
   purchaseLink, 
-  bookTitle, 
   onPurchaseClick 
 }) => {
   const { trackConversion } = useABTest('book_cta_buttons');

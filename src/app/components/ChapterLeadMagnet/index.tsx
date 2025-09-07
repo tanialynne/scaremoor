@@ -18,7 +18,7 @@ const ChapterLeadMagnet: React.FC<ChapterLeadMagnetProps> = ({
 }) => {
   return (
     <div className={`space-y-5 lg:pt-10 ${className}`}>
-      <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+      <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
         <p className="text-3xl md:text-6xl">Get Chapter One…</p>
         <h3 className="text-5xl md:text-7xl">If You Dare.</h3>
       </div>
@@ -26,7 +26,7 @@ const ChapterLeadMagnet: React.FC<ChapterLeadMagnetProps> = ({
       <div 
         className="max-w-[62ch] font-light space-y-6"
         style={{
-          textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+          textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
         }}
       >
         <p>Want a taste of the terror before you buy?</p>

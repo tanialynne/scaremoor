@@ -22,7 +22,7 @@ const AuthorPage = () => {
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop=" lg:pt-22 xl:pt-2">
         <div className="relative overflow-hidden grid grid-cols-1 md:grid-cols-[2fr_1fr] lg:grid-cols-[1fr_400px] items-center">
           <div className="space-y-5 ">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-5xl">About the Author.</p>
               <h1 className="text-5xl md:text-7xl">T.L. Griffith</h1>
             </div>
@@ -30,7 +30,7 @@ const AuthorPage = () => {
             <div
               className=" max-w-[80ch] font-light space-y-3"
               style={{
-                textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+                textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
               }}>
               <p>Tania writes spooky stories for brave kids—and secretly hopes every attic hides a cursed mirror, and every old house has at least one painting that blinks. </p>
               <p>

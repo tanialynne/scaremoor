@@ -27,7 +27,7 @@ const Society = () => {
         <div
           className="max-w-[70ch] space-y-6"
           style={{
-            textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+            textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
           }}>
           <p>Want secret stories, creepy wallpapers, and insider-only chills?</p>
           <p>Join the Scaremoor Society—our free reader club—and get exclusive content, bonus books, and early sneak peeks. It’s like a haunted library card. But cooler.</p>

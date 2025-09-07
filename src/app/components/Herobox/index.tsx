@@ -23,7 +23,8 @@ const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPad
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}>
-      <div className="absolute inset-0 bg-black/40 -z-10"></div>
+      <div className="absolute inset-0 bg-black/50 -z-10"></div>
+      {fogEffect && <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/20 -z-5"></div>}
 
       <Nav />
       {fogEffect && <VantaFogBackground />}

@@ -29,14 +29,14 @@ const ScaremoorPage = () => {
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop=" lg:pt-22">
         <div className=" items-center">
           <div className="space-y-5">
-            <div className="font-(family-name:--trickOrDead) font-normal [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+            <div className="font-(family-name:--trickOrDead) font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <h1 className="text-5xl md:text-7xl">What is SCAREMOOR?</h1>
             </div>
 
             <p
               className=" max-w-[58ch] font-light space-y-6 "
               style={{
-                textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+                textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
               }}
             >
               <span className="block">

@@ -1,9 +1,9 @@
 // Google Analytics 4 Utility Functions
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
-    clarity: (...args: any[]) => void;
+    gtag: (...args: unknown[]) => void;
+    dataLayer: Record<string, unknown>[];
+    clarity: (action: string, ...args: unknown[]) => void;
   }
 }
 
@@ -260,7 +260,7 @@ export const trackTimeOnPage = (timeInSeconds: number, pageName: string) => {
 };
 
 // Error Tracking
-export const trackError = (error: string, errorInfo?: any) => {
+export const trackError = (error: string, errorInfo?: Record<string, unknown>) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'exception', {
       description: error,
@@ -362,4 +362,123 @@ export const trackUserJourneyStage = (stage: 'discovery' | 'interest' | 'conside
       }
     });
   }
+};
+
+// Quiz-specific tracking
+export const trackQuizStart = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'quiz_start', {
+      event_category: 'Quiz',
+      event_label: 'Book Recommendation Quiz',
+      custom_parameters: {
+        quiz_type: 'book_recommendation'
+      }
+    });
+  }
+  
+  setClarityCustomTag('quiz_started', 'yes');
+  trackClarityEvent('quiz_start', {
+    quiz_type: 'book_recommendation'
+  });
+};
+
+export const trackQuizAnswer = (questionNumber: number, questionText: string, answer: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'quiz_answer', {
+      event_category: 'Quiz',
+      event_label: `Question ${questionNumber}`,
+      custom_parameters: {
+        question_number: questionNumber,
+        question_text: questionText,
+        answer_text: answer,
+        quiz_type: 'book_recommendation'
+      }
+    });
+  }
+  
+  trackClarityEvent('quiz_answer', {
+    question_number: questionNumber,
+    question_text: questionText,
+    answer_text: answer
+  });
+};
+
+export const trackQuizComplete = (recommendedBook: string, timeSpent?: number) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'quiz_complete', {
+      event_category: 'Quiz',
+      event_label: 'Book Recommendation Quiz Complete',
+      value: timeSpent || 0,
+      custom_parameters: {
+        recommended_book: recommendedBook,
+        quiz_type: 'book_recommendation',
+        time_spent_seconds: timeSpent || 0
+      }
+    });
+  }
+  
+  setClarityCustomTag('quiz_completed', 'yes');
+  setClarityCustomTag('recommended_book', recommendedBook);
+  
+  trackClarityEvent('quiz_complete', {
+    recommended_book: recommendedBook,
+    time_spent_seconds: timeSpent || 0
+  });
+  
+  // Track as conversion event
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion', {
+      send_to: `${GA_TRACKING_ID}/quiz_completion`,
+      value: 2.00,
+      currency: 'USD'
+    });
+  }
+};
+
+export const trackQuizEmailSignup = (recommendedBook: string, email?: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'generate_lead', {
+      currency: 'USD',
+      value: 8.00, // Higher value for quiz-driven leads
+      method: 'Quiz Result Email Capture',
+      custom_parameters: {
+        lead_source: 'quiz_result',
+        recommended_book: recommendedBook,
+        quiz_type: 'book_recommendation'
+      }
+    });
+  }
+  
+  trackClarityEvent('quiz_email_signup', {
+    recommended_book: recommendedBook,
+    lead_source: 'quiz_result'
+  });
+  
+  // Track as high-value conversion
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion', {
+      send_to: `${GA_TRACKING_ID}/quiz_lead_generation`,
+      value: 8.00,
+      currency: 'USD'
+    });
+  }
+};
+
+export const trackQuizBookPurchase = (recommendedBook: string, purchaseUrl: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'purchase_intent', {
+      event_category: 'Quiz Conversion',
+      event_label: `${recommendedBook} Purchase Click`,
+      custom_parameters: {
+        recommended_book: recommendedBook,
+        purchase_source: 'quiz_result',
+        destination_url: purchaseUrl
+      }
+    });
+  }
+  
+  trackClarityEvent('quiz_book_purchase_click', {
+    recommended_book: recommendedBook,
+    purchase_source: 'quiz_result'
+  });
 };

@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={loading}
     >
       <div className="relative inline-block h-14 sm:h-16 transition-transform duration-300 hover:scale-[102%]">
-        <span className="invisible block text-lg sm:text-2xl font-(family-name:--trickOrDead) capitalize px-8 py-4">
+        <span className="invisible block text-lg sm:text-2xl font-(family-name:--trickOrDead) capitalize px-12 py-4">
           {children ?? text}
         </span>
         <Image

@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { trackButtonClick } from "./utils/analytics";
+import { isFeatureEnabled } from "./constants/FeatureFlags";
 
 import Herobox from "./components/Herobox";
 import Button from "./components/Button";
@@ -7,6 +11,8 @@ import BookList from "./components/BookList";
 import { Testimonials } from "./components/Testimonials";
 import Society from "./components/Society";
 import BookDetails from "./components/BookDetails";
+import { HomeHeroTest } from "./components/ABTestExamples/HomeHeroTest";
+import ABTestDebug from "./components/ABTestDebug";
 
 import BackgroundImage from "../../public/images/landingpage-Image.png";
 import BookImageRight from "../../public/images/home-hero-comingsoon.png";
@@ -21,6 +27,7 @@ import YellowBackground from "../../public/images/yellowBackground.png";
 const HomePage = () => {
   return (
     <>
+      <ABTestDebug testId="home_hero_layout" />
       <Herobox
         backgroundImage={BackgroundImage}
         landingAssets={true}
@@ -29,7 +36,7 @@ const HomePage = () => {
       >
         <div className="lg:grid lg:grid-cols-2 items-center space-y-12">
           <div className="space-y-5 lg:pt-10">
-            <div className="font-(family-name:--trickOrDead) font-normal ">
+            <div className="font-(family-name:--trickOrDead) font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-6xl">Middle Grade Horror.</p>
               <h1 className="text-5xl md:text-7xl">Maximum Grade Chills.</h1>
             </div>
@@ -37,7 +44,7 @@ const HomePage = () => {
             <p
               className=" max-w-[62ch] font-light"
               style={{
-                textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+                textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
               }}
             >
               Spine-tingling stories that keep kids hooked—and looking over
@@ -55,28 +62,28 @@ const HomePage = () => {
                 />
               </Link>
 
-              {/*<Link href="/scaremoor">
-                <Button
-                  buttonImage={YellowBackground}
-                  altText="see-series"
-                  text="See the Full Series"
-                />
-              </Link>*/}
+              {isFeatureEnabled("QUIZ_ENABLED") && (
+                <Link
+                  href="/quiz"
+                  onClick={() =>
+                    trackButtonClick(
+                      "Find Your Perfect Scare",
+                      "Homepage Hero",
+                      "/quiz"
+                    )
+                  }
+                >
+                  <Button
+                    buttonImage={YellowBackground}
+                    altText="take-quiz"
+                    text="Find Your Perfect Scare"
+                    textColor="text-black"
+                  />
+                </Link>
+              )}
             </div>
           </div>
-          {/*<div className="relative flex justify-center items-center ">
-            <Image src={BookImageRight} alt="book-image" className="inline-block w-4/5 md:w-3/5 lg:w-4/5 " />
-          </div>*/}
-          <div className="relative flex justify-center items-center">
-            <video
-              className="w-full lg:w-[90%] max-w-screen-md rounded-lg shadow-lg"
-              src="/videos/themaskroom_trailer.mp4"
-              autoPlay
-              playsInline
-              muted
-              controls
-            />
-          </div>
+          <HomeHeroTest className="relative flex justify-center items-center" />
         </div>
       </Herobox>
       <main className="text-white relative z-50">

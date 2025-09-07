@@ -12,9 +12,11 @@ type RequestFormProp = {
   buttonText?: string;
   requestId?: string;
   bookTitle?: string;
+  onSubmitSuccess?: () => void;
+  layout?: 'stacked' | 'inline'; // 'stacked' = button below, 'inline' = button on same row
 };
 
-const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId, bookTitle }) => {
+const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId, bookTitle, onSubmitSuccess, layout = 'inline' }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -69,6 +71,11 @@ const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId, bookTit
           trackLeadMagnetSignup(requestId, bookTitle);
         }
         trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', true);
+        
+        // Call success callback if provided
+        if (onSubmitSuccess) {
+          onSubmitSuccess();
+        }
       } else {
         spookyToast.error(`💀 Spell Failed: ${data.message}`);
         trackFormSubmit('Lead Magnet Form', bookTitle || 'Unknown Book', false);
@@ -83,13 +90,35 @@ const RequestForm: React.FC<RequestFormProp> = ({ buttonText, requestId, bookTit
 
   return (
     <form>
-      <div className="flex flex-col md:flex-row pt-8 gap-5 w-full">
-        <InputField labelText="Email Address" inputType="email" value={email} onChange={setEmail} onFocus={handleFieldFocus} />
-        <InputField labelText="Name" inputType="text" value={name} onChange={setName} onFocus={handleFieldFocus} />
-        <div className="shrink-0">
-          <Button buttonImage={OrangeBackground} altText="join-now" text={buttonText ? buttonText : "Join Now"} onClick={(e) => handleSubmit(e)} loading={loading} />
+      {layout === 'inline' ? (
+        // Inline layout - button on same row (for book pages with shorter text)
+        <div className="flex flex-col md:flex-row pt-8 gap-4 w-full items-end">
+          <div className="flex-1 md:max-w-[200px]">
+            <InputField labelText="Email Address" inputType="email" value={email} onChange={setEmail} onFocus={handleFieldFocus} backgroungType="light" />
+          </div>
+          <div className="flex-1 md:max-w-[180px]">
+            <InputField labelText="Name" inputType="text" value={name} onChange={setName} onFocus={handleFieldFocus} backgroungType="light" />
+          </div>
+          <div className="shrink-0">
+            <Button buttonImage={OrangeBackground} altText="join-now" text={buttonText ? buttonText : "Join Now"} onClick={(e) => handleSubmit(e)} loading={loading} />
+          </div>
         </div>
-      </div>
+      ) : (
+        // Stacked layout - button below (for quiz with longer text)
+        <div className="pt-8 space-y-5 w-full">
+          <div className="flex flex-col sm:flex-row gap-5">
+            <div className="flex-1">
+              <InputField labelText="Email Address" inputType="email" value={email} onChange={setEmail} onFocus={handleFieldFocus} backgroungType="light" />
+            </div>
+            <div className="flex-1">
+              <InputField labelText="Name" inputType="text" value={name} onChange={setName} onFocus={handleFieldFocus} backgroungType="light" />
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <Button buttonImage={OrangeBackground} altText="join-now" text={buttonText ? buttonText : "Join Now"} onClick={(e) => handleSubmit(e)} loading={loading} />
+          </div>
+        </div>
+      )}
     </form>
   );
 };

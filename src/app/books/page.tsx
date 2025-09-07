@@ -25,7 +25,7 @@ const BooksPage = () => {
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className=" items-center">
           <div className="space-y-5">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-6xl">Every Book a New Scare.</p>
               <h1 className="text-5xl md:text-7xl max-w-[20ch]">Every Story a Standalone Shiver.</h1>
             </div>
@@ -33,7 +33,7 @@ const BooksPage = () => {
             <p
               className=" max-w-[80ch] font-light "
               style={{
-                textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+                textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
               }}>
               Welcome to SCAREMOOR—a middle-grade horror series full of haunted objects, cursed doors, and creepy school secrets. <br /> Each book is its own eerie adventure, perfect for curious kids
               and grown-ups who still love a good spine-tingling read.

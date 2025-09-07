@@ -10,6 +10,9 @@ import Button from "@/app/components/Button";
 import Herobox from "@/app/components/Herobox";
 import VideoPreview from "@/app/components/VideoPreview";
 import ChapterLeadMagnet from "@/app/components/ChapterLeadMagnet";
+import { BookCTATest } from "@/app/components/ABTestExamples/BookCTATest";
+import { LeadMagnetTest } from "@/app/components/ABTestExamples/LeadMagnetTest";
+import ABTestDebug from "@/app/components/ABTestDebug";
 import { 
   trackBookPageView, 
   trackPurchaseClick, 
@@ -53,6 +56,10 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
 
   return (
     <>
+      <ABTestDebug testId="book_cta_buttons" position="fixed" />
+      {selectedBook?.leadMagnetId && (
+        <ABTestDebug testId="lead_magnet_layout" position="fixed" className="top-64" />
+      )}
       <Herobox
         backgroundImage={BackgroundImage}
         contentPaddingTop=" lg:pt-22 xl:pt-2"
@@ -60,13 +67,13 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
         <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-[2fr_1fr] xl:grid-cols-[1fr_500px] gap-8 items-start z-10">
           <div className="space-y-5 ">
             {selectedBook?.leadMagnetId ? (
-              <ChapterLeadMagnet
+              <LeadMagnetTest
                 bookTitle={selectedBook.bookTitle}
                 leadMagnetId={selectedBook.leadMagnetId}
               />
             ) : (
               <>
-                <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+                <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
                   <p className="text-3xl md:text-5xl leading-10">
                     {selectedBook?.bookSubHeading}
                   </p>
@@ -79,18 +86,11 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                   <Markdown>{selectedBook?.bookDescription}</Markdown>
                 </div>
                 <div className="mt-8">
-                  <Link
-                    href={selectedBook?.purchaseLink}
-                    rel="noreferrer"
-                    target="_blank"
-                    onClick={handlePurchaseClick}
-                  >
-                    <Button
-                      buttonImage={OrangeBackground}
-                      altText="get-book"
-                      text="Get The Book"
-                    />
-                  </Link>
+                  <BookCTATest
+                    purchaseLink={selectedBook.purchaseLink}
+                    bookTitle={selectedBook.bookTitle}
+                    onPurchaseClick={handlePurchaseClick}
+                  />
                 </div>
               </>
             )}
@@ -134,7 +134,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
         <section className="relative flex flex-col justify-center items-center text-center space-y-12 min-h-150 z-50 py-20">
           {selectedBook?.leadMagnetId && selectedBook?.videoPreview ? (
             <div className="w-full max-w-7xl mx-auto mb-16">
-              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)] text-center mb-12">
+              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)] text-center mb-12">
                 <p className="text-3xl md:text-5xl leading-10">
                   {selectedBook?.bookSubHeading}
                 </p>
@@ -157,18 +157,11 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                     bookTitle={selectedBook.bookTitle}
                   />
                   <div className="text-center mt-8">
-                    <Link
-                      href={selectedBook?.purchaseLink}
-                      rel="noreferrer"
-                      target="_blank"
-                      onClick={handlePurchaseClick}
-                    >
-                      <Button
-                        buttonImage={OrangeBackground}
-                        altText="get-book"
-                        text="Get The Book"
-                      />
-                    </Link>
+                    <BookCTATest
+                      purchaseLink={selectedBook.purchaseLink}
+                      bookTitle={selectedBook.bookTitle}
+                      onPurchaseClick={handlePurchaseClick}
+                    />
                   </div>
                 </div>
               </div>
@@ -188,7 +181,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
               {selectedBook?.leadMagnetId && !selectedBook?.videoPreview && (
                 <div className="max-w-4xl mx-auto mb-32 text-left">
                   <div className="space-y-6">
-                    <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)] text-center">
+                    <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)] text-center">
                       <p className="text-3xl md:text-5xl leading-10">
                         {selectedBook?.bookSubHeading}
                       </p>
@@ -202,18 +195,11 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                     </div>
 
                     <div className="text-center mt-8">
-                      <Link
-                        href={selectedBook?.purchaseLink}
-                        rel="noreferrer"
-                        target="_blank"
-                        onClick={handlePurchaseClick}
-                      >
-                        <Button
-                          buttonImage={OrangeBackground}
-                          altText="get-book"
-                          text="Get The Book"
-                        />
-                      </Link>
+                      <BookCTATest
+                        purchaseLink={selectedBook.purchaseLink}
+                        bookTitle={selectedBook.bookTitle}
+                        onPurchaseClick={handlePurchaseClick}
+                      />
                     </div>
                   </div>
                 </div>

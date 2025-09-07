@@ -29,7 +29,7 @@ const LeadMagnet = () => {
         <div className="lg:grid lg:grid-cols-2 space-y-12">
           <div className=" space-y-12">
             <div className="space-y-5 lg:pt-10">
-              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
                 <p className="text-3xl md:text-6xl">Open the Door…</p>
                 <h1 className="text-5xl md:text-7xl">If You Dare.</h1>
               </div>
@@ -37,7 +37,7 @@ const LeadMagnet = () => {
               <div
                 className=" max-w-[62ch] font-light space-y-6"
                 style={{
-                  textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+                  textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
                 }}>
                 <p>A spooky short story for curious kids who love creepy mysteries and twist endings.</p>
                 <p>

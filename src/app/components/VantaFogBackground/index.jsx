@@ -21,9 +21,9 @@ const VantaFogBackground = () => {
         midtoneColor: 0xffffff,
         lowlightColor: 0x0,
         baseColor: 0x0,
-        blurFactor: 0.7,
-        speed: 3,
-        zoom: 0.9,
+        blurFactor: 0.9,
+        speed: 2,
+        zoom: 1.2,
       });
     }
 
@@ -32,7 +32,7 @@ const VantaFogBackground = () => {
     };
   }, []);
 
-  return <div ref={vantaRef} className="hidden lg:block absolute inset-0 -z-10 mix-blend-screen opacity-60 pointer-events-none" />;
+  return <div ref={vantaRef} className="hidden lg:block absolute inset-0 -z-10 mix-blend-screen opacity-30 pointer-events-none" />;
 };
 
 export default VantaFogBackground;

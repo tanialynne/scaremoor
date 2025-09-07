@@ -25,8 +25,8 @@ const JoinClub = () => {
     <>
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-4">
         <div className=" space-y-12">
-          <div className="space-y-5 lg:pt-10 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_13px_rgba(0,0,0,0.8)]">
+          <div className="space-y-5 lg:pt-10 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-6xl">Want Creepy Stories?</p>
               <h1 className="text-5xl md:text-7xl">Join the Club.</h1>
             </div>
@@ -34,7 +34,7 @@ const JoinClub = () => {
             <div
               className=" max-w-[62ch] font-light space-y-6"
               style={{
-                textShadow: "13px 13px 13px rgba(0, 0, 0, 0.8)",
+                textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
               }}>
               <p>A secret society for spooky story lovers, brave readers, and anyone who thinks haunted lockers are cool.</p>
               <p>

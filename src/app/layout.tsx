@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import SpookyToast from "./components/SpookyToast";
 import StarryBackground from "./components/Starfield";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const TrickOrDead = localFont({
   src: "../../public/fonts/TrickOrDead.otf",
@@ -146,11 +148,13 @@ export default function RootLayout({
         {/* Microsoft Clarity */}
         <Script id="clarity-init" strategy="afterInteractive">
           {`
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || 'n9m6d1w8qz'}");
+            if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || 'n9m6d1w8qz'}");
+            }
           `}
         </Script>
       </head>
@@ -162,6 +166,8 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <SpookyToast />
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

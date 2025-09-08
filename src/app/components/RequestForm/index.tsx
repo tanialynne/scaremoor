@@ -93,10 +93,11 @@ const RequestForm: React.FC<RequestFormProp> = ({
           onSubmitSuccess();
         }
       } else {
-        spookyToast.error(`💀 Spell Failed: ${data.message}`);
+        spookyToast.error(`💀 Spell Failed: ${data.error || data.message || "Unknown error"}`);
         trackFormSubmit("Lead Magnet Form", bookTitle || "Unknown Book", false);
       }
-    } catch {
+    } catch (error) {
+      console.error("Kit form submission error:", error);
       spookyToast.error("💀 Something spooky went wrong!");
       trackFormSubmit("Lead Magnet Form", bookTitle || "Unknown Book", false);
     } finally {
@@ -105,7 +106,7 @@ const RequestForm: React.FC<RequestFormProp> = ({
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit} className="relative z-20">
       {layout === "inline" ? (
         // Inline layout - button on same row (for book pages with shorter text)
         <div className="flex flex-col md:flex-row pt-8 gap-4 w-full items-end">
@@ -134,7 +135,6 @@ const RequestForm: React.FC<RequestFormProp> = ({
               buttonImage={OrangeBackground}
               altText="join-now"
               text={buttonText ? buttonText : "Join Now"}
-              onClick={(e) => handleSubmit(e)}
               loading={loading}
             />
           </div>
@@ -169,7 +169,6 @@ const RequestForm: React.FC<RequestFormProp> = ({
               buttonImage={OrangeBackground}
               altText="join-now"
               text={buttonText ? buttonText : "Join Now"}
-              onClick={(e) => handleSubmit(e)}
               loading={loading}
             />
           </div>

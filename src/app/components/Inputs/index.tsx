@@ -30,7 +30,7 @@ const InputField: React.FC<InputFieldProps> = ({ labelText, inputType, value, on
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={onFocus}
-          className={`w-full h-16 px-6 text-base font-medium ${backgroungType === "dark" ? "text-white bg-transparent" : "text-black bg-transparent"} border-0 focus:outline-none focus:ring-0 relative z-10`}
+          className={`w-full h-16 px-6 text-base font-medium ${backgroungType === "dark" ? "text-white bg-transparent" : "text-black bg-transparent"} border-0 focus:outline-none focus:ring-0 relative z-30`}
           aria-label={labelText}
           autoComplete={inputType === 'email' ? 'email' : inputType === 'text' ? 'name' : 'off'}
         />

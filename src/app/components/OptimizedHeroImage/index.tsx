@@ -1,8 +1,6 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
-
 interface OptimizedHeroImageProps {
   src: StaticImageData;
   alt: string;
@@ -16,7 +14,6 @@ const OptimizedHeroImage: React.FC<OptimizedHeroImageProps> = ({
   priority = true,
   className = "absolute inset-0 object-cover"
 }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <Image

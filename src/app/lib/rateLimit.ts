@@ -59,17 +59,19 @@ function getClientIP(request: NextRequest): string {
     return realIp;
   }
   
-  // Fallback to direct connection IP (may not work in all environments)
-  return request.ip || 'unknown';
+  // Fallback for unknown IP
+  return 'unknown';
 }
 
 // Common rate limit configurations
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 export const contactFormRateLimit = rateLimit({
-  maxRequests: 5, // 5 requests
-  windowMs: 15 * 60 * 1000, // per 15 minutes
+  maxRequests: isDevelopment ? 100 : 5, // More lenient in development
+  windowMs: isDevelopment ? 60 * 1000 : 15 * 60 * 1000, // 1 minute in dev, 15 minutes in prod
 });
 
 export const newsletterRateLimit = rateLimit({
-  maxRequests: 3, // 3 requests
-  windowMs: 60 * 60 * 1000, // per hour
+  maxRequests: isDevelopment ? 100 : 3, // More lenient in development
+  windowMs: isDevelopment ? 60 * 1000 : 60 * 60 * 1000, // 1 minute in dev, 1 hour in prod
 });

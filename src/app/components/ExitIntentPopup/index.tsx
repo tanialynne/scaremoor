@@ -11,7 +11,11 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [hasShown, setHasShown] = useState(false);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Kit form ID for exit intent popup lead magnet
+  const EXIT_INTENT_FORM_ID = "8174135"; // Using same as free story for now
 
   useEffect(() => {
     // Check localStorage to see if popup has been shown recently
@@ -26,7 +30,6 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
 
     if (hasShown) return;
 
-    let timeoutId: NodeJS.Timeout;
     let hasTriggered = false;
 
     const handleMouseLeave = (e: MouseEvent) => {
@@ -48,11 +51,11 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
     };
 
     document.addEventListener("mouseleave", handleMouseLeave);
-    timeoutId = setTimeout(handleTimer, 30000);
+    const timeoutIdRef = setTimeout(handleTimer, 30000);
 
     return () => {
       document.removeEventListener("mouseleave", handleMouseLeave);
-      clearTimeout(timeoutId);
+      clearTimeout(timeoutIdRef);
     };
   }, [hasShown]);
 
@@ -70,20 +73,33 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !name) {
+      window.dispatchEvent(
+        new CustomEvent("show-toast", {
+          detail: {
+            message: "Please fill in both your name and email! 👻",
+            type: "error",
+          },
+        })
+      );
+      return;
+    }
 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/newsletter-signup", {
+      const response = await fetch("/api/join", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email,
-          source: "exit-intent-popup",
-          timestamp: new Date().toISOString(),
+          form_id: EXIT_INTENT_FORM_ID,
+          subscriber_data: {
+            first_name: name,
+            email_address: email,
+            referrer: "exit-intent-popup",
+          },
         }),
       });
 
@@ -101,7 +117,7 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
       } else {
         throw new Error("Signup failed");
       }
-    } catch (error) {
+    } catch {
       window.dispatchEvent(
         new CustomEvent("show-toast", {
           detail: {
@@ -141,10 +157,10 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
         <div className="relative z-10">
           <div className="text-center mb-4">
             <h3 id="exit-popup-title" className="text-2xl font-bold text-orange-100 mb-2">
-              Wait! Don't Leave Yet...
+              Wait! Don&apos;t Leave Yet...
             </h3>
             <div className="text-orange-300 text-sm mb-4">
-              🎃 Get a FREE chapter of "The Mask Room"
+              🎃 Get a FREE chapter of &quot;The Mask Room&quot;
             </div>
           </div>
 
@@ -152,11 +168,29 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
             <p id="exit-popup-description" className="text-orange-200 text-sm leading-relaxed">
               Something sinister lurks behind the old theater masks... 
               <br />
-              <strong>Discover the mystery that's captivating young readers!</strong>
+              <strong>Discover the mystery that&apos;s captivating young readers!</strong>
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="name-input" className="sr-only">
+                Your name for personalization
+              </label>
+              <input
+                id="name-input"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name"
+                required
+                aria-describedby="name-help"
+                className="w-full px-4 py-3 rounded-lg bg-black/40 border border-orange-500/30 text-orange-100 placeholder:text-orange-400/70 focus:outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-400/50 focus:bg-black/60 transition-all"
+              />
+              <div id="name-help" className="sr-only">
+                Enter your name for a personalized experience
+              </div>
+            </div>
             <div>
               <label htmlFor="email-input" className="sr-only">
                 Email address for free chapter access

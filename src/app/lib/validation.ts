@@ -3,6 +3,19 @@ export interface ValidationResult {
   errors: string[];
 }
 
+export interface ContactFormData {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+}
+
+export interface NewsletterSignupData {
+  email: string;
+  source?: string;
+  timestamp?: string;
+}
+
 // Email validation with more comprehensive checks
 export function validateEmail(email: string): ValidationResult {
   const errors: string[] = [];
@@ -145,7 +158,7 @@ export function validateMessage(message: string): ValidationResult {
 }
 
 // Contact form validation
-export function validateContactForm(data: any): ValidationResult {
+export function validateContactForm(data: ContactFormData): ValidationResult {
   const errors: string[] = [];
   
   const nameValidation = validateName(data.name);
@@ -153,7 +166,7 @@ export function validateContactForm(data: any): ValidationResult {
     errors.push(...nameValidation.errors);
   }
   
-  const emailValidation = validateEmail(data.emailAddress);
+  const emailValidation = validateEmail(data.email);
   if (!emailValidation.isValid) {
     errors.push(...emailValidation.errors);
   }
@@ -167,7 +180,7 @@ export function validateContactForm(data: any): ValidationResult {
 }
 
 // Newsletter signup validation
-export function validateNewsletterSignup(data: any): ValidationResult {
+export function validateNewsletterSignup(data: NewsletterSignupData): ValidationResult {
   const errors: string[] = [];
   
   const emailValidation = validateEmail(data.email);

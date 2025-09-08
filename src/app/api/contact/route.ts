@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, emailAddress, message } = body;
+    const { name, email, message } = body;
 
     // Create email content
     const emailSubject = `New Contact Form Submission from ${name}`;
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
 New contact form submission from your website:
 
 Name: ${name}
-Email: ${emailAddress}
+Email: ${email}
 Message:
 ${message}
 
@@ -105,7 +105,7 @@ Submitted at: ${new Date().toLocaleString()}
         to: process.env.MAIL_TO || 'tania@scaremoor.com',
         subject: emailSubject,
         text: emailBody,
-        replyTo: emailAddress,
+        replyTo: email,
       });
       console.log('✅ Email sent successfully');
       
@@ -126,7 +126,7 @@ Submitted at: ${new Date().toLocaleString()}
     // Log the submission for backup
     console.log('Contact form submission:', {
       name,
-      emailAddress,
+      email,
       message,
       timestamp: new Date().toISOString(),
     });

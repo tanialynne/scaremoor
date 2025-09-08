@@ -28,6 +28,13 @@ export const POST = async (request: NextRequest) => {
       }
     }
 
+    // Log the request for debugging
+    console.log("Kit API Request:", {
+      form_id,
+      subscriber_data,
+      hasApiKey: !!process.env.KIT_API_KEY,
+    });
+
     const createResponse = await fetch(`${baseURL}/subscribers`, {
       method: "POST",
       headers: {
@@ -38,6 +45,25 @@ export const POST = async (request: NextRequest) => {
     });
 
     const createData = await createResponse.json();
+    
+    // Log the response for debugging
+    console.log("Kit API Create Response:", {
+      status: createResponse.status,
+      ok: createResponse.ok,
+      data: createData,
+    });
+
+    // Check if subscriber creation was successful
+    if (!createResponse.ok) {
+      console.error("Kit subscriber creation failed:", createData);
+      return NextResponse.json(
+        { 
+          error: createData.error || createData.message || "Failed to create subscriber",
+          details: createData 
+        },
+        { status: createResponse.status }
+      );
+    }
 
     // 2. If subscriber created successfully, add to form
     if (form_id) {
@@ -55,6 +81,12 @@ export const POST = async (request: NextRequest) => {
       });
 
       const addToFormData = await addToFormResponse.json();
+      
+      console.log("Kit API Form Add Response:", {
+        status: addToFormResponse.status,
+        ok: addToFormResponse.ok,
+        data: addToFormData,
+      });
 
       if (!addToFormResponse.ok) {
         return NextResponse.json(

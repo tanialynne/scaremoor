@@ -114,7 +114,7 @@ export default function SocialProof() {
                 <Star size={16} fill="currentColor" />
                 <Star size={16} fill="currentColor" />
               </div>
-              <span>"Perfect for my 10-year-old!"</span>
+              <span>&quot;Perfect for my 10-year-old!&quot;</span>
             </div>
             
             <div className="flex items-center space-x-2 text-orange-200/80 text-sm">
@@ -125,7 +125,7 @@ export default function SocialProof() {
                 <Star size={16} fill="currentColor" />
                 <Star size={16} fill="currentColor" />
               </div>
-              <span>"Better than Goosebumps!"</span>
+              <span>&quot;Better than Goosebumps!&quot;</span>
             </div>
             
             <div className="flex items-center space-x-2 text-orange-200/80 text-sm">
@@ -136,7 +136,7 @@ export default function SocialProof() {
                 <Star size={16} fill="currentColor" />
                 <Star size={16} fill="currentColor" />
               </div>
-              <span>"Keeps them reading!"</span>
+              <span>&quot;Keeps them reading!&quot;</span>
             </div>
           </div>
         </div>

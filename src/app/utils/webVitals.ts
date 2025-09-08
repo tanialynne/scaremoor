@@ -18,8 +18,8 @@ function sendToAnalytics(metric: Metric) {
         metric_delta: metric.delta,
         page_url: window.location.pathname,
         user_agent: navigator.userAgent.substring(0, 100), // Truncated UA
-        connection_type: (navigator as any).connection?.effectiveType || 'unknown',
-        device_memory: (navigator as any).deviceMemory || 'unknown',
+        connection_type: (navigator as { connection?: { effectiveType: string } }).connection?.effectiveType || 'unknown',
+        device_memory: (navigator as { deviceMemory?: number }).deviceMemory || 'unknown',
       }
     });
 
@@ -31,7 +31,7 @@ function sendToAnalytics(metric: Metric) {
 
 // Get performance insights based on metric values
 function getPerformanceInsight(metric: Metric): string {
-  const { name, value, rating } = metric;
+  const { name, rating } = metric;
   
   switch (name) {
     case 'LCP':
@@ -39,7 +39,6 @@ function getPerformanceInsight(metric: Metric): string {
       if (rating === 'needs-improvement') return '🟡 Consider optimizing images and server response';
       return '🔴 Slow loading - check image optimization and server performance';
       
-    case 'FID':
     case 'INP':
       if (rating === 'good') return '🟢 Excellent interactivity!';
       if (rating === 'needs-improvement') return '🟡 Some delay in user interactions';
@@ -65,34 +64,6 @@ function getPerformanceInsight(metric: Metric): string {
   }
 }
 
-// Optional: Send to your own analytics endpoint
-function sendToCustomEndpoint(metric: Metric) {
-  const body = JSON.stringify({
-    name: metric.name,
-    value: metric.value,
-    rating: metric.rating,
-    delta: metric.delta,
-    id: metric.id,
-    url: window.location.href,
-    timestamp: Date.now(),
-  });
-
-  // You can uncomment this to send to your own endpoint
-  /*
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon('/api/analytics/vitals', body);
-  } else {
-    fetch('/api/analytics/vitals', {
-      body,
-      method: 'POST',
-      keepalive: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
-  */
-}
 
 export function trackWebVitals() {
   try {
@@ -121,10 +92,10 @@ export function trackPerformanceEntries() {
           if (entry.entryType === 'navigation') {
             const navEntry = entry as PerformanceNavigationTiming;
             const timings = {
-              domContentLoaded: Math.round(navEntry.domContentLoadedEventEnd - navEntry.navigationStart),
-              loadComplete: Math.round(navEntry.loadEventEnd - navEntry.navigationStart),
+              domContentLoaded: Math.round(navEntry.domContentLoadedEventEnd - navEntry.startTime),
+              loadComplete: Math.round(navEntry.loadEventEnd - navEntry.startTime),
               firstByte: Math.round(navEntry.responseStart - navEntry.requestStart),
-              domInteractive: Math.round(navEntry.domInteractive - navEntry.navigationStart),
+              domInteractive: Math.round(navEntry.domInteractive - navEntry.startTime),
               connectTime: Math.round(navEntry.connectEnd - navEntry.connectStart),
               dnsTime: Math.round(navEntry.domainLookupEnd - navEntry.domainLookupStart),
             };
@@ -184,9 +155,9 @@ export function getPerformanceSummary() {
   if (!navigation) return null;
   
   return {
-    pageLoadTime: Math.round(navigation.loadEventEnd - navigation.navigationStart),
-    domContentLoaded: Math.round(navigation.domContentLoadedEventEnd - navigation.navigationStart),
-    firstByte: Math.round(navigation.responseStart - navigation.navigationStart),
+    pageLoadTime: Math.round(navigation.loadEventEnd - navigation.startTime),
+    domContentLoaded: Math.round(navigation.domContentLoadedEventEnd - navigation.startTime),
+    firstByte: Math.round(navigation.responseStart - navigation.startTime),
     resources: performance.getEntriesByType('resource').length,
     timestamp: new Date().toISOString(),
   };

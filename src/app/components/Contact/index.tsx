@@ -14,7 +14,7 @@ import SignMark from "../../../../public/images/signMark.svg";
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
-    emailAddress: "",
+    email: "",
     message: "",
   });
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const ContactForm = () => {
     // Basic client-side validation
     if (
       !formData.name.trim() ||
-      !formData.emailAddress.trim() ||
+      !formData.email.trim() ||
       !formData.message.trim()
     ) {
       spookyToast.error("The ghostly spirits demand all fields be filled! 👻");
@@ -33,7 +33,7 @@ const ContactForm = () => {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.emailAddress)) {
+    if (!emailRegex.test(formData.email)) {
       spookyToast.error(
         "That email looks cursed! Check your magical address! 📧✨"
       );
@@ -60,7 +60,7 @@ const ContactForm = () => {
         // Reset form
         setFormData({
           name: "",
-          emailAddress: "",
+          email: "",
           message: "",
         });
       } else {
@@ -113,9 +113,9 @@ const ContactForm = () => {
             <InputField
               labelText="Email Address"
               inputType="email"
-              value={formData.emailAddress}
+              value={formData.email}
               onChange={(value: string) =>
-                setFormData({ ...formData, emailAddress: value })
+                setFormData({ ...formData, email: value })
               }
               isLabel={true}
               backgroungType="dark"

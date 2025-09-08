@@ -19,7 +19,8 @@ const BlogPosts: BlogPost[] = [
     id: "1",
     title: "The Psychology Behind Why Kids Love Horror Stories",
     slug: slugify("The Psychology Behind Why Kids Love Horror Stories"),
-    excerpt: "Discover why children are naturally drawn to scary stories and how these tales help them develop courage and resilience.",
+    excerpt:
+      "Discover why children are naturally drawn to scary stories and how these tales help them develop courage and resilience.",
     content: `
 There's something magical about watching a child's eyes widen during a ghost story, or seeing them lean in closer when the plot thickens in a horror tale. Parents often wonder: why do kids gravitate toward stories that are designed to frighten them?
 
@@ -69,10 +70,9 @@ Remember, a good children's horror story doesn't just scare – it empowers. It 
     id: "2",
     title: "Creating the Perfect Reading Atmosphere for Spooky Stories",
     slug: slugify("Creating the Perfect Reading Atmosphere for Spooky Stories"),
-    excerpt: "Transform any space into the ideal setting for enjoying scary stories with these simple tips and tricks.",
+    excerpt:
+      "Transform any space into the ideal setting for enjoying scary stories with these simple tips and tricks.",
     content: `
-# Creating the Perfect Reading Atmosphere for Spooky Stories
-
 The right atmosphere can make all the difference when diving into a scary story. Whether you're reading alone or sharing tales with friends and family, creating the perfect spooky ambiance enhances the entire experience.
 
 ## Setting the Scene
@@ -180,10 +180,9 @@ The perfect reading atmosphere should enhance the story without overwhelming it.
     id: "3",
     title: "Behind the Scenes: Writing The Haunted Locker",
     slug: slugify("Behind the Scenes: Writing The Haunted Locker"),
-    excerpt: "Get an inside look at the creative process behind Scaremoor's first spine-tingling tale.",
+    excerpt:
+      "Get an inside look at the creative process behind Scaremoor's first spine-tingling tale.",
     content: `
-# Behind the Scenes: Writing The Haunted Locker
-
 Every story starts somewhere, but *The Haunted Locker* began with a very specific memory: the metallic clang of school lockers and that peculiar echo they make in empty hallways.
 
 ## The Spark of Inspiration
@@ -326,7 +325,12 @@ Writing *The Haunted Locker* taught me that the best children's horror doesn't j
     `.trim(),
     author: "T.L. Griffith",
     publishedDate: "2024-12-05",
-    tags: ["writing process", "behind the scenes", "The Haunted Locker", "author insights"],
+    tags: [
+      "writing process",
+      "behind the scenes",
+      "The Haunted Locker",
+      "author insights",
+    ],
     readTime: 7,
   },
 ];

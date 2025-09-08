@@ -13,6 +13,7 @@ import Society from "./components/Society";
 import BookDetails from "./components/BookDetails";
 import { HomeHeroTest } from "./components/ABTestExamples/HomeHeroTest";
 import ABTestDebug from "./components/ABTestDebug";
+/*import SocialProof from "./components/SocialProof";*/
 
 import BackgroundImage from "../../public/images/landingpage-Image.png";
 import HunterLockerBook from "../../public/images/books/hunterlocker-book.png";
@@ -85,7 +86,7 @@ const HomePage = () => {
           <HomeHeroTest className="relative flex justify-center items-center" />
         </div>
       </Herobox>
-      <main className="text-white relative z-50">
+      <main id="main-content" className="text-white relative z-50">
         <section
           className="px-8 md:px-20 py-20 min-h-180 h-full bg-black grid grid-cols-1 lg:grid-cols-2 items-center gap-8"
           style={{
@@ -102,7 +103,7 @@ const HomePage = () => {
             <div>
               <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize">
                 Where Middle School{" "}
-                <span className="block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+                <span className="block gradient-text-accessible">
                   Meets Monsters.
                 </span>
               </h2>
@@ -143,7 +144,7 @@ const HomePage = () => {
         </section>
 
         <section className="px-8 md:px-20 py-30 min-h-180 h-full text-center relative overflow-hidden space-y-6">
-          <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+          <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
             Monster Must Reads
           </h2>
           <p>
@@ -177,6 +178,8 @@ const HomePage = () => {
         </section>
 
         <Society />
+
+        {/* <SocialProof /> */}
 
         <Testimonials
           title="What Customers Are Saying"

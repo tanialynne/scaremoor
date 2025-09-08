@@ -1,19 +1,59 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
+import dynamic from "next/dynamic";
 import Script from "next/script";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import SpookyToast from "./components/SpookyToast";
-import StarryBackground from "./components/Starfield";
+// Lazy load the background animation to reduce initial bundle size
+const StarryBackground = dynamic(() => import("./components/Starfield"), {
+  loading: () => <div className="fixed inset-0 bg-black -z-50" />,
+});
+
+// Exit intent popup for lead capture
+const ExitIntentPopup = dynamic(() => import("./components/ExitIntentPopup"));
+
+// Preload critical images
+const ImagePreloader = dynamic(() => import("./components/ImagePreloader"));
+
+// Web Vitals tracking
+const WebVitalsTracker = dynamic(() => import("./components/WebVitalsTracker"));
+
+// Critical images to preload for better Core Web Vitals
+const criticalImages = [
+  "/images/landingpage-Image.png",
+  "/images/monsterBackground.png",
+  "/images/bookspage-image.png",
+];
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 
+// Use optimized webfonts with fallbacks
 const TrickOrDead = localFont({
-  src: "../../public/fonts/TrickOrDead.otf",
+  src: [
+    {
+      path: "../../public/fonts/TrickOrDeadRegular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/TrickOrDeadRegular.woff",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/TrickOrDead.otf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
   variable: "--trickOrDead",
+  display: "swap", // Improve loading performance
+  fallback: ["serif"], // Fallback fonts
+  preload: true,
 });
 
 const poppins = Poppins({
@@ -161,11 +201,17 @@ export default function RootLayout({
       <body
         className={`${poppins.className} ${TrickOrDead.variable} antialiased relative bg-black`}
       >
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
+        <ImagePreloader images={criticalImages} priority />
+        <WebVitalsTracker />
         <StarryBackground starCount={300} />
         {children}
         <Footer />
         <ScrollToTop />
         <SpookyToast />
+        <ExitIntentPopup />
         <SpeedInsights />
         <Analytics />
       </body>

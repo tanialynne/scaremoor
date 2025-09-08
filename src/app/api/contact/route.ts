@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { contactFormRateLimit } from '../../lib/rateLimit';
+import { validateContactForm } from '../../lib/validation';
 
 // Email sending function using Nodemailer
 async function sendEmailViaNodemailer({ to, subject, text, replyTo }: {
@@ -53,30 +55,27 @@ async function sendEmailViaNodemailer({ to, subject, text, replyTo }: {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting check
+    const rateLimitResult = contactFormRateLimit(request);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: rateLimitResult.error },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     
-    const {
-      name,
-      emailAddress,
-      message
-    } = body;
-
-    // Basic validation
-    if (!name?.trim() || !emailAddress?.trim() || !message?.trim()) {
+    // Comprehensive validation
+    const validationResult = validateContactForm(body);
+    if (!validationResult.isValid) {
       return NextResponse.json(
-        { error: 'All fields are required' },
+        { error: validationResult.errors.join(', ') },
         { status: 400 }
       );
     }
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailAddress)) {
-      return NextResponse.json(
-        { error: 'Please enter a valid email address' },
-        { status: 400 }
-      );
-    }
+    const { name, emailAddress, message } = body;
 
     // Create email content
     const emailSubject = `New Contact Form Submission from ${name}`;

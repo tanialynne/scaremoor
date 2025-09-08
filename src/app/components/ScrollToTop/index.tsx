@@ -29,9 +29,14 @@ export default function ScrollToTop() {
 
   return (
     isVisible && (
-      <div onClick={scrollToTop} className="fixed bottom-40 right-8 w-10 sm:w-14 cursor-pointer transition-transform hover:scale-110 z-50">
+      <button 
+        onClick={scrollToTop} 
+        className="fixed bottom-40 right-8 w-10 sm:w-14 cursor-pointer transition-transform hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg z-50"
+        aria-label="Scroll to top of page"
+        type="button"
+      >
         <Image src={ScrollTop} alt="scroll-to-top" className="inline-block w-full" />
-      </div>
+      </button>
     )
   );
 }

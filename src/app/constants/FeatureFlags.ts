@@ -6,6 +6,9 @@ export const FEATURE_FLAGS = {
   // Blog feature toggle - set to false to hide blog from navigation
   BLOG_ENABLED: false,
 
+  // Podcasts feature toggle - set to false to hide podcasts from navigation
+  PODCASTS_ENABLED: false,
+
   // Add more feature flags here as needed
   // NEWSLETTER_ENABLED: true,
   // TESTIMONIALS_ENABLED: true,

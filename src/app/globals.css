@@ -96,3 +96,108 @@ html::-webkit-scrollbar-thumb:hover {
     transform: translateY(-2px);
   }
 }
+
+/* Accessibility improvements for gradient text */
+.gradient-text-accessible {
+  background: linear-gradient(180deg, #ffffff 20%, #e5e7eb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Fallback for accessibility */
+  color: #ffffff;
+}
+
+@supports not (-webkit-background-clip: text) {
+  .gradient-text-accessible {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: #ffffff;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .gradient-text-accessible,
+  .bg-gradient-to-b {
+    background: none !important;
+    -webkit-text-fill-color: #ffffff !important;
+    color: #ffffff !important;
+  }
+  
+  /* Ensure all interactive elements have visible borders in high contrast mode */
+  button:not([disabled]), 
+  a, 
+  input:not([disabled]), 
+  select:not([disabled]), 
+  textarea:not([disabled]) {
+    border: 2px solid #ffffff !important;
+    outline: 2px solid #ffffff !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip to main content for screen readers */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #ea580c;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+.skip-to-content:focus {
+  top: 6px;
+}
+
+/* Remove all focus outlines and rings for mouse users */
+*:focus,
+*:focus-within,
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Only show focus outlines when using keyboard navigation */
+*:focus-visible {
+  outline: 2px solid #fb923c !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+
+/* Remove focus rings from Tailwind classes that might be adding them */
+.focus\:outline-none:focus,
+.focus\:ring-2:focus,
+.focus\:ring-orange-400:focus,
+.focus\:ring-offset-2:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Only add focus styling for keyboard users */
+.focus\:ring-2:focus-visible,
+.focus\:ring-orange-400:focus-visible {
+  outline: 2px solid #fb923c !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+  box-shadow: none !important;
+}

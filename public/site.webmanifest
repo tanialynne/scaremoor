@@ -1,0 +1,40 @@
+{
+  "name": "Scaremoor - Middle Grade Horror Books for Kids 8-13",
+  "short_name": "Scaremoor",
+  "description": "Creepy, kid-safe horror books perfect for young readers who love Goosebumps and spine-tingling stories. Ages 8-13+.",
+  "icons": [
+    {
+      "src": "/favicon_io/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon_io/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon_io/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon_io/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#F54F02",
+  "background_color": "#000000",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "/",
+  "scope": "/",
+  "categories": ["books", "entertainment", "education", "kids"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

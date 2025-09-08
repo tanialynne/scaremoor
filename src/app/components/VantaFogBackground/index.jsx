@@ -32,7 +32,7 @@ const VantaFogBackground = () => {
     };
   }, []);
 
-  return <div ref={vantaRef} className="hidden lg:block absolute inset-0 -z-10 mix-blend-screen opacity-30 pointer-events-none" />;
+  return <div ref={vantaRef} className="hidden lg:block absolute inset-0 -z-8 mix-blend-screen opacity-30 pointer-events-none" />;
 };
 
 export default VantaFogBackground;

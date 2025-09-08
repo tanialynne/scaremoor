@@ -23,9 +23,10 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type="submit"
-      className={`relative text-center w-fit cursor-pointer ${textColor}`}
+      className={`relative text-center w-fit cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg transition-all ${textColor}`}
       onClick={onClick}
       disabled={loading}
+      aria-label={altText}
     >
       <div className="relative inline-block h-14 sm:h-16 transition-transform duration-300 hover:scale-[102%]">
         <span className="invisible block text-lg sm:text-2xl font-(family-name:--trickOrDead) capitalize px-8 py-4">

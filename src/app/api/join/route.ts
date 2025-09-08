@@ -1,10 +1,32 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { newsletterRateLimit } from "../../lib/rateLimit";
+import { validateEmail } from "../../lib/validation";
 
 const baseURL = "https://api.kit.com/v4";
 
-export const POST = async (request: Request) => {
+export const POST = async (request: NextRequest) => {
   try {
+    // Rate limiting check
+    const rateLimitResult = newsletterRateLimit(request);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: rateLimitResult.error },
+        { status: 429 }
+      );
+    }
+
     const { form_id, subscriber_data } = await request.json();
+
+    // Validate email if provided in subscriber_data
+    if (subscriber_data?.email_address) {
+      const emailValidation = validateEmail(subscriber_data.email_address);
+      if (!emailValidation.isValid) {
+        return NextResponse.json(
+          { error: emailValidation.errors.join(', ') },
+          { status: 400 }
+        );
+      }
+    }
 
     const createResponse = await fetch(`${baseURL}/subscribers`, {
       method: "POST",

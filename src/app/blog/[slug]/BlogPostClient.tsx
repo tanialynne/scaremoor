@@ -71,7 +71,7 @@ const BlogPostClient: React.FC<BlogPostClientProps> = ({ selectedPost }) => {
               </div>
 
               <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl leading-tight">
+                <h1 className="text-5xl md:text-7xl max-w-[30ch]">
                   {selectedPost.title}
                 </h1>
               </div>
@@ -201,8 +201,8 @@ const BlogPostClient: React.FC<BlogPostClientProps> = ({ selectedPost }) => {
               Ready for More Scares?
             </h2>
             <p className="text-lg">
-              Dive into our spine-tingling middle grade horror series, perfect
-              for young readers who love a good scare.
+              Explore our spine-tingling middle grade horror series, perfect for
+              young readers who love a good scare.
             </p>
           </div>
 

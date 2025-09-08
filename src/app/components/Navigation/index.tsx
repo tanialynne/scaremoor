@@ -59,22 +59,30 @@ const Nav = () => {
 
           <button
             onClick={toggleMenu}
-            className="lg:hidden mr-5 text-white hover:text-gray-300 transition-colors z-20 cursor-pointer"
+            className="lg:hidden mr-5 text-white hover:text-gray-300 focus:text-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-2 transition-colors z-20 cursor-pointer"
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMenuOpen}
+            type="button"
           >
-            <AlignRight className="text-white cursor-pointer" size={35} />
+            <AlignRight className="text-white cursor-pointer" size={35} aria-hidden="true" />
           </button>
 
           <div className="flex items-center gap-1.5">
             <Link
               href="https://www.amazon.com/dp/B0DKLDSJBC"
-              className="cursor-pointer"
+              className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-1 transition-transform hover:scale-110 focus:scale-110"
               rel="noopener"
               target="_blank"
+              aria-label="Shop books on Amazon (opens in new tab)"
             >
-              <Image src={ShopIcon} alt="shopIcon" className="w-10" />
+              <Image src={ShopIcon} alt="Shop on Amazon" className="w-10" />
             </Link>
-            <Link href="/contact" className="cursor-pointer">
-              <Image src={EmailIcon} alt="emailIcon" className="w-10" />
+            <Link 
+              href="/contact" 
+              className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-1 transition-transform hover:scale-110 focus:scale-110"
+              aria-label="Contact us"
+            >
+              <Image src={EmailIcon} alt="Contact us" className="w-10" />
             </Link>
           </div>
         </div>

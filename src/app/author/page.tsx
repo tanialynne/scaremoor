@@ -41,7 +41,7 @@ const AuthorPage = () => {
               <p>
                 She grew up on a steady diet of Goosebumps,
                 flashlight-under-the-blanket nights, and the kind of creepy
-                books you read even though you&apos;re not supposed to. Now she
+                books you read even though you’re not supposed to. Now she
                 writes stories that make you shiver, smile, and check the closet
                 one more time… just in case.
               </p>
@@ -50,11 +50,11 @@ const AuthorPage = () => {
                 and probably a ghost dog.
               </p>
               <p>
-                When she&apos;s not writing, she&apos;s lifting heavy things,
-                drinking coffee on her porch like a cryptid in training, or
-                plotting how to turn <i className="font-bold">Scaremoor</i> into
-                an entire universe of middle grade horror that keeps kids (and
-                adults) delightfully disturbed.
+                When she’s not writing, she’s lifting heavy things, drinking
+                coffee on her porch like a cryptid in training, or plotting how
+                to turn <i className="font-bold">Scaremoor</i> into an entire
+                universe of middle grade horror that keeps kids (and adults)
+                delightfully disturbed.
               </p>
             </div>
           </div>

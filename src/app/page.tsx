@@ -13,6 +13,7 @@ import Society from "./components/Society";
 import BookDetails from "./components/BookDetails";
 import { HomeHeroTest } from "./components/ABTestExamples/HomeHeroTest";
 import ABTestDebug from "./components/ABTestDebug";
+import OptimizedSection from "./components/OptimizedSection";
 /*import SocialProof from "./components/SocialProof";*/
 
 import BackgroundImage from "../../public/images/landingpage-Image.png";
@@ -32,7 +33,7 @@ const HomePage = () => {
         backgroundImage={BackgroundImage}
         landingAssets={true}
         fogEffect={true}
-        contentPaddingTop="lg:pt-4"
+        contentPaddingTop="lg:pt-22"
       >
         <div className="lg:grid lg:grid-cols-2 items-center space-y-12">
           <div className="space-y-5 lg:pt-10">
@@ -86,14 +87,12 @@ const HomePage = () => {
           <HomeHeroTest className="relative flex justify-center items-center" />
         </div>
       </Herobox>
-      <main id="main-content" className="text-white relative z-50">
-        <section
+      <main id="main-content" className="text-white relative">
+        <OptimizedSection
+          backgroundImage={MonsterBackground}
           className="px-8 md:px-20 py-20 min-h-180 h-full bg-black grid grid-cols-1 lg:grid-cols-2 items-center gap-8"
-          style={{
-            backgroundImage: `url(${MonsterBackground.src})`,
-            backgroundSize: "cover",
+          backgroundStyle={{
             backgroundPosition: "bottom",
-            backgroundRepeat: "no-repeat",
           }}
         >
           <BookDetails
@@ -141,10 +140,10 @@ const HomePage = () => {
               </div>
             </div>
           </BookDetails>
-        </section>
+        </OptimizedSection>
 
         <section className="px-8 md:px-20 py-30 min-h-180 h-full text-center relative overflow-hidden space-y-6">
-          <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
+          <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
             Monster Must Reads
           </h2>
           <p>

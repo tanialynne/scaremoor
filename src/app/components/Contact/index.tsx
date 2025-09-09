@@ -85,13 +85,13 @@ const ContactForm = () => {
           </div>
           <div className="space-y-8 pt-6 max-w-[55ch]">
             <p>
-              Got questions that go bump in the night? Whether you&apos;re
-              haunted by a curious mind, need help with an order, or want to
-              whisper a ghostly suggestion, we’re here to help! At Scaremoor, we
-              love hearing from brave souls—parents, teachers, and little
-              readers alike.
+              Got questions that go bump in the night? Whether you’re haunted by
+              a curious mind, need help with an order, or want to whisper a
+              ghostly suggestion, we’re here to help! At Scaremoor, we love
+              hearing from brave souls—parents, teachers, and little readers
+              alike.
             </p>
-            <p>Don&apos;t worry—we only bite in our stories. 👻</p>
+            <p>Don’t worry—we only bite in our stories. 👻</p>
           </div>
         </div>
         <form

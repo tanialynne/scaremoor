@@ -269,7 +269,7 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       },
       {
         id: "b",
-        text: "👁️ Being watched by things that shouldn&apos;t exist",
+        text: "👁️ Being watched by things that shouldn’t exist",
         points: {
           the_haunted_locker: 2,
           the_night_of_the_living_vines: 2,
@@ -536,7 +536,7 @@ const QuizClient = () => {
   if (!quizStarted) {
     return (
       <>
-        <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-4">
+        <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-5xl text-orange-400">
@@ -615,7 +615,7 @@ const QuizClient = () => {
   if (showEmailCapture && recommendation) {
     return (
       <>
-        <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-4">
+        <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
           <div className="max-w-4xl mx-auto text-center space-y-10">
             {!emailSubmitted ? (
               <>
@@ -636,9 +636,9 @@ const QuizClient = () => {
                       Enter Your Email to See Your Results
                     </h3>
                     <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-                      We&apos;ll instantly send you your personalized book
+                      We’ll instantly send you your personalized book
                       recommendation plus the first chapter to read in your
-                      inbox! You&apos;ll also get exclusive Scaremoor content and
+                      inbox! You’ll also get exclusive Scaremoor content and
                       updates on new releases!
                     </p>
                   </div>
@@ -695,7 +695,7 @@ const QuizClient = () => {
   if (showResult && recommendation) {
     return (
       <>
-        <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-4">
+        <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
           <div className="max-w-5xl mx-auto text-center space-y-10">
             <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-2xl md:text-4xl text-green-400">
@@ -887,7 +887,7 @@ const QuizClient = () => {
 
   return (
     <>
-      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-4">
+      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Progress Bar */}
           <div className="w-full bg-gray-700 rounded-full h-3 mb-8">

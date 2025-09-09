@@ -233,9 +233,9 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
               />
             </Link>
             <Link
-              href="/scaremoor"
+              href="/books"
               onClick={() =>
-                handleButtonClick("See More Scaremoor Books", "/scaremoor")
+                handleButtonClick("See More Scaremoor Books", "/books")
               }
             >
               <Button

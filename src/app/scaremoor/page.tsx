@@ -62,7 +62,7 @@ const ScaremoorPage = () => {
         <section className="px-8 md:px-20 py-20 min-h-180 h-full text-center relative overflow-hidden ">
           <div className="space-y-30 relative z-50 mb-40">
             <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize flex flex-col bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
-              Who&apos;s it for?
+              Who’s it for?
             </h2>
             <div className="flex flex-col lg:flex-row justify-center items-center gap-20">
               <InfoCard
@@ -118,8 +118,8 @@ const ScaremoorPage = () => {
                   disappearing from her own life.
                 </li>
                 <li>
-                  A school locker holds a secret so dark… it never
-                  should&apos;ve been opened.
+                  A school locker holds a secret so dark… it never should’ve
+                  been opened.
                 </li>
                 <li>
                   Two best friends discover vines in the garden that move.

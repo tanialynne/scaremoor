@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const JoinClub = () => {
   return (
     <>
-      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-4">
+      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className=" space-y-12">
           <div className="space-y-5 lg:pt-10 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
             <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">

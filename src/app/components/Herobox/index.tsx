@@ -22,33 +22,45 @@ type HeroboxProps = {
 
 const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPaddingTop = "lg:pt-12", landingAssets = false, fogEffect = false }) => {
   return (
-    <div className="min-h-screen h-full relative z-50 px-8 md:px-20 p-8 overflow-hidden isolate">
-      {/* Optimized background image */}
-      {backgroundImage && (
-        <Image 
-          src={backgroundImage}
-          alt="Hero background"
-          fill
-          priority
-          className="absolute inset-0 object-cover -z-30"
-        />
-      )}
-      <div className="absolute inset-0 bg-black/50 -z-20"></div>
-      {fogEffect && <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/20 -z-10"></div>}
-
-      <div className="relative z-10">
+    <>
+      {/* Navigation outside of stacking context with proper padding */}
+      <div className="absolute top-0 left-0 right-0 z-[1000] px-8 md:px-20 py-8">
         <Nav />
       </div>
-      {fogEffect && <VantaFogBackground />}
+      
+      <div className="min-h-screen h-full relative px-8 md:px-20 pt-24 pb-8 overflow-hidden isolate">
+        {/* Optimized responsive background image */}
+        {backgroundImage && (
+          <Image 
+            src={backgroundImage}
+            alt="Hero background"
+            fill
+            priority
+            className="absolute inset-0 object-cover -z-30"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
+            placeholder="blur"
+          />
+        )}
+        <div className="absolute inset-0 bg-black/50 -z-20"></div>
+        {fogEffect && <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/20 -z-10"></div>}
 
-      {landingAssets && (
-        <div className="absolute bottom-0 left-0 right-0 -z-5">
-          <Image src={LandingPageAsset} alt="landingpage-assets" className="w-full" />
-        </div>
-      )}
+        {fogEffect && <VantaFogBackground />}
 
-      <div className={`relative z-10 text-white pt-10 ${contentPaddingTop}`}>{children}</div>
-    </div>
+        {landingAssets && (
+          <div className="absolute bottom-0 left-0 right-0 -z-5">
+            <Image 
+              src={LandingPageAsset} 
+              alt="landingpage-assets" 
+              className="w-full h-auto"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
+              placeholder="blur"
+            />
+          </div>
+        )}
+
+        <div className={`relative z-10 text-white pt-10 ${contentPaddingTop}`}>{children}</div>
+      </div>
+    </>
   );
 };
 

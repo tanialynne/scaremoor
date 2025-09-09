@@ -139,7 +139,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc }: Podcas
   }, []);
 
   return (
-    <div className="relative w-full h-64 perspective-1000">
+    <div className="relative w-full perspective-1000">
       <div
         className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${
           isFlipped ? "rotate-y-180" : ""
@@ -157,17 +157,23 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc }: Podcas
         aria-pressed={isFlipped}
       >
         {/* Front of card */}
-        <div className="absolute inset-0 w-full h-full backface-hidden bg-gray-900/50 rounded-lg p-6 border border-gray-700 hover:border-orange-500/50 focus-within:border-orange-500/50 focus-within:ring-2 focus-within:ring-orange-400/50 transition-all duration-300 hover:transform hover:scale-105 focus-within:scale-105 cursor-pointer">
-          <h3 className="font-trickordead text-2xl mb-3" id={`podcast-title-${title.replace(/\s+/g, '-').toLowerCase()}`}>{title}</h3>
-          <p className="text-gray-300 mb-4 text-sm leading-relaxed">
-            {description}
-          </p>
-          <div className="flex items-center justify-between mt-auto">
-            <span className="text-sm text-gray-400">{episode} • {duration}</span>
-            <span className="text-green-400 font-semibold">FREE</span>
-          </div>
-          <div className="absolute bottom-4 right-4 text-gray-500">
-            <span className="text-xs">Click to play →</span>
+        <div className="w-full h-full backface-hidden bg-gray-900/50 rounded-lg p-6 border border-gray-700 hover:border-orange-500/50 focus-within:border-orange-500/50 focus-within:ring-2 focus-within:ring-orange-400/50 transition-all duration-300 hover:transform hover:scale-105 focus-within:scale-105 cursor-pointer">
+          <div className="flex flex-col h-full min-h-[280px]">
+            <div className="space-y-3 flex-grow">
+              <h3 className="font-trickordead text-2xl" id={`podcast-title-${title.replace(/\s+/g, '-').toLowerCase()}`}>{title}</h3>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                {description}
+              </p>
+            </div>
+            <div className="pt-4 mt-4 border-t border-gray-700">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400">{episode} • {duration}</span>
+                <span className="text-green-400 font-semibold">FREE</span>
+              </div>
+              <div className="mt-4 text-right text-gray-500">
+                <span className="text-xs">Click to play →</span>
+              </div>
+            </div>
           </div>
         </div>
 

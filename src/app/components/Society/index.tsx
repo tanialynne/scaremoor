@@ -45,7 +45,7 @@ const Society = () => {
             </p>
             <p>
               Join the Scaremoor Society—our free reader club—and get exclusive
-              content, bonus books, and early sneak peeks. It's like a haunted
+              content, bonus books, and early sneak peeks. It&apos;s like a haunted
               library card. But cooler.
             </p>
           </div>

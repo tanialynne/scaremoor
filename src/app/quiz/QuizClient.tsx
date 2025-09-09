@@ -538,7 +538,7 @@ const QuizClient = () => {
       <>
         <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+            <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-3xl md:text-5xl text-orange-400">
                 Ready for a Scare?
               </p>
@@ -619,7 +619,7 @@ const QuizClient = () => {
           <div className="max-w-4xl mx-auto text-center space-y-10">
             {!emailSubmitted ? (
               <>
-                <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+                <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
                   <div className="text-6xl mb-4">🎯</div>
                   <h1 className="text-4xl md:text-6xl">
                     Your Perfect Book Match is Ready!
@@ -666,7 +666,7 @@ const QuizClient = () => {
               </>
             ) : (
               <div className="space-y-8">
-                <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+                <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
                   <div className="text-6xl mb-4">✅</div>
                   <h1 className="text-4xl md:text-6xl text-green-400">
                     Thank You!
@@ -697,7 +697,7 @@ const QuizClient = () => {
       <>
         <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
           <div className="max-w-5xl mx-auto text-center space-y-10">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+            <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-2xl md:text-4xl text-green-400">
                 🎉 Your Perfect Match!
               </p>
@@ -747,7 +747,7 @@ const QuizClient = () => {
 
             <div className="space-y-6">
               <div
-                className="font-(family-name:--trickOrDead) text-2xl md:text-3xl"
+                className="font-trickordead text-2xl md:text-3xl"
                 style={{ textShadow: "0 0 10px rgba(0, 0, 0, 0.8)" }}
               >
                 Want to Read {recommendation.title}?
@@ -898,7 +898,7 @@ const QuizClient = () => {
           </div>
 
           <div className="text-center space-y-6">
-            <div className="font-(family-name:--trickOrDead) font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+            <div className="font-trickordead font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <p className="text-sm md:text-base text-orange-400 mb-2">
                 Question {currentQuestion + 1} of {QUIZ_QUESTIONS.length}
               </p>

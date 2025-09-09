@@ -61,7 +61,7 @@ const BookCard: React.FC<BookCardProps> = ({
                     className="w-full h-full transition-all duration-300 group-hover/button:scale-110"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <i className="fa-brands fa-amazon text-white text-sm"></i>
+                    <i className="fa-brands fa-amazon text-white text-xl"></i>
                   </div>
                 </div>
               </Link>
@@ -74,7 +74,7 @@ const BookCard: React.FC<BookCardProps> = ({
                   className="w-full h-full transition-all duration-300 group-hover/button:scale-110"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <i className="fa-solid fa-circle-info text-black text-sm"></i>
+                  <i className="fa-solid fa-circle-info text-black text-xl"></i>
                 </div>
               </div>
             </Link>
@@ -84,7 +84,7 @@ const BookCard: React.FC<BookCardProps> = ({
 
       <figcaption className="flex flex-col flex-grow justify-between text-center px-4 py-4 space-y-3">
         <div>
-          <h3 className="text-2xl md:text-3xl font-(family-name:--trickOrDead) font-normal">
+          <h3 className="text-2xl md:text-3xl font-trickordead font-normal">
             {bookTitle}
           </h3>
           <p className="text-[#808080] text-sm mt-2">{bookSubHeading}</p>

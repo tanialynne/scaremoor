@@ -25,64 +25,68 @@ export const metadata: Metadata = {
 const LeadMagnet = () => {
   return (
     <>
-      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
-        <div className="lg:grid lg:grid-cols-2 space-y-12">
-          <div className=" space-y-12">
-            <div className="space-y-5 lg:pt-10">
-              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-                <p className="text-3xl md:text-6xl">Open the Door…</p>
-                <h1 className="text-5xl md:text-7xl">If You Dare.</h1>
-              </div>
+      <div className="relative">
+        <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
+          <div className="lg:grid lg:grid-cols-2 space-y-12">
+            <div className=" space-y-12">
+              <div className="space-y-5 lg:pt-10">
+                <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+                  <h2 className="hero-text-large">Open the Door…</h2>
+                  <h1 className="hero-text-xlarge">If You Dare.</h1>
+                </div>
 
-              <div
-                className=" max-w-[62ch] font-light space-y-6"
-                style={{
-                  textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
-                }}
-              >
-                <p>
-                  A spooky short story for curious kids who love creepy
-                  mysteries and twist endings.
-                </p>
-                <p>
-                  Get The Forgotten Door <span className="font-bold">FREE</span>{" "}
-                  and discover the world of{" "}
-                  <span className="font-bold">SCAREMOOR</span>.
-                </p>
-              </div>
-              <div className="w-full max-w-[300px] sm:max-w-1/2 md:max-w-[700px]">
-                <RequestForm buttonText="Send my Story" requestId="8174135" />
-              </div>
+                <div
+                  className=" max-w-[62ch] font-light space-y-6"
+                  style={{
+                    textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
+                  }}
+                >
+                  <p>
+                    A spooky short story for curious kids who love creepy
+                    mysteries and twist endings.
+                  </p>
+                  <p>
+                    Get The Forgotten Door <span className="font-bold">FREE</span>{" "}
+                    and discover the world of{" "}
+                    <span className="font-bold">SCAREMOOR</span>.
+                  </p>
+                </div>
+                <div className="w-full max-w-[300px] sm:max-w-1/2 md:max-w-[700px]">
+                  <RequestForm buttonText="Send my Story" requestId="8174135" />
+                </div>
 
-              <ul className=" flex gap-4 pt-4 flex-col md:flex-row">
-                <li className="inline-flex items-center gap-2">
-                  <Image src={ListCheckIcon} alt="list-icon" />
-                  <span>
-                    Perfect for ages 8–12 (and brave grown-ups too). No spam,
-                    just stories.
-                  </span>
-                </li>
-              </ul>
+                <ul className=" flex gap-4 pt-4 flex-col md:flex-row">
+                  <li className="inline-flex items-center gap-2">
+                    <Image src={ListCheckIcon} alt="list-icon" />
+                    <span>
+                      Perfect for ages 8–12 (and brave grown-ups too). No spam,
+                      just stories.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="relative flex justify-center items-center ">
+              <Image
+                src={HeroImage}
+                alt="book-image"
+                className="inline-block w-full max-w-[580px] "
+              />
             </div>
           </div>
-          <div className="relative flex justify-center items-center ">
-            <Image
-              src={HeroImage}
-              alt="book-image"
-              className="inline-block w-full max-w-[580px] "
-            />
-          </div>
+        </Herobox>
+        <div className="absolute -bottom-0 md:-bottom-6 left-0 right-0 w-full">
+          <Image
+            src={BlurLayer}
+            alt="blur-layer"
+            className="w-full h-auto"
+          />
         </div>
-        <Image
-          src={BlurLayer}
-          alt="blur-layer"
-          className="absolute -bottom-0 md:-bottom-6 left-0 right-0"
-        />
-      </Herobox>
+      </div>
 
       <main className="text-white overflow-hidden">
         <section className="relative px-8 md:px-20 text-center flex flex-col justify-center items-center py-20 min-h-80 h-full ">
-          <h2 className="font-(family-name:--trickOrDead) font-normal block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent text-4xl sm:text-6xl capitalize">
+          <h2 className="font-trickordead font-normal block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent text-4xl sm:text-6xl capitalize">
             What’s The Forgotten Door About?
           </h2>
 
@@ -103,7 +107,7 @@ const LeadMagnet = () => {
             backgroundPosition: "center",
           }}
         >
-          <h3 className="text-white font-(family-name:--trickOrDead) font-normal text-3xl md:text-5xl leading-15 max-w-[38ch] text-center pt-20">
+          <h3 className="text-white font-trickordead font-normal text-3xl md:text-5xl leading-15 max-w-[38ch] text-center pt-20">
             It’s spooky, mysterious, and safe-for-school scary—perfect for fans
             of Goosebumps, Scary Stories to Tell in the Dark, and creepy tales
             with heart.
@@ -111,7 +115,7 @@ const LeadMagnet = () => {
         </section>
 
         <section className="relative px-8 md:px-20 py-20 min-h-180 h-full">
-          <h3 className=" font-(family-name:--trickOrDead) font-normal text-3xl text-center md:text-5xl bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+          <h3 className=" font-trickordead font-normal text-3xl text-center md:text-5xl bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
             Why Kids (and Parents) Love It
           </h3>
           <div className="mt-18 md:mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
@@ -134,7 +138,7 @@ const LeadMagnet = () => {
               imageAltText="haunted-locker-book"
             >
               <div>
-                <h2 className="font-(family-name:--trickOrDead) font-normal block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent text-4xl sm:text-6xl capitalize">
+                <h2 className="font-trickordead font-normal block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent text-4xl sm:text-6xl capitalize">
                   Love It? There’s More.
                 </h2>
 
@@ -155,7 +159,7 @@ const LeadMagnet = () => {
           </div>
 
           <div className="flex flex-col justify-center items-center pt-30 pb-20 text-center space-y-4">
-            <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
               Ready to get creeped out—in the best way?
             </h2>
             <p>

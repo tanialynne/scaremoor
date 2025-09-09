@@ -30,7 +30,7 @@ const ScaremoorPage = () => {
         <div className=" items-center">
           <div className="space-y-5">
             <div className="font-trickordead font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-              <h1 className="text-5xl md:text-7xl">What is SCAREMOOR?</h1>
+              <h1 className="hero-text-xlarge">What is SCAREMOOR?</h1>
             </div>
 
             <p

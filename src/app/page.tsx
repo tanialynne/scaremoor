@@ -37,9 +37,9 @@ const HomePage = () => {
       >
         <div className="lg:grid lg:grid-cols-2 items-center space-y-12">
           <div className="space-y-5 lg:pt-10">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-              <p className="text-3xl md:text-6xl">Middle Grade Horror.</p>
-              <h1 className="text-5xl md:text-7xl">Maximum Grade Chills.</h1>
+            <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+              <h2 className="hero-text-large">Middle Grade Horror.</h2>
+              <h1 className="hero-text-xlarge">Maximum Grade Chills.</h1>
             </div>
 
             <p
@@ -100,7 +100,7 @@ const HomePage = () => {
             imageAltText="haunted-locker-book"
           >
             <div>
-              <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize">
+              <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize">
                 Where Middle School{" "}
                 <span className="block gradient-text-accessible">
                   Meets Monsters.

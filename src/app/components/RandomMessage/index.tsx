@@ -23,7 +23,7 @@ const RandomMessage = () => {
     setRandomMessage(messages[index]);
   }, [messages, pathname]);
 
-  return <h2 className="text-[50px] md:text-[90px] max-w-[10ch] font-(family-name:--trickOrDead)">{randomMessage}</h2>;
+  return <h2 className="text-[50px] md:text-[90px] max-w-[10ch] font-trickordead">{randomMessage}</h2>;
 };
 
 export default RandomMessage;

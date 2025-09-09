@@ -50,11 +50,11 @@ const Footer = () => {
         </div>
 
         <div className="relative flex justify-between flex-col md:flex-row md:items-end gap-12 z-50">
-          <p className="order-3 md:order-1">©{getCurrentYear()} Scaremoor.</p>
+          <p className="order-3 md:order-1 footer-text-small">©{getCurrentYear()} Scaremoor.</p>
           <div className="tracking-wide order-2 flex flex-col gap-4">
             <Link
               href="/contact"
-              className="text-lg transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
+              className="text-base transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
             >
               Contact Us
             </Link>

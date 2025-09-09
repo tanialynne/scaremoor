@@ -70,7 +70,7 @@ const BlogPostClient: React.FC<BlogPostClientProps> = ({ selectedPost }) => {
                 ))}
               </div>
 
-              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+              <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
                 <h1 className="text-5xl md:text-7xl max-w-[30ch]">
                   {selectedPost.title}
                 </h1>
@@ -126,17 +126,17 @@ const BlogPostClient: React.FC<BlogPostClientProps> = ({ selectedPost }) => {
               <Markdown
                 components={{
                   h1: ({ children }) => (
-                    <h1 className="font-(family-name:--trickOrDead) text-4xl md:text-5xl text-orange-400 mb-6 mt-8">
+                    <h1 className="font-trickordead text-4xl md:text-5xl text-orange-400 mb-6 mt-8">
                       {children}
                     </h1>
                   ),
                   h2: ({ children }) => (
-                    <h2 className="font-(family-name:--trickOrDead) text-3xl md:text-4xl text-orange-400 mb-4 mt-8">
+                    <h2 className="font-trickordead text-3xl md:text-4xl text-orange-400 mb-4 mt-8">
                       {children}
                     </h2>
                   ),
                   h3: ({ children }) => (
-                    <h3 className="font-(family-name:--trickOrDead) text-2xl md:text-3xl text-orange-400 mb-4 mt-6">
+                    <h3 className="font-trickordead text-2xl md:text-3xl text-orange-400 mb-4 mt-6">
                       {children}
                     </h3>
                   ),
@@ -197,7 +197,7 @@ const BlogPostClient: React.FC<BlogPostClientProps> = ({ selectedPost }) => {
 
         <section className="relative flex flex-col justify-center items-center text-center space-y-12 py-20 px-8 z-50">
           <div className="max-w-2xl mx-auto space-y-6">
-            <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl md:text-6xl bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl md:text-6xl bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
               Ready for More Scares?
             </h2>
             <p className="text-lg">

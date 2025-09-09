@@ -180,8 +180,8 @@ function ToastCard({ toast, onClose }: { toast: ToastItem; onClose: () => void }
         </div>
 
         <div className="flex-1">
-          <p className="font-bold text-white text-sm tracking-wide mb-1">{randomTitle}</p>
-          <p className="text-sm text-white/90 leading-relaxed font-medium">{toast.message}</p>
+          <p className="font-bold text-white text-sm tracking-wide mb-1 footer-text-small">{randomTitle}</p>
+          <p className="text-sm text-white/90 leading-relaxed font-medium footer-text-small">{toast.message}</p>
         </div>
 
         <button

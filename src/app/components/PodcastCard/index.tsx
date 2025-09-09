@@ -158,7 +158,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc }: Podcas
       >
         {/* Front of card */}
         <div className="absolute inset-0 w-full h-full backface-hidden bg-gray-900/50 rounded-lg p-6 border border-gray-700 hover:border-orange-500/50 focus-within:border-orange-500/50 focus-within:ring-2 focus-within:ring-orange-400/50 transition-all duration-300 hover:transform hover:scale-105 focus-within:scale-105 cursor-pointer">
-          <h3 className="font-(family-name:--trickOrDead) text-2xl mb-3" id={`podcast-title-${title.replace(/\s+/g, '-').toLowerCase()}`}>{title}</h3>
+          <h3 className="font-trickordead text-2xl mb-3" id={`podcast-title-${title.replace(/\s+/g, '-').toLowerCase()}`}>{title}</h3>
           <p className="text-gray-300 mb-4 text-sm leading-relaxed">
             {description}
           </p>
@@ -175,7 +175,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc }: Podcas
         <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gray-900/50 rounded-lg p-6 border border-orange-500/50">
           <div className="flex flex-col h-full">
             <div className="flex-1">
-              <h3 className="font-(family-name:--trickOrDead) text-xl mb-2 text-orange-400">{title}</h3>
+              <h3 className="font-trickordead text-xl mb-2 text-orange-400">{title}</h3>
               <p className="text-sm text-gray-300 mb-4">Now Playing...</p>
             </div>
 
@@ -217,11 +217,11 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc }: Podcas
                   className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-full transition-colors relative z-10"
                 >
                   {isPlaying ? (
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
                     </svg>
                   ) : (
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z"/>
                     </svg>
                   )}

@@ -19,7 +19,7 @@ const OptimizedSection: React.FC<OptimizedSectionProps> = ({
 }) => {
   return (
     <section 
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden isolate ${className}`}
       style={backgroundStyle}
     >
       {backgroundImage && (
@@ -33,7 +33,7 @@ const OptimizedSection: React.FC<OptimizedSectionProps> = ({
           placeholder="blur"
         />
       )}
-      {children}
+{children}
     </section>
   );
 };

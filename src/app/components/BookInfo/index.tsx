@@ -14,7 +14,7 @@ const BookInfo: React.FC<BookInfoProps> = ({ title, bookImage, children }) => {
         <Image src={bookImage} alt="book" className="inline-block" />
       </div>
       <div className="text-white text-start max-w-3xl">
-        <h3 className="font-(family-name:--trickOrDead) font-normal text-3xl sm:text-5xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">{title}</h3>
+        <h3 className="font-trickordead font-normal text-3xl sm:text-5xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">{title}</h3>
         {children}
       </div>
     </div>

@@ -80,10 +80,10 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
               />
             ) : (
               <>
-                <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-                  <p className="text-3xl md:text-5xl leading-10">
+                <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+                  <h3 className="text-2xl md:text-4xl">
                     {selectedBook?.bookSubHeading}
-                  </p>
+                  </h3>
                   <h1 className="text-5xl md:text-7xl">
                     {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                   </h1>
@@ -135,10 +135,10 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
         <section className="relative flex flex-col justify-center items-center text-center space-y-12 min-h-150 z-50 py-20">
           {selectedBook?.leadMagnetId && selectedBook?.videoPreview ? (
             <div className="w-full max-w-7xl mx-auto mb-16">
-              <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)] text-center mb-12">
-                <p className="text-3xl md:text-5xl leading-10">
+              <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)] text-center mb-12">
+                <h3 className="text-2xl md:text-4xl">
                   {selectedBook?.bookSubHeading}
-                </p>
+                </h3>
                 <h2 className="text-5xl md:text-7xl">
                   {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                 </h2>
@@ -182,7 +182,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
               {selectedBook?.leadMagnetId && !selectedBook?.videoPreview && (
                 <div className="max-w-4xl mx-auto mb-32 text-left">
                   <div className="space-y-6">
-                    <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)] text-center">
+                    <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)] text-center">
                       <p className="text-3xl md:text-5xl leading-10">
                         {selectedBook?.bookSubHeading}
                       </p>
@@ -209,7 +209,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
           )}
 
           <div>
-            <h2 className="font-(family-name:--trickOrDead) font-normal  text-4xl md:text-7xl text-center block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal  text-4xl md:text-7xl text-center block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
               Perfect for fans of
             </h2>
 

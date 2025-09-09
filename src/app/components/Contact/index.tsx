@@ -79,8 +79,8 @@ const ContactForm = () => {
     <Herobox>
       <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-4 mt-8 z-10 pb-20 lg:pb-0">
         <div>
-          <div className="font-(family-name:--trickOrDead) font-normal space-y-4">
-            <p className="text-3xl md:text-6xl">Let’s Chat,</p>
+          <div className="font-trickordead font-normal space-y-4">
+            <h2 className="hero-text-large">Let’s Chat,</h2>
             <h1 className="text-5xl md:text-7xl">Reach Out to Us.</h1>
           </div>
           <div className="space-y-8 pt-6 max-w-[55ch]">

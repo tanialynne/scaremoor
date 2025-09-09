@@ -27,9 +27,9 @@ const BlogPage = () => {
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="items-center">
           <div className="space-y-5">
-            <div className="font-(family-name:--trickOrDead) font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-              <p className="text-3xl md:text-6xl">Stories Behind the Scares.</p>
-              <h1 className="text-5xl md:text-7xl max-w-[20ch]">
+            <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+              <h2 className="hero-text-large">Stories Behind the Scares.</h2>
+              <h1 className="hero-text-xlarge max-w-[20ch]">
                 Writing Tips & Insights.
               </h1>
             </div>
@@ -75,7 +75,7 @@ const BlogPage = () => {
           className="px-8 md:px-20 py-20 min-h-180 h-full relative overflow-hidden space-y-6"
         >
           <div className="text-center space-y-6 relative z-50">
-            <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
               Featured Stories & Tips
             </h2>
             <p className="max-w-[60ch] mx-auto">
@@ -133,7 +133,7 @@ const BlogPage = () => {
           </div>
 
           <div className="text-center space-y-6 relative z-50 pt-24">
-            <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
               Ready for More Scares?
             </h2>
             <p className="max-w-[60ch] mx-auto">

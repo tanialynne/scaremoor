@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({
       aria-label={altText}
     >
       <div className="relative inline-block h-14 sm:h-16 transition-transform duration-300 hover:scale-[102%]">
-        <span className="invisible block text-lg sm:text-2xl font-(family-name:--trickOrDead) capitalize px-8 py-4">
+        <span className="invisible block text-lg sm:text-2xl font-trickordead capitalize px-8 py-4">
           {children ?? text}
         </span>
         <Image
@@ -37,7 +37,7 @@ const Button: React.FC<ButtonProps> = ({
           alt={altText}
           className="absolute inset-0 w-full h-full transition-transform duration-300 hover:scale-[102%] hover:brightness-105"
         />
-        <span className="absolute inset-0 flex items-center justify-center text-lg sm:text-2xl font-(family-name:--trickOrDead) capitalize transition-colors duration-300">
+        <span className="absolute inset-0 flex items-center justify-center text-lg sm:text-2xl font-trickordead capitalize transition-colors duration-300">
           {loading ? (
             <span className="animate-pulse">Summoning…</span>
           ) : (

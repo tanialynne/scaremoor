@@ -18,12 +18,16 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
   const EXIT_INTENT_FORM_ID = "8174135"; // Using same as free story for now
 
   useEffect(() => {
-    // Check localStorage to see if popup has been shown recently
+    // Check if user has already submitted their email through any form
+    const hasSubmittedEmail = localStorage.getItem('scaremoor_email_submitted');
+    
+    // Check if popup was shown recently (24 hour cooldown)
     const lastShown = localStorage.getItem('exitIntentShown');
     const now = Date.now();
     const oneDayInMs = 24 * 60 * 60 * 1000; // 24 hours
 
-    if (lastShown && (now - parseInt(lastShown)) < oneDayInMs) {
+    // Don't show if user already submitted email or popup shown recently
+    if (hasSubmittedEmail || (lastShown && (now - parseInt(lastShown)) < oneDayInMs)) {
       setHasShown(true);
       return;
     }
@@ -42,20 +46,10 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
       }
     };
 
-    const handleTimer = () => {
-      if (hasTriggered || hasShown) return;
-      hasTriggered = true;
-      setIsVisible(true);
-      setHasShown(true);
-      localStorage.setItem('exitIntentShown', Date.now().toString());
-    };
-
     document.addEventListener("mouseleave", handleMouseLeave);
-    const timeoutIdRef = setTimeout(handleTimer, 30000);
 
     return () => {
       document.removeEventListener("mouseleave", handleMouseLeave);
-      clearTimeout(timeoutIdRef);
     };
   }, [hasShown]);
 
@@ -105,6 +99,8 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
 
       if (response.ok) {
         setIsVisible(false);
+        // Mark that user has submitted their email
+        localStorage.setItem('scaremoor_email_submitted', 'true');
         // Show success toast
         window.dispatchEvent(
           new CustomEvent("show-toast", {

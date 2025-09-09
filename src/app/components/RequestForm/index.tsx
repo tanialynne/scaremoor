@@ -82,6 +82,9 @@ const RequestForm: React.FC<RequestFormProp> = ({
         setEmail("");
         setName("");
 
+        // Mark that user has submitted their email (prevents exit intent popup)
+        localStorage.setItem('scaremoor_email_submitted', 'true');
+
         // Track successful lead magnet signup
         if (requestId && bookTitle) {
           trackLeadMagnetSignup(requestId, bookTitle);

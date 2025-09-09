@@ -27,20 +27,29 @@ const BooksPage = () => {
           <div className="space-y-5 lg:pt-10">
             <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <h2 className="hero-text-large">Every Book a New Scare.</h2>
-              <h1 className="hero-text-xlarge max-w-[20ch]">Every Story a Standalone Shiver.</h1>
+              <h1 className="hero-text-xlarge max-w-[20ch]">
+                Every Story a Standalone Shiver.
+              </h1>
             </div>
 
             <p
               className=" max-w-[80ch] font-light "
               style={{
                 textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
-              }}>
-              Welcome to SCAREMOOR—a middle-grade horror series full of haunted objects, cursed doors, and creepy school secrets. <br /> Each book is its own eerie adventure, perfect for curious kids
-              and grown-ups who still love a good spine-tingling read.
+              }}
+            >
+              Welcome to SCAREMOOR—a middle-grade horror series full of haunted
+              objects, cursed doors, and creepy school secrets. <br /> Each book
+              is its own eerie adventure, perfect for curious kids and grown-ups
+              who still love a good spine-tingling read.
             </p>
             <div className="pt-8">
               <Link href="/scaremoor">
-                <Button buttonImage={OrangeBackgroundMd} altText="about-series" text="About The Series" />
+                <Button
+                  buttonImage={OrangeBackgroundMd}
+                  altText="about-series"
+                  text="About The Series"
+                />
               </Link>
             </div>
           </div>
@@ -50,14 +59,28 @@ const BooksPage = () => {
         <section className="px-8 md:px-20 py-20 min-h-180 h-full text-center relative overflow-hidden space-y-6">
           <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize flex flex-col relative z-50">
             <span>Start anywhere. Read in any order.</span>
-            <span className="gradient-text-accessible">Just don’t read with the lights off…</span>
+            <span className="gradient-text-accessible">
+              Just don’t read with the lights off…
+            </span>
           </h2>
 
           <BookCollection />
 
-          <Image src={CloudRight} alt="cloud" className="absolute top-10 right-0" />
-          <Image src={CloudBottom} alt="cloud" className="absolute bottom-0 left-0" />
-          <Image src={CloudBottomMiddle} alt="cloud" className="absolute bottom-0 right-0" />
+          <Image
+            src={CloudRight}
+            alt="cloud"
+            className="absolute top-10 right-0"
+          />
+          <Image
+            src={CloudBottom}
+            alt="cloud"
+            className="absolute bottom-0 left-0"
+          />
+          <Image
+            src={CloudBottomMiddle}
+            alt="cloud"
+            className="absolute bottom-0 right-0"
+          />
         </section>
 
         <section
@@ -67,23 +90,34 @@ const BooksPage = () => {
             backgroundSize: "cover",
             backgroundPosition: "bottom",
             backgroundRepeat: "no-repeat",
-          }}>
-          <div className="space-y-5 relative z-50 pt-32 md:pt-28">
+          }}
+        >
+          <div className="space-y-5 relative z-50 pt-32 md:pt-28 w-full max-w-[1280px] pl-8 md:pl-20">
             <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[30%] to-[#A4A4A4] bg-clip-text text-transparent">
               More stories are <br /> creeping in soon
             </h2>
 
-            <p className="max-w-[45ch]">Sign up for the Scaremoor Society to get early access, bonus reads, and secret scares.</p>
+            <p className="max-w-[45ch]">
+              Sign up for the Scaremoor Society to get early access, bonus
+              reads, and secret scares.
+            </p>
 
             <div className="pt-5 ">
               <Link href="/society">
-                <Button buttonImage={OrangeBackground} altText="join-club" text="Join The Club" />
+                <Button
+                  buttonImage={OrangeBackground}
+                  altText="join-club"
+                  text="Join The Club"
+                />
               </Link>
             </div>
           </div>
         </section>
 
-        <Testimonials title="What Customers Are Saying" description="See what little readers (and their grown-ups!) say about our spine-tingling, just-spooky-enough stories!" />
+        <Testimonials
+          title="What Customers Are Saying"
+          description="See what little readers (and their grown-ups!) say about our spine-tingling, just-spooky-enough stories!"
+        />
       </main>
     </>
   );

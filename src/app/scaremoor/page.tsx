@@ -64,16 +64,18 @@ const ScaremoorPage = () => {
             <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize flex flex-col gradient-text-accessible">
               Who’s it for?
             </h2>
-            <div className="flex flex-col lg:flex-row justify-center items-center gap-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto px-8 lg:px-16">
               <InfoCard
                 cardIcon={BookIcon}
                 cardTitle="Readers Ages 8–12+"
-                cardDescription="For kids who love creepy stories but don’t want nightmares. Whether they’re confident readers or just starting to fall in love with books, Scaremoor delivers suspense, mystery, and unforgettable twists."
+                cardDescription="For kids who love creepy stories but don't want nightmares. Whether they're confident readers or just starting to fall in love with books, Scaremoor delivers suspense, mystery, and unforgettable twists."
+                cardWidth="w-full"
               />
               <InfoCard
                 cardIcon={FamilyIcon}
                 cardTitle="Parents, Teachers & Librarians"
                 cardDescription="Each story is age-appropriate (no gore, no trauma), with emotionally rich characters, strong vocabulary, and high relatability. They're safe for classrooms and perfect for read-alouds."
+                cardWidth="w-full"
               />
             </div>
           </div>

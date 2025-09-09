@@ -149,23 +149,26 @@ const PodcastsPage = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-center items-center gap-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-8 lg:px-12">
             <InfoCard
               cardIconFa="fa-solid fa-car-side"
               cardTitle="Road Trip Ready"
               cardDescription="Keep kids entertained during long drives with spine-tingling stories that make the miles fly by."
+              cardWidth="w-full"
             />
             
             <InfoCard
               cardIconFa="fa-solid fa-headphones"
               cardTitle="Headphone Adventures"
               cardDescription="Immersive audio experiences that transport young listeners into the eerie world of Scaremoor."
+              cardWidth="w-full"
             />
             
             <InfoCard
               cardIconFa="fa-solid fa-bed"
               cardTitle="Bedtime Chills"
               cardDescription="Just scary enough to thrill without keeping them up all night (we hope!)."
+              cardWidth="w-full"
             />
           </div>
         </section>

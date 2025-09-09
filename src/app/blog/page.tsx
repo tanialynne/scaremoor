@@ -26,7 +26,7 @@ const BlogPage = () => {
     <>
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="items-center">
-          <div className="space-y-5">
+          <div className="space-y-5 lg:pt-10">
             <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <h2 className="hero-text-large">Stories Behind the Scares.</h2>
               <h1 className="hero-text-xlarge max-w-[20ch]">

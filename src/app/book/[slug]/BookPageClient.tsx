@@ -72,7 +72,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
       )}
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="relative overflow-hidden grid grid-cols-1 lg:grid-cols-[2fr_1fr] xl:grid-cols-[1fr_500px] gap-8 items-start z-10">
-          <div className="space-y-5 ">
+          <div className="space-y-5 lg:pt-10">
             {selectedBook?.leadMagnetId ? (
               <LeadMagnetTest
                 bookTitle={selectedBook.bookTitle}
@@ -84,7 +84,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                   <h3 className="text-2xl md:text-4xl">
                     {selectedBook?.bookSubHeading}
                   </h3>
-                  <h1 className="text-5xl md:text-7xl">
+                  <h1 className="text-5xl md:text-7xl gradient-text-accessible">
                     {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                   </h1>
                 </div>
@@ -139,7 +139,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                 <h3 className="text-2xl md:text-4xl">
                   {selectedBook?.bookSubHeading}
                 </h3>
-                <h2 className="text-5xl md:text-7xl">
+                <h2 className="text-5xl md:text-7xl gradient-text-accessible">
                   {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                 </h2>
               </div>
@@ -186,7 +186,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                       <p className="text-3xl md:text-5xl leading-10">
                         {selectedBook?.bookSubHeading}
                       </p>
-                      <h2 className="text-5xl md:text-7xl">
+                      <h2 className="text-5xl md:text-7xl gradient-text-accessible">
                         {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                       </h2>
                     </div>
@@ -209,7 +209,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
           )}
 
           <div>
-            <h2 className="font-trickordead font-normal  text-4xl md:text-7xl text-center block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl md:text-7xl text-center block gradient-text-accessible">
               Perfect for fans of
             </h2>
 

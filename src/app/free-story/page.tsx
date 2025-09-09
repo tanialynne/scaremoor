@@ -86,7 +86,7 @@ const LeadMagnet = () => {
 
       <main className="text-white overflow-hidden">
         <section className="relative px-8 md:px-20 text-center flex flex-col justify-center items-center py-20 min-h-80 h-full ">
-          <h2 className="font-trickordead font-normal block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent text-4xl sm:text-6xl capitalize">
+          <h2 className="font-trickordead font-normal block gradient-text-accessible text-4xl sm:text-6xl capitalize">
             What’s The Forgotten Door About?
           </h2>
 
@@ -115,7 +115,7 @@ const LeadMagnet = () => {
         </section>
 
         <section className="relative px-8 md:px-20 py-20 min-h-180 h-full">
-          <h3 className=" font-trickordead font-normal text-3xl text-center md:text-5xl bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+          <h3 className=" font-trickordead font-normal text-3xl text-center md:text-5xl gradient-text-accessible">
             Why Kids (and Parents) Love It
           </h3>
           <div className="mt-18 md:mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
@@ -138,7 +138,7 @@ const LeadMagnet = () => {
               imageAltText="haunted-locker-book"
             >
               <div>
-                <h2 className="font-trickordead font-normal block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent text-4xl sm:text-6xl capitalize">
+                <h2 className="font-trickordead font-normal block gradient-text-accessible text-4xl sm:text-6xl capitalize">
                   Love It? There’s More.
                 </h2>
 
@@ -159,7 +159,7 @@ const LeadMagnet = () => {
           </div>
 
           <div className="flex flex-col justify-center items-center pt-30 pb-20 text-center space-y-4">
-            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
               Ready to get creeped out—in the best way?
             </h2>
             <p>

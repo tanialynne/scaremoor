@@ -116,9 +116,11 @@ const Nav = () => {
         >
           <button
             onClick={toggleMenu}
-            className="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors z-[9999999] cursor-pointer"
+            className="absolute top-8 right-8 text-white hover:text-gray-300 focus:text-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-2 transition-colors z-[9999999] cursor-pointer"
+            aria-label="Close navigation menu"
+            type="button"
           >
-            <X size={35} />
+            <X size={35} aria-hidden="true" />
           </button>
 
           <div className="flex flex-col items-center space-y-8">
@@ -146,21 +148,24 @@ const Nav = () => {
                 className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300"
                 href="https://www.amazon.com/dp/B0DKLDSJBC"
                 rel="noopener"
+                target="_blank"
+                aria-label="Shop books on Amazon (opens in new tab)"
               >
-                <Image src={ShopIcon} alt="shopIcon" className="w-8" />
+                <Image src={ShopIcon} alt="Shop on Amazon" className="w-8" />
               </Link>
               <Link
                 href="/contact"
-                className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 transition-all duration-300"
+                className="cursor-pointer p-3 rounded-full border border-white/20 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black transition-all duration-300"
+                aria-label="Contact us"
               >
-                <Image src={EmailIcon} alt="emailIcon" className="w-8" />
+                <Image src={EmailIcon} alt="Contact us" className="w-8" />
               </Link>
             </div>
           </div>
         </div>
 
         <div className="absolute bottom-0">
-          <Image src={HandGrab} alt="star" />
+          <Image src={HandGrab} alt="Decorative illustration" aria-hidden="true" />
         </div>
       </div>
     </div>

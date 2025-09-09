@@ -24,7 +24,7 @@ const BooksPage = () => {
     <>
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className=" items-center">
-          <div className="space-y-5">
+          <div className="space-y-5 lg:pt-10">
             <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <h2 className="hero-text-large">Every Book a New Scare.</h2>
               <h1 className="hero-text-xlarge max-w-[20ch]">Every Story a Standalone Shiver.</h1>
@@ -50,7 +50,7 @@ const BooksPage = () => {
         <section className="px-8 md:px-20 py-20 min-h-180 h-full text-center relative overflow-hidden space-y-6">
           <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize flex flex-col relative z-50">
             <span>Start anywhere. Read in any order.</span>
-            <span className="bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">Just don’t read with the lights off…</span>
+            <span className="gradient-text-accessible">Just don’t read with the lights off…</span>
           </h2>
 
           <BookCollection />

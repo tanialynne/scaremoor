@@ -164,7 +164,7 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
           className="absolute top-4 right-4 text-orange-300 hover:text-orange-100 focus:text-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-orange-900 rounded-full p-1 transition-all z-10"
           aria-label="Close popup"
         >
-          <X size={20} />
+          <X size={20} aria-hidden="true" />
         </button>
 
         <div className="relative z-10">

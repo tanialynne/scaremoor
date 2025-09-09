@@ -21,7 +21,7 @@ const AuthorPage = () => {
     <>
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="relative overflow-hidden grid grid-cols-1 md:grid-cols-[2fr_1fr] lg:grid-cols-[1fr_400px] items-center">
-          <div className="space-y-5 ">
+          <div className="space-y-5 lg:pt-10">
             <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <h2 className="hero-text-large">About the Author.</h2>
               <h1 className="hero-text-xlarge">T.L. Griffith</h1>
@@ -79,9 +79,9 @@ const AuthorPage = () => {
           className="absolute bottom-0 left-0"
         />
         <section className="relative flex flex-col justify-center items-center text-center space-y-12 h-180 z-50">
-          <h2 className="font-trickordead font-normal  text-4xl md:text-6xl text-center">
+          <h2 className="font-trickordead font-normal text-4xl md:text-6xl text-center gradient-text-accessible">
             Want to ask her a question{" "}
-            <span className="block bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <span className="block">
               or share a spooky idea?
             </span>
           </h2>

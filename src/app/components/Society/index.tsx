@@ -20,7 +20,7 @@ const Society = () => {
         backgroundRepeat: "no-repeat",
       }}>
       <div className="space-y-5 relative z-50">
-        <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[30%] to-[#A4A4A4] bg-clip-text text-transparent">
+        <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
           Scaremoor Society
         </h2>
 

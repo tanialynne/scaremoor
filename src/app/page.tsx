@@ -100,11 +100,9 @@ const HomePage = () => {
             imageAltText="haunted-locker-book"
           >
             <div>
-              <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize">
+              <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
                 Where Middle School{" "}
-                <span className="block gradient-text-accessible">
-                  Meets Monsters.
-                </span>
+                <span className="block">Meets Monsters.</span>
               </h2>
 
               <div className="max-w-[58ch] pt-8">

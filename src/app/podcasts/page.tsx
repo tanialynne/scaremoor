@@ -23,7 +23,7 @@ const PodcastsPage = () => {
     <>
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="items-center">
-          <div className="space-y-5">
+          <div className="space-y-5 lg:pt-10">
             <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <h2 className="hero-text-large">Stories That Come Alive.</h2>
               <h1 className="hero-text-xlarge max-w-[20ch]">
@@ -71,7 +71,7 @@ const PodcastsPage = () => {
           className="px-8 md:px-20 py-20 min-h-180 h-full relative overflow-hidden space-y-6"
         >
           <div className="text-center space-y-6 relative z-50">
-            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
               Free Episodes Available Now
             </h2>
             <p className="max-w-[60ch] mx-auto">
@@ -144,7 +144,7 @@ const PodcastsPage = () => {
 
         <section className="px-8 md:px-20 py-20 space-y-8">
           <div className="text-center space-y-6">
-            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent pb-12">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible pb-12">
               Perfect for On-the-Go Scares
             </h2>
           </div>

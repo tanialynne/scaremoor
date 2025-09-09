@@ -15,7 +15,7 @@ export const Testimonials: React.FC<TestimonialsProp> = ({ backgroundImage, titl
       style={backgroundImage ? { backgroundImage: `url(${backgroundImage.src})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}>
       <div className="space-y-6 text-center relative z-50">
         {title && (
-          <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">{title}</h2>
+          <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">{title}</h2>
         )}
         {description && <p>{description}</p>}
 

@@ -19,21 +19,23 @@
   .font-trickordead {
     font-family: var(--trickOrDead), serif;
   }
-  
+
   .hero-text-large {
     font-size: clamp(1.875rem, 4vw, 3.75rem) !important;
     font-family: var(--trickOrDead), serif !important;
     line-height: 1 !important;
     margin-bottom: 0.5rem !important;
+    color: #ffffff; /* Fallback */
   }
-  
+
   .hero-text-xlarge {
     font-size: clamp(3rem, 5vw, 4.5rem) !important;
     font-family: var(--trickOrDead), serif !important;
     line-height: 1 !important;
     margin-top: 0 !important;
+    color: #ffffff; /* Fallback */
   }
-  
+
   .footer-text-small {
     font-size: 16px !important;
   }
@@ -131,7 +133,27 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* Accessibility improvements for gradient text */
 .gradient-text-accessible {
-  background: linear-gradient(180deg, #ffffff 20%, #e5e7eb 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8) 2%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Fallback for accessibility */
+  color: #ffffff;
+}
+
+/* Improved gradient text with better contrast ratio */
+.gradient-text-improved {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8) 2%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -140,7 +162,10 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 @supports not (-webkit-background-clip: text) {
-  .gradient-text-accessible {
+  .gradient-text-accessible,
+  .gradient-text-improved,
+  .hero-text-large,
+  .hero-text-xlarge {
     background: none;
     -webkit-text-fill-color: initial;
     color: #ffffff;
@@ -150,17 +175,20 @@ html::-webkit-scrollbar-thumb:hover {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .gradient-text-accessible,
+  .gradient-text-improved,
+  .hero-text-large,
+  .hero-text-xlarge,
   .bg-gradient-to-b {
     background: none !important;
     -webkit-text-fill-color: #ffffff !important;
     color: #ffffff !important;
   }
-  
+
   /* Ensure all interactive elements have visible borders in high contrast mode */
-  button:not([disabled]), 
-  a, 
-  input:not([disabled]), 
-  select:not([disabled]), 
+  button:not([disabled]),
+  a,
+  input:not([disabled]),
+  select:not([disabled]),
   textarea:not([disabled]) {
     border: 2px solid #ffffff !important;
     outline: 2px solid #ffffff !important;
@@ -195,6 +223,28 @@ html::-webkit-scrollbar-thumb:hover {
 
 .skip-to-content:focus {
   top: 6px;
+}
+
+/* Better focus visibility for all interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #ea580c;
+  outline-offset: 2px;
+}
+
+/* Improve touch targets for mobile accessibility */
+@media (max-width: 768px) {
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 /* Remove all focus outlines and rings for mouse users */

@@ -10,10 +10,6 @@ import RequestForm from "../components/RequestForm";
 
 import BackgroundImage from "../../../public/images/JoinTheClub.png";
 import ListCheckIcon from "../../../public/images/icons/list.svg";
-import HunterIcon from "../../../public/images/icons/hunterIcon.svg";
-import PlantIcon from "../../../public/images/icons/plantIcon.svg";
-import SwingIcon from "../../../public/images/icons/swingIcon.svg";
-import PaintIcon from "../../../public/images/icons/paintIcon.svg";
 import ScaremoorGate from "../../../public/images/scaremoordoor.png";
 
 export const metadata: Metadata = {
@@ -71,7 +67,7 @@ const JoinClub = () => {
       <main className="text-white">
         <section className="px-8 md:px-20 py-20 min-h-180 h-full relative overflow-hidden space-y-6">
           <div className="space-y-4 md:space-y-6 text-center">
-            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[30%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
               Why Join The Scaremoor Society?
             </h2>
             <p className="max-w-[50ch] mx-auto">
@@ -114,7 +110,7 @@ const JoinClub = () => {
           </div>
           
           {/* <div className="space-y-4 text-center mt-30">
-            <h3 className="font-trickordead font-normal text-3xl sm:text-4xl capitalize bg-gradient-to-b from-white from-[30%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h3 className="font-trickordead font-normal text-3xl sm:text-4xl capitalize gradient-text-accessible">
               Pick Your First Fright
             </h3>
             <p>
@@ -158,7 +154,7 @@ const JoinClub = () => {
         <section className="px-8 md:px-20 py-20 min-h-180 h-full relative overflow-hidden">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-20 items-center justify-center">
             <div className="space-y-10 order-2 xl:order-1">
-              <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize bg-gradient-to-b from-white from-[30%] to-[#A4A4A4] bg-clip-text text-transparent">
+              <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize gradient-text-accessible">
                 Ready to Enter?
               </h2>
               <div className="w-4/5 sm:w-1/2 md:w-11/12 lg:w-[700px]">

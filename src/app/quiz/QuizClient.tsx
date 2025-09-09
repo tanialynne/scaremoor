@@ -449,6 +449,9 @@ const QuizClient = () => {
     const answer = question.answers.find((a) => a.id === answerId);
     if (!answer) return;
 
+    // Scroll to top when moving to next question
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     // Update scores
     setScores((prev) => {
       const newScores = { ...prev };
@@ -500,6 +503,9 @@ const QuizClient = () => {
   };
 
   const restartQuiz = () => {
+    // Scroll to top when restarting quiz
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     setCurrentQuestion(0);
     setScores({});
     setShowResult(false);

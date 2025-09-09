@@ -59,6 +59,9 @@ const RequestForm: React.FC<RequestFormProp> = ({
       return;
     }
 
+    // Mark email as submitted immediately to prevent exit intent popup
+    localStorage.setItem('scaremoor_email_submitted', 'true');
+    
     setLoading(true);
 
     try {
@@ -96,11 +99,15 @@ const RequestForm: React.FC<RequestFormProp> = ({
           onSubmitSuccess();
         }
       } else {
+        // Remove the flag if submission failed
+        localStorage.removeItem('scaremoor_email_submitted');
         spookyToast.error(`💀 Spell Failed: ${data.error || data.message || "Unknown error"}`);
         trackFormSubmit("Lead Magnet Form", bookTitle || "Unknown Book", false);
       }
     } catch (error) {
       console.error("Kit form submission error:", error);
+      // Remove the flag if submission failed
+      localStorage.removeItem('scaremoor_email_submitted');
       spookyToast.error("💀 Something spooky went wrong!");
       trackFormSubmit("Lead Magnet Form", bookTitle || "Unknown Book", false);
     } finally {

@@ -38,6 +38,11 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
 
     const handleMouseLeave = (e: MouseEvent) => {
       if (hasTriggered || hasShown) return;
+      
+      // Check again if user has submitted email since component mounted
+      const hasSubmittedEmailNow = localStorage.getItem('scaremoor_email_submitted');
+      if (hasSubmittedEmailNow) return;
+      
       if (e.clientY <= 0) {
         hasTriggered = true;
         setIsVisible(true);
@@ -79,6 +84,9 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
       return;
     }
 
+    // Mark email as submitted immediately to prevent duplicate popups
+    localStorage.setItem('scaremoor_email_submitted', 'true');
+    
     setIsSubmitting(true);
 
     try {
@@ -111,9 +119,13 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
           })
         );
       } else {
+        // Remove the flag if submission failed
+        localStorage.removeItem('scaremoor_email_submitted');
         throw new Error("Signup failed");
       }
     } catch {
+      // Remove the flag if submission failed
+      localStorage.removeItem('scaremoor_email_submitted');
       window.dispatchEvent(
         new CustomEvent("show-toast", {
           detail: {

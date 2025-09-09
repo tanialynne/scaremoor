@@ -29,7 +29,7 @@ const ScaremoorPage = () => {
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop=" lg:pt-22">
         <div className=" items-center">
           <div className="space-y-5">
-            <div className="font-(family-name:--trickOrDead) font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
+            <div className="font-trickordead font-normal [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
               <h1 className="text-5xl md:text-7xl">What is SCAREMOOR?</h1>
             </div>
 
@@ -61,7 +61,7 @@ const ScaremoorPage = () => {
       <main>
         <section className="px-8 md:px-20 py-20 min-h-180 h-full text-center relative overflow-hidden ">
           <div className="space-y-30 relative z-50 mb-40">
-            <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize flex flex-col bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+            <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize flex flex-col bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
               Who&apos;s it for?
             </h2>
             <div className="flex flex-col lg:flex-row justify-center items-center gap-20">
@@ -94,7 +94,7 @@ const ScaremoorPage = () => {
             className="absolute bottom-1/2 -translate-y-1/2 right-60"
           />
 
-          <h2 className="font-(family-name:--trickOrDead) font-normal text-4xl sm:text-6xl capitalize flex flex-col bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
+          <h2 className="font-trickordead font-normal text-4xl sm:text-6xl capitalize flex flex-col bg-gradient-to-b from-white from-[10%] to-[#A4A4A4] bg-clip-text text-transparent">
             What makes it different?
           </h2>
           <div className="flex flex-col justify-center items-center mt-10">

@@ -8,6 +8,12 @@
 }
 
 @layer utilities {
+  .font-trickordead {
+    font-family: var(--trickOrDead), serif;
+  }
+}
+
+@layer utilities {
   .swiper-pagination-bullet {
     @apply bg-white! opacity-100! h-3! w-3!;
   }

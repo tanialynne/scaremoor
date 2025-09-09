@@ -10,7 +10,7 @@
 /* Minimal font consistency - only fix the actual problem areas */
 @layer components {
   /* Only ensure paragraphs meet 20px minimum - nothing else */
-  p:not(.hero-text):not(.footer-text-small) {
+  p:not(.hero-text):not(.footer-text-small):not(.card-description) {
     font-size: max(20px, 1.25rem) !important;
   }
 }

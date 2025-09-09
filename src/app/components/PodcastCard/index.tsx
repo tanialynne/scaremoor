@@ -8,9 +8,10 @@ interface PodcastCardProps {
   episode: string;
   duration: string;
   audioSrc: string;
+  bookTitle?: string;
 }
 
-const PodcastCard = ({ title, description, episode, duration, audioSrc }: PodcastCardProps) => {
+const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitle }: PodcastCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -161,14 +162,18 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc }: Podcas
           <div className="flex flex-col h-full min-h-[280px]">
             <div className="space-y-3 flex-grow">
               <h3 className="font-trickordead text-2xl" id={`podcast-title-${title.replace(/\s+/g, '-').toLowerCase()}`}>{title}</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="card-description text-gray-300 text-lg leading-relaxed">
                 {description}
               </p>
             </div>
             <div className="pt-4 mt-4 border-t border-gray-700">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">{episode} • {duration}</span>
-                <span className="text-green-400 font-semibold">FREE</span>
+                <span className="text-sm text-gray-400">
+                  {bookTitle && <span className="text-orange-400">{bookTitle}</span>}
+                  {bookTitle && episode && " • "}
+                  {episode}
+                </span>
+                <span className="text-gray-400 text-sm">{duration}</span>
               </div>
               <div className="mt-4 text-right text-gray-500">
                 <span className="text-xs">Click to play →</span>

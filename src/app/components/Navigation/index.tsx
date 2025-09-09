@@ -37,7 +37,7 @@ const Nav = () => {
       <div
         className={`flex justify-between bg-transparent  relative z-[100] transition-transform duration-500 ease-in-out`}
       >
-        <Link href="/" className="w-25 lg:w-30 ">
+        <Link href="/" className="w-25 xl:w-30 ">
           <Image
             src={Logo}
             alt="brand logo"
@@ -46,7 +46,7 @@ const Nav = () => {
         </Link>
 
         <div className="flex items-center ml-auto">
-          <div className="hidden lg:flex gap-6 mr-16">
+          <div className="hidden xl:flex gap-3 mr-8">
             {NAV_ITEMS.map((link, idx) => (
               <NavLink
                 key={link.name}
@@ -59,7 +59,7 @@ const Nav = () => {
 
           <button
             onClick={toggleMenu}
-            className="lg:hidden ml-8 text-white hover:text-gray-300 focus:text-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-2 transition-colors z-[100] cursor-pointer relative"
+            className="xl:hidden ml-8 text-white hover:text-gray-300 focus:text-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-2 transition-colors z-[100] cursor-pointer relative"
             aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isMenuOpen}
             type="button"
@@ -89,7 +89,7 @@ const Nav = () => {
       </div>
 
       <div
-        className={`fixed lg:hidden inset-0 z-[999999] 
+        className={`fixed xl:hidden inset-0 z-[999999] 
         transition-all duration-700 ease-in-out 
         ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         style={{ backgroundColor: isMenuOpen ? '#000000' : 'transparent' }}

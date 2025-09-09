@@ -15,7 +15,7 @@ const NavLink: React.FC<NavLinkProps> = ({ text, href = "#", index }) => {
   return (
     <Link 
       href={href} 
-      className="flex items-center space-x-2 group focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg px-2 py-1 transition-all"
+      className="flex items-center space-x-1 group focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg px-1 py-1 transition-all"
       aria-current={isActive ? "page" : undefined}
       aria-label={`Navigate to ${text}`}
     >

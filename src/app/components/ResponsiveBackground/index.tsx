@@ -29,7 +29,7 @@ const ResponsiveBackground: React.FC<ResponsiveBackgroundProps> = ({
         fill
         priority={priority}
         className="hidden lg:block absolute inset-0 object-cover -z-30"
-        sizes="100vw"
+        sizes="(min-width: 1024px) 100vw, 0px"
       />
       
       {/* Tablet Background */}
@@ -40,7 +40,7 @@ const ResponsiveBackground: React.FC<ResponsiveBackgroundProps> = ({
           fill
           priority={priority}
           className="hidden md:block lg:hidden absolute inset-0 object-cover -z-30"
-          sizes="100vw"
+          sizes="(min-width: 768px) and (max-width: 1023px) 100vw, 0px"
         />
       )}
       
@@ -52,7 +52,7 @@ const ResponsiveBackground: React.FC<ResponsiveBackgroundProps> = ({
           fill
           priority={priority}
           className="block md:hidden absolute inset-0 object-cover -z-30"
-          sizes="100vw"
+          sizes="(max-width: 767px) 100vw, 0px"
         />
       )}
       
@@ -64,7 +64,7 @@ const ResponsiveBackground: React.FC<ResponsiveBackgroundProps> = ({
           fill
           priority={priority}
           className="block lg:hidden absolute inset-0 object-cover -z-30"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
         />
       )}
       

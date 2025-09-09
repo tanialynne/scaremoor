@@ -37,7 +37,7 @@ const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPad
             fill
             priority
             className="absolute inset-0 object-cover -z-30"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 100vw, 100vw"
             placeholder="blur"
           />
         )}
@@ -52,7 +52,7 @@ const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPad
               src={LandingPageAsset} 
               alt="landingpage-assets" 
               className="w-full h-auto"
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 100vw, 100vw"
               placeholder="blur"
             />
           </div>

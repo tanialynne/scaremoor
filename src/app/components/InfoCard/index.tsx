@@ -17,7 +17,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ cardIcon, cardTitle, cardDescriptio
         <Image src={cardIcon} alt="info-icon" className="inline-block w-full h-full" />
       </div>
       {cardTitle && <h4 className="font-medium text-xl">{cardTitle}</h4>}
-      <p className={descriptionTextSize}>{cardDescription}</p>
+      <p className={descriptionTextSize || "text-xl"}>{cardDescription}</p>
     </div>
   );
 };

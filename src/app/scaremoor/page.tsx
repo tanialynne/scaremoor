@@ -112,7 +112,7 @@ const ScaremoorPage = () => {
           </div>
           <div className="py-30 relative z-50">
             <BookInfo title="Sample Storylines" bookImage={HauntedBook}>
-              <ul className="mt-4 list-disc space-y-4 text-lg pl-5">
+              <ul className="mt-4 list-disc space-y-4 text-xl pl-5">
                 <li>
                   A girl opens a mysterious supply closet door—and starts
                   disappearing from her own life.

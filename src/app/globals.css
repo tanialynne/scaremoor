@@ -5,31 +5,12 @@
   p {
     @apply text-xl md:text-lg leading-8;
   }
-  
-  /* Ensure ALL text elements are never smaller than 20px on ALL screen sizes */
-  /* Paragraphs and main text */
-  p, li, span:not(.sr-only):not(.hidden), div:not(.sr-only):not(.hidden) {
-    font-size: max(20px, 1.25rem) !important;
-  }
-  
-  /* Form elements */
-  label, button:not(.sr-only), input, textarea, select {
-    font-size: max(20px, 1.25rem) !important;
-  }
-  
-  /* Override specific Tailwind text sizes that are smaller than 20px */
-  .text-xs, .text-sm, .text-base, .text-lg {
-    font-size: 20px !important;
-  }
-  
-  /* Keep small utility text small for accessibility labels */
-  .text-xs.sr-only, .text-sm.sr-only,
-  .absolute.sr-only, [aria-hidden="true"] {
-    font-size: inherit !important;
-  }
-  
-  /* Specific overrides for common small text patterns */
-  .text-gray-400, .text-gray-300, .text-orange-400 {
+}
+
+/* Minimal font consistency - only fix the actual problem areas */
+@layer components {
+  /* Only ensure paragraphs meet 20px minimum - nothing else */
+  p {
     font-size: max(20px, 1.25rem) !important;
   }
 }

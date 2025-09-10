@@ -128,7 +128,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-orange-400">7. Children's Privacy</h2>
+            <h2 className="text-2xl font-bold text-orange-400">7. Children&apos;s Privacy</h2>
             <p className="text-gray-300 leading-relaxed">
               While our books are designed for middle-grade readers, our website is directed to parents, educators, and adult purchasers. We do not knowingly collect personal information from children under 13. If we become aware that we have collected personal information from a child under 13, we will take steps to delete such information.
             </p>

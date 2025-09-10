@@ -58,6 +58,12 @@ const Footer = () => {
             >
               Contact Us
             </Link>
+            <Link
+              href="/privacy"
+              className="text-base transition-colors duration-300 ease-in-out hover:text-[#F54F02]"
+            >
+              Privacy Policy
+            </Link>
           </div>
           <div className="flex flex-col lg:flex-row gap-1.5 order-1 md:order-3">
             <FooterIcon

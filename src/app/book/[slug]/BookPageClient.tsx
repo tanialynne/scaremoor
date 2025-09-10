@@ -84,7 +84,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                   <h3 className="text-2xl md:text-4xl">
                     {selectedBook?.bookSubHeading}
                   </h3>
-                  <h1 className="text-5xl md:text-7xl gradient-text-accessible">
+                  <h1 className="text-5xl md:text-7xl">
                     {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                   </h1>
                 </div>
@@ -139,7 +139,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                 <h3 className="text-2xl md:text-4xl">
                   {selectedBook?.bookSubHeading}
                 </h3>
-                <h2 className="text-5xl md:text-7xl gradient-text-accessible">
+                <h2 className="text-5xl md:text-7xl">
                   {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                 </h2>
               </div>
@@ -186,7 +186,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                       <p className="text-3xl md:text-5xl leading-10">
                         {selectedBook?.bookSubHeading}
                       </p>
-                      <h2 className="text-5xl md:text-7xl gradient-text-accessible">
+                      <h2 className="">
                         {selectedBook?.bookTitle} #{selectedBook?.bookNumber}
                       </h2>
                     </div>

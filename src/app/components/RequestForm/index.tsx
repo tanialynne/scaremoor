@@ -8,6 +8,7 @@ import {
   trackFormStart,
   trackFormSubmit,
   trackLeadMagnetSignup,
+  trackFacebookLead,
 } from "@/app/utils/analytics";
 
 import OrangeBackground from "../../../../public/images/orangeBackground.png";
@@ -79,6 +80,9 @@ const RequestForm: React.FC<RequestFormProp> = ({
 
       const data = await res.json();
       if (res.ok) {
+        // Track Facebook Lead event
+        trackFacebookLead(`lead_magnet_${requestId || 'unknown'}`);
+        
         spookyToast.success(
           "Email potion brewed and delivered perfectly! 🧪📧"
         );

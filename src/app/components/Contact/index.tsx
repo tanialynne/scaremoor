@@ -6,6 +6,7 @@ import Button from "../Button";
 import Herobox from "../Herobox";
 import InputField from "../Inputs";
 import { spookyToast } from "../SpookyToast";
+import { trackFacebookLead } from "@/app/utils/analytics";
 
 import OrangeBackground from "../../../../public/images/orangeBackground.png";
 import CloudBottom from "../../../../public/images/cloudBottomLeft.png";
@@ -54,6 +55,9 @@ const ContactForm = () => {
       const data = await response.json();
 
       if (response.ok) {
+        // Track Facebook Lead event
+        trackFacebookLead("contact_form");
+        
         spookyToast.success(
           "Your message has been sent through the ether! We'll respond soon! 👻📬"
         );

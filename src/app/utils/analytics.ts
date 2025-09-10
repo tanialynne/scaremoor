@@ -4,6 +4,7 @@ declare global {
     gtag: (...args: unknown[]) => void;
     dataLayer: Record<string, unknown>[];
     clarity: (action: string, ...args: unknown[]) => void;
+    fbq: (action: string, event: string, params?: Record<string, unknown>) => void;
   }
 }
 
@@ -323,6 +324,27 @@ export const setClarityCustomTag = (key: string, value: string) => {
 export const identifyClarityUser = (userId: string) => {
   if (typeof window !== 'undefined' && window.clarity) {
     window.clarity('identify', userId);
+  }
+};
+
+// Facebook Pixel Tracking
+export const trackFacebookLead = (leadSource?: string) => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    const params: Record<string, unknown> = {};
+    if (leadSource) params.content_name = leadSource;
+    
+    window.fbq('track', 'Lead', params);
+  }
+};
+
+export const trackFacebookPurchase = (bookTitle: string, value: number) => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', 'Purchase', {
+      content_name: bookTitle,
+      content_type: 'product',
+      value: value,
+      currency: 'USD'
+    });
   }
 };
 

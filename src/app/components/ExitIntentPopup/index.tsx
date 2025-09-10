@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { trackFacebookLead } from "@/app/utils/analytics";
 
 interface ExitIntentPopupProps {
   onClose?: () => void;
@@ -111,6 +112,9 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
       });
 
       if (response.ok) {
+        // Track Facebook Lead event
+        trackFacebookLead("exit_intent_popup");
+        
         setIsVisible(false);
         // Mark that user has submitted their email
         localStorage.setItem("scaremoor_email_submitted", "true");

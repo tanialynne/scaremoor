@@ -16,6 +16,7 @@ import {
   trackQuizComplete,
   trackQuizEmailSignup,
   trackQuizBookPurchase,
+  trackFacebookLead,
 } from "../utils/analytics";
 
 import BackgroundImage from "../../../public/images/scaremoorpage-image.png";
@@ -526,6 +527,9 @@ const QuizClient = () => {
 
   const handleEmailGatedSignup = (success: boolean = true) => {
     if (success) {
+      // Track Facebook Lead event for quiz email signup
+      trackFacebookLead("quiz_email_signup");
+      
       setEmailSubmitted(true);
       trackFormStart("Quiz Email Gate", "Quiz Email Capture");
       if (recommendation) {

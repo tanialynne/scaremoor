@@ -13,7 +13,7 @@ export const FEATURE_FLAGS = {
   MULTI_SERIES_ENABLED: false,
 
   // Event calendar and management
-  EVENTS_ENABLED: false,
+  EVENTS_ENABLED: true,
 
   // Direct book sales integration
   DIRECT_SALES_ENABLED: false,

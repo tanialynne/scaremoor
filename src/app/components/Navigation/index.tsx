@@ -3,8 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { NAV_ITEMS } from "@/app/constants/NavLinks";
+import { getFilteredNavigation, getFlatNavItems } from "@/app/constants/NavigationStructure";
 import NavLink from "./NavLink";
+import NavigationDropdown from "./NavigationDropdown";
+import MobileNavSection from "./MobileNavSection";
 
 import { AlignRight, X } from "lucide-react";
 
@@ -16,6 +18,8 @@ import Star from "../../../../public/images/starsIcon.svg";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigationGroups = getFilteredNavigation();
+  const flatNavItems = getFlatNavItems();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -46,13 +50,12 @@ const Nav = () => {
         </Link>
 
         <div className="flex items-center ml-auto">
-          <div className="hidden xl:flex gap-3 mr-8">
-            {NAV_ITEMS.map((link, idx) => (
-              <NavLink
-                key={link.name}
-                text={link.name}
-                href={link.href}
-                index={idx + 1}
+          <div className="hidden xl:flex gap-2 mr-8">
+            {navigationGroups.map((group, idx) => (
+              <NavigationDropdown
+                key={group.name}
+                group={group}
+                index={idx}
               />
             ))}
           </div>
@@ -110,7 +113,7 @@ const Nav = () => {
         />
 
         <div
-          className={`relative z-[10] flex flex-col items-center justify-center h-full 
+          className={`relative z-[10] flex flex-col h-full 
             transition-all duration-500 ease-in-out
             ${isMenuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
         >
@@ -123,25 +126,27 @@ const Nav = () => {
             <X size={35} aria-hidden="true" />
           </button>
 
-          <div className="flex flex-col items-center space-y-8">
-            {NAV_ITEMS.map((link, idx) => (
-              <div
-                key={link.name}
-                className={`transform transition-all duration-500 ease-in-out
-                  ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-                style={{
-                  transitionDelay: `${(idx + 1) * 80 + 300}ms`,
-                }}
-              >
-                <NavLink text={link.name} href={link.href} index={idx + 1} />
-              </div>
-            ))}
+          {/* Scrollable content area */}
+          <div className="flex-1 overflow-y-auto px-8 py-20 mt-16">
+            <div className="flex flex-col space-y-3 w-full max-w-sm mx-auto">
+              {navigationGroups.map((group, idx) => (
+                <MobileNavSection
+                  key={group.name}
+                  group={group}
+                  onLinkClick={() => setIsMenuOpen(false)}
+                  animationDelay={(idx + 1) * 100 + 300}
+                />
+              ))}
+            </div>
+          </div>
 
+          {/* Fixed bottom social icons */}
+          <div className="flex-shrink-0 p-8">
             <div
-              className={`flex items-center gap-6 mt-12 transition-all duration-500 ease-in-out
+              className={`flex items-center justify-center gap-6 transition-all duration-500 ease-in-out
                 ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
               style={{
-                transitionDelay: `${NAV_ITEMS.length * 80 + 500}ms`,
+                transitionDelay: `${navigationGroups.length * 100 + 500}ms`,
               }}
             >
               <Link

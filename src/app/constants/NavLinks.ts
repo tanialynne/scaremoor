@@ -7,6 +7,7 @@ const ALL_NAV_ITEMS = [
   { name: "Blog", href: "/blog", featureFlag: "BLOG_ENABLED" as const },
   { name: "Quiz", href: "/quiz", featureFlag: "QUIZ_ENABLED" as const },
   { name: "Author", href: "/author" },
+  { name: "Press Kit", href: "/press-kit" },
   { name: "Scaremoor", href: "/scaremoor" },
 ];
 

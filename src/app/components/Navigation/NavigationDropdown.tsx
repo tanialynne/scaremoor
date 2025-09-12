@@ -61,7 +61,7 @@ const NavigationDropdown: React.FC<NavigationDropdownProps> = ({ group, index })
         href={item.href}
         className={`px-4 py-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black hover:bg-orange-600/20 ${
           isActive 
-            ? "bg-orange-600/30 text-orange-400 font-semibold" 
+            ? "text-orange-400 font-semibold" 
             : "text-white hover:text-orange-300"
         }`}
         style={{
@@ -85,7 +85,7 @@ const NavigationDropdown: React.FC<NavigationDropdownProps> = ({ group, index })
         onKeyDown={handleKeyDown}
         className={`flex items-center px-4 py-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black hover:bg-orange-600/20 ${
           isActiveGroup
-            ? "bg-orange-600/30 text-orange-400 font-semibold"
+            ? "text-orange-400 font-semibold"
             : "text-white hover:text-orange-300"
         }`}
         style={{
@@ -120,7 +120,7 @@ const NavigationDropdown: React.FC<NavigationDropdownProps> = ({ group, index })
                 href={item.href}
                 className={`block px-4 py-2 text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-inset ${
                   isActive
-                    ? "bg-orange-600/30 text-orange-400 font-semibold"
+                    ? "text-orange-400 font-semibold"
                     : "text-gray-300 hover:bg-orange-600/20 hover:text-white"
                 } ${isBookItem ? "pl-6 border-l-2 border-orange-700/20 ml-2" : ""}`}
                 role="menuitem"

@@ -18,14 +18,17 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
   const [totalDuration, setTotalDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Initialize random animation delays for CSS animations
-  const [animationDelays] = useState(() => 
-    Array.from({ length: 60 }, () => Math.random() * 0.7 + 0.2)
-  );
+  // Initialize random animation delays for CSS animations (lazy loaded)
+  const [animationDelays, setAnimationDelays] = useState<number[]>([]);
 
   const handleCardClick = async () => {
     if (!isFlipped) {
       setIsFlipped(true);
+      
+      // Generate animation delays only when needed (when flipping to show waveform)
+      if (animationDelays.length === 0) {
+        setAnimationDelays(Array.from({ length: 60 }, () => Math.random() * 0.7 + 0.2));
+      }
       
       // Auto-play when card flips
       setTimeout(async () => {
@@ -186,17 +189,17 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
         {/* Back of card */}
         <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gray-900/50 rounded-lg p-6 border border-orange-500/50">
           <div className="flex flex-col h-full">
-            <div className="flex-1">
+            <div>
               <h3 className="font-trickordead text-xl mb-2 text-orange-400">{title}</h3>
-              <p className="text-sm text-gray-300 mb-4">Now Playing...</p>
+              <span className="text-xs text-gray-300 mb-4 block">Now Playing...</span>
             </div>
 
-            {/* Audio Controls */}
-            <div className="space-y-4">
+            {/* Audio Controls - Centered */}
+            <div className="flex-1 flex flex-col justify-center space-y-4">
               {/* Play/Pause Button with Waveform */}
               <div className="flex items-center justify-center relative">
                 {/* CSS-Based Waveform Animation */}
-                {isPlaying && (
+                {isPlaying && animationDelays.length > 0 && (
                   <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-16 flex items-center justify-center pointer-events-none px-2" aria-hidden="true">
                     <div className="sound-wave flex items-center justify-center h-full w-full">
                       {animationDelays.map((delay, i) => {
@@ -272,8 +275,10 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
                   <span>{formatTime(totalDuration)}</span>
                 </div>
               </div>
+            </div>
 
-              {/* Back Button */}
+            {/* Back Button - Fixed at bottom */}
+            <div>
               <button
                 onClick={(e) => {
                   e.stopPropagation();

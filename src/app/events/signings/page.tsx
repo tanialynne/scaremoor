@@ -308,7 +308,7 @@ const BookSigningsPage = () => {
                 Want a Signing at Your Location?
               </h3>
               <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                Bookstore owner? Librarian? Event coordinator? We'd love to bring T.L. Griffith 
+                Bookstore owner? Librarian? Event coordinator? We&apos;d love to bring T.L. Griffith 
                 to your location for a book signing event that will thrill young horror fans!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

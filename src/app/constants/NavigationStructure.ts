@@ -1,5 +1,6 @@
 import { isFeatureEnabled } from "./FeatureFlags";
 import Books from "./Books";
+import { getActiveSeries, hasMultipleSeries } from "../utils/seriesUtils";
 
 export interface NavigationItem {
   name: string;
@@ -13,58 +14,81 @@ export interface NavigationGroup {
   alwaysVisible?: boolean;
 }
 
-const ALL_NAVIGATION_GROUPS: NavigationGroup[] = [
-  {
-    name: "Home",
-    items: [{ name: "Home", href: "/" }],
-    alwaysVisible: true
-  },
-  {
-    name: "Books",
-    items: [
-      { name: "All Books", href: "/books" },
-      ...Books.map(book => ({
+// Function to generate navigation groups dynamically
+const getNavigationGroups = (): NavigationGroup[] => {
+  const activeSeries = getActiveSeries();
+  const multipleSeriesActive = hasMultipleSeries();
+  const multiSeriesEnabled = isFeatureEnabled("MULTI_SERIES_ENABLED");
+  
+  const booksItems: NavigationItem[] = [];
+  
+  if (multiSeriesEnabled && multipleSeriesActive) {
+    // If multiple series feature is enabled AND multiple series are active, show series navigation
+    booksItems.push({ name: "All Series", href: "/series" });
+    activeSeries.forEach(series => {
+      booksItems.push({ name: series.seriesTitle, href: `/series/${series.seriesSlug}` });
+    });
+  } else {
+    // If single series or feature disabled, show books directly
+    booksItems.push({ name: "All Books", href: "/books" });
+    Books.slice(0, 5).map(book => { // Limit to first 5 books in nav
+      booksItems.push({
         name: book.bookTitle,
         href: `/book/${book.bookSlug}`
-      })),
-      { name: "Series", href: "/series", featureFlag: "MULTI_SERIES_ENABLED" },
-      { name: "Shop", href: "/shop", featureFlag: "DIRECT_SALES_ENABLED" }
-    ]
-  },
-  {
-    name: "Media",
-    items: [
-      { name: "Podcast", href: "/podcast", featureFlag: "PODCAST_ENABLED" },
-      { name: "Blog", href: "/blog", featureFlag: "BLOG_ENABLED" },
-      { name: "Press Kit", href: "/press-kit", featureFlag: "PRESS_KIT_ENABLED" }
-    ]
-  },
-  {
-    name: "Events",
-    items: [
-      { name: "Event Calendar", href: "/events", featureFlag: "EVENTS_ENABLED" },
-      { name: "Book Signings", href: "/events/signings", featureFlag: "EVENTS_ENABLED" },
-      { name: "Virtual Events", href: "/events/virtual", featureFlag: "EVENTS_ENABLED" }
-    ]
-  },
-  {
-    name: "Quiz",
-    items: [{ name: "Quiz", href: "/quiz", featureFlag: "QUIZ_ENABLED" }],
-    alwaysVisible: true
-  },
-  {
-    name: "About",
-    items: [
-      { name: "Author", href: "/author" },
-      { name: "Scaremoor", href: "/scaremoor" },
-      { name: "Contact", href: "/contact" }
-    ]
+      });
+    });
   }
-];
+  
+  // Add optional shop link
+  if (isFeatureEnabled("DIRECT_SALES_ENABLED")) {
+    booksItems.push({ name: "Shop", href: "/shop" });
+  }
+
+  return [
+    {
+      name: "Home",
+      items: [{ name: "Home", href: "/" }],
+      alwaysVisible: true
+    },
+    {
+      name: "Books",
+      items: booksItems
+      },
+    {
+      name: "Media",
+      items: [
+        { name: "Podcast", href: "/podcast", featureFlag: "PODCAST_ENABLED" },
+        { name: "Blog", href: "/blog", featureFlag: "BLOG_ENABLED" },
+        { name: "Press Kit", href: "/press-kit", featureFlag: "PRESS_KIT_ENABLED" }
+      ]
+    },
+    {
+      name: "Events",
+      items: [
+        { name: "Event Calendar", href: "/events", featureFlag: "EVENTS_ENABLED" },
+        { name: "Book Signings", href: "/events/signings", featureFlag: "EVENTS_ENABLED" },
+        { name: "Virtual Events", href: "/events/virtual", featureFlag: "EVENTS_ENABLED" }
+      ]
+    },
+    {
+      name: "Quiz",
+      items: [{ name: "Quiz", href: "/quiz", featureFlag: "QUIZ_ENABLED" }],
+      alwaysVisible: true
+    },
+    {
+      name: "About",
+      items: [
+        { name: "Author", href: "/author" },
+        { name: "Scaremoor", href: "/scaremoor" },
+        { name: "Contact", href: "/contact" }
+      ]
+    }
+  ];
+};
 
 // Filter navigation groups and items based on feature flags
 export const getFilteredNavigation = (): NavigationGroup[] => {
-  return ALL_NAVIGATION_GROUPS.map(group => ({
+  return getNavigationGroups().map(group => ({
     ...group,
     items: group.items.filter(item => 
       !item.featureFlag || isFeatureEnabled(item.featureFlag)

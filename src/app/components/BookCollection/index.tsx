@@ -1,11 +1,18 @@
 import Books from "@/app/constants/Books";
+import { getBooksForSeries } from "@/app/utils/seriesUtils";
 import BookCard from "../BookCard";
 
-const BookCollection = () => {
+type BookCollectionProps = {
+  seriesId?: string;
+};
+
+const BookCollection = ({ seriesId }: BookCollectionProps) => {
+  const books = seriesId ? getBooksForSeries(seriesId) : Books;
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 relative z-50">
-      {Books.length > 0 &&
-        Books.map((book) => (
+      {books.length > 0 &&
+        books.map((book) => (
           <BookCard
             key={book.bookTitle}
             type="open"

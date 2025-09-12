@@ -29,6 +29,7 @@ export type Book = {
   bookDescription?: string;
   videoPreview?: string;
   leadMagnetId?: string;
+  seriesId?: string; // Add series association
 };
 
 const Books: Book[] = [
@@ -36,6 +37,7 @@ const Books: Book[] = [
     bookNumber: 1,
     bookTitle: "The Haunted Locker",
     bookSlug: slugify("The Haunted Locker"),
+    seriesId: "scaremoor",
     bookImage: {
       open: HauntedBookFlat,
       close: HauntedBook,
@@ -54,6 +56,7 @@ Now, Ben and Mia must race against time to stop the spirits from escaping, but t
     bookNumber: 2,
     bookTitle: "The Night of the Living Vines",
     bookSlug: slugify("The Night of the Living Vines"),
+    seriesId: "scaremoor",
     bookImage: {
       open: LivingVineFlat,
       close: LivingVine,
@@ -74,6 +77,7 @@ Will they find a way to stop the ancient force before it's too late? Or will the
     bookNumber: 3,
     bookTitle: "The Phantom Playground",
     bookSlug: slugify("The Phantom Playground"),
+    seriesId: "scaremoor",
     bookImage: {
       open: PhantomGroundFlat,
       close: PhantomGround,
@@ -94,6 +98,7 @@ If Emily and her friends can't uncover the truth—and survive it—they might b
     bookNumber: 4,
     bookTitle: "The Changing Portrait",
     bookSlug: slugify("The Changing Portrait"),
+    seriesId: "scaremoor",
     bookImage: {
       open: ChangingPortraitFlat,
       close: ChangingPortrait,
@@ -114,6 +119,7 @@ As the past bleeds into the present, Haley must solve the mystery before the man
     bookNumber: 5,
     bookTitle: "The Vanishing Words",
     bookSlug: slugify("The Vanishing Words"),
+    seriesId: "scaremoor",
     bookImage: {
       open: VanishingWordsFlat,
       close: VanishingWords,
@@ -134,6 +140,7 @@ Because some words don't just have meaning. They have a mind of their own.
     bookNumber: 6,
     bookTitle: "The Mask Room",
     bookSlug: slugify("The Mask Room"),
+    seriesId: "scaremoor",
     bookImage: {
       open: MaskRoomFlat,
       close: MaskRoom,

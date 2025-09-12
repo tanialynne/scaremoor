@@ -8,6 +8,7 @@ import Markdown from "react-markdown";
 import { BlogPost } from "@/app/constants/BlogPosts";
 import Button from "@/app/components/Button";
 import Nav from "@/app/components/Navigation";
+import ShareButtons from "@/app/components/ShareButtons";
 import { trackButtonClick } from "@/app/utils/analytics";
 
 import BackgroundImage from "../../../../public/images/singleBookBackground.png";
@@ -191,6 +192,17 @@ const BlogPostClient: React.FC<BlogPostClientProps> = ({ selectedPost }) => {
               >
                 {selectedPost.content}
               </Markdown>
+            </div>
+            
+            {/* Share buttons after article content */}
+            <div className="mt-12 pt-8">
+              <ShareButtons 
+                url={`https://www.scaremoor.com/blog/${selectedPost.slug}`}
+                title={selectedPost.title}
+                description={selectedPost.excerpt}
+                hashtags="Scaremoor,Blog,MiddleGradeHorror,WritingTips"
+                label="Share this article:"
+              />
             </div>
           </div>
         </article>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Herobox from "../components/Herobox";
 import Button from "../components/Button";
 import InfoCard from "../components/InfoCard";
+import EventShareButtons from "../components/EventShareButtons";
 import SAMPLE_EVENTS, { 
   getUpcomingEvents, 
   getFeaturedEvents, 
@@ -178,6 +179,8 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           </a>
         )}
       </div>
+      
+      <EventShareButtons event={event} />
     </div>
   );
 };

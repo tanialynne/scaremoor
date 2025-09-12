@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import { Testimonials } from "../components/Testimonials";
 import PodcastCard from "../components/PodcastCard";
 import InfoCard from "../components/InfoCard";
-import PODCAST_EPISODES, { getEpisodesGroupedByBook } from "../constants/PodcastEpisodes";
+import { getEpisodesGroupedByBook } from "../constants/PodcastEpisodes";
 
 import BackgroundImage from "../../../public/images/singleBookBackground.png";
 import OrangeBackgroundMd from "../../../public/images/orangeBackgroundMd.png";

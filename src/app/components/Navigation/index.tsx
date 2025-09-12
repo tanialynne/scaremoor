@@ -9,6 +9,7 @@ import NavigationDropdown from "./NavigationDropdown";
 import MobileNavSection from "./MobileNavSection";
 
 import { AlignRight, X } from "lucide-react";
+import CartIcon from "../CartIcon";
 
 import Logo from "../../../../public/images/logo.png";
 import ShopIcon from "../../../../public/images/shop.svg";
@@ -71,6 +72,7 @@ const Nav = () => {
           </button>
 
           <div className="flex items-center gap-1.5">
+            <CartIcon />
             <Link
               href="https://www.amazon.com/dp/B0DKLDSJBC"
               className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-1 transition-transform hover:scale-110 focus:scale-110"

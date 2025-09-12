@@ -26,7 +26,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ cardIcon, cardIconFa, cardTitle, ca
           </>
         ) : null}
       </div>
-      {cardTitle && <h4 className="font-trickordead font-medium text-xl">{cardTitle}</h4>}
+      {cardTitle && <h4 className="font-trickordead font-medium text-lg">{cardTitle}</h4>}
       <p className={descriptionTextSize || "text-white"}>{cardDescription}</p>
     </div>
   );

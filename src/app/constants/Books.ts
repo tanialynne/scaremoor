@@ -30,6 +30,16 @@ export type Book = {
   videoPreview?: string;
   leadMagnetId?: string;
   seriesId?: string; // Add series association
+  directSales?: {
+    enabled: boolean;
+    variants: Array<{
+      format: "paperback" | "hardcover" | "ebook" | "audiobook";
+      price: number;
+      originalPrice?: number;
+      inStock: boolean;
+      isbn?: string;
+    }>;
+  };
 };
 
 const Books: Book[] = [
@@ -51,6 +61,28 @@ Now, Ben and Mia must race against time to stop the spirits from escaping, but t
 
 *A spine-chilling adventure perfect for young readers who love a good scare!*
     `.trim(),
+    directSales: {
+      enabled: true,
+      variants: [
+        {
+          format: "paperback",
+          price: 12.99,
+          originalPrice: 14.99,
+          inStock: true,
+          isbn: "978-0-123456-78-9"
+        },
+        {
+          format: "ebook",
+          price: 7.99,
+          inStock: true
+        },
+        {
+          format: "audiobook",
+          price: 14.99,
+          inStock: true
+        }
+      ]
+    }
   },
   {
     bookNumber: 2,
@@ -158,6 +190,29 @@ Now the masks are spreading. The school is shifting. And Natalie might be the on
 
 Would you recognize yourself... without your face?
     `.trim(),
+    directSales: {
+      enabled: true,
+      variants: [
+        {
+          format: "paperback",
+          price: 13.99,
+          inStock: true,
+          isbn: "978-0-987654-32-1"
+        },
+        {
+          format: "hardcover",
+          price: 19.99,
+          originalPrice: 22.99,
+          inStock: true,
+          isbn: "978-0-987654-33-8"
+        },
+        {
+          format: "ebook",
+          price: 8.99,
+          inStock: true
+        }
+      ]
+    }
   },
 ];
 

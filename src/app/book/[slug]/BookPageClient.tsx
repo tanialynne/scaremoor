@@ -9,7 +9,7 @@ import { Book } from "@/app/constants/Books";
 import Button from "@/app/components/Button";
 import Herobox from "@/app/components/Herobox";
 import VideoPreview from "@/app/components/VideoPreview";
-import { BookCTATest } from "@/app/components/ABTestExamples/BookCTATest";
+import BookPurchaseOptions from "@/app/components/BookPurchaseOptions";
 import { LeadMagnetTest } from "@/app/components/ABTestExamples/LeadMagnetTest";
 import ABTestDebug from "@/app/components/ABTestDebug";
 import {
@@ -93,9 +93,8 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                   <Markdown>{selectedBook?.bookDescription}</Markdown>
                 </div>
                 <div className="mt-8">
-                  <BookCTATest
-                    purchaseLink={selectedBook.purchaseLink}
-                    bookTitle={selectedBook.bookTitle}
+                  <BookPurchaseOptions
+                    book={selectedBook}
                     onPurchaseClick={handlePurchaseClick}
                   />
                 </div>
@@ -158,9 +157,8 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                     bookTitle={selectedBook.bookTitle}
                   />
                   <div className="text-center mt-8">
-                    <BookCTATest
-                      purchaseLink={selectedBook.purchaseLink}
-                      bookTitle={selectedBook.bookTitle}
+                    <BookPurchaseOptions
+                      book={selectedBook}
                       onPurchaseClick={handlePurchaseClick}
                     />
                   </div>
@@ -196,9 +194,8 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                     </div>
 
                     <div className="text-center mt-8">
-                      <BookCTATest
-                        purchaseLink={selectedBook.purchaseLink}
-                        bookTitle={selectedBook.bookTitle}
+                      <BookPurchaseOptions
+                        book={selectedBook}
                         onPurchaseClick={handlePurchaseClick}
                       />
                     </div>

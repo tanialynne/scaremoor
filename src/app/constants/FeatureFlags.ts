@@ -16,7 +16,7 @@ export const FEATURE_FLAGS = {
   EVENTS_ENABLED: true,
 
   // Direct book sales integration
-  DIRECT_SALES_ENABLED: false,
+  DIRECT_SALES_ENABLED: true,
 
   // Press kit for media resources
   PRESS_KIT_ENABLED: true,

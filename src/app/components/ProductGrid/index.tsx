@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Books from '../../constants/Books';
-import Products, { getAllActiveProducts, getProductsByCategory } from '../../constants/Products';
+import { getAllActiveProducts, getProductsByCategory } from '../../constants/Products';
 import ProductCard from '../ProductCard';
 import GenericProductCard from '../GenericProductCard';
 

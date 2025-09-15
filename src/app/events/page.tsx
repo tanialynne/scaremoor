@@ -6,13 +6,13 @@ import Herobox from "../components/Herobox";
 import Button from "../components/Button";
 import InfoCard from "../components/InfoCard";
 import EventShareButtons from "../components/EventShareButtons";
-import SAMPLE_EVENTS, { 
-  getUpcomingEvents, 
-  getFeaturedEvents, 
-  formatEventDate, 
+import {
+  getUpcomingEvents,
+  getFeaturedEvents,
+  formatEventDate,
   formatEventLocation,
   Event,
-  EventType 
+  EventType
 } from "../constants/Events";
 
 import BackgroundImage from "../../../public/images/singleBookBackground.png";
@@ -186,7 +186,6 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
 };
 
 const EventsPage = () => {
-  const allEvents = SAMPLE_EVENTS;
   const upcomingEvents = getUpcomingEvents();
   const featuredEvents = getFeaturedEvents();
 
@@ -244,7 +243,7 @@ const EventsPage = () => {
                 Featured Events
               </h2>
               <p className="max-w-[60ch] mx-auto">
-                Don't miss these special events and exclusive opportunities 
+                Don&apos;t miss these special events and exclusive opportunities
                 to meet T.L. Griffith and dive deeper into the world of Scaremoor.
               </p>
             </div>
@@ -346,7 +345,7 @@ const EventsPage = () => {
               </h3>
               <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
                 Interested in having T.L. Griffith visit your school, library, bookstore, or festival? 
-                We'd love to bring the spine-tingling world of Scaremoor to your community!
+                We&apos;d love to bring the spine-tingling world of Scaremoor to your community!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/contact">

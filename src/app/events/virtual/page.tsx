@@ -5,12 +5,12 @@ import Link from "next/link";
 import Herobox from "../../components/Herobox";
 import Button from "../../components/Button";
 import InfoCard from "../../components/InfoCard";
-import SAMPLE_EVENTS, { 
+import {
   getVirtualEvents,
-  formatEventDate, 
+  formatEventDate,
   formatEventLocation,
   Event,
-  EventType 
+  EventType
 } from "../../constants/Events";
 
 import BackgroundImage from "../../../../public/images/singleBookBackground.png";
@@ -231,7 +231,7 @@ const VirtualEventsPage = () => {
               Upcoming Virtual Events
             </h2>
             <p className="max-w-[60ch] mx-auto">
-              Connect with the Scaremoor community online! Perfect for fans who can't attend 
+              Connect with the Scaremoor community online! Perfect for fans who can&apos;t attend
               in-person events or want to join from anywhere in the world.
             </p>
           </div>
@@ -345,8 +345,8 @@ const VirtualEventsPage = () => {
                 Have an Idea for a Virtual Event?
               </h3>
               <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                We're always looking for creative ways to connect with Scaremoor fans online! 
-                Whether it's a themed trivia night, character discussion, or something completely new.
+                We&apos;re always looking for creative ways to connect with Scaremoor fans online! 
+                Whether it&apos;s a themed trivia night, character discussion, or something completely new.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/contact">

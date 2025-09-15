@@ -6,10 +6,6 @@ import Link from 'next/link';
 import { X, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
 import { formatPrice } from '../../constants/DirectSales';
-import Button from '../Button';
-
-import YellowBackground from '../../../../public/images/yellowBackground.png';
-import OrangeBackground from '../../../../public/images/orangeBackground.png';
 
 const ShoppingCart: React.FC = () => {
   const { state, removeItem, updateQuantity, closeCart, clearCart } = useCart();

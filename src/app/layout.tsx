@@ -220,9 +220,10 @@ export default function RootLayout({
           `}
         </Script>
         <noscript>
-          <img 
-            height="1" 
-            width="1" 
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
             style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=228729539194546&ev=PageView&noscript=1"
             alt=""

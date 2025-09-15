@@ -1,15 +1,10 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-
 import Herobox from "../components/Herobox";
-import Button from "../components/Button";
 import CheckoutForm from "../components/CheckoutForm";
 import { isFeatureEnabled } from "../constants/FeatureFlags";
 
 import BackgroundImage from "../../../public/images/landingpage-Image.png";
-import OrangeBackground from "../../../public/images/orangeBackground.png";
 
 export const metadata: Metadata = {
   title: "Checkout",

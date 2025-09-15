@@ -51,8 +51,8 @@ const NavigationDropdown: React.FC<NavigationDropdownProps> = ({ group, index })
     };
   }, [timeoutId]);
 
-  // If only one item and it's always visible, render as simple link
-  if (group.items.length === 1 && group.alwaysVisible) {
+  // If only one item, render as simple link instead of dropdown
+  if (group.items.length === 1) {
     const item = group.items[0];
     const isActive = pathname === item.href;
     
@@ -111,7 +111,7 @@ const NavigationDropdown: React.FC<NavigationDropdownProps> = ({ group, index })
           }`}
           role="menu"
         >
-          {group.items.map((item, itemIndex) => {
+          {group.items.map((item) => {
             const isActive = pathname === item.href;
             const isBookItem = item.href.startsWith('/book/');
             return (

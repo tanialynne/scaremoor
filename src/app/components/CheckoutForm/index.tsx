@@ -6,7 +6,6 @@ import { useCart } from '../../contexts/CartContext';
 import { formatPrice } from '../../constants/DirectSales';
 import Button from '../Button';
 
-import YellowBackground from '../../../../public/images/yellowBackground.png';
 import OrangeBackground from '../../../../public/images/orangeBackground.png';
 
 const CheckoutForm: React.FC = () => {

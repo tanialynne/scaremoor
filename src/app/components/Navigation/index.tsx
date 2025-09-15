@@ -3,8 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { getFilteredNavigation, getFlatNavItems } from "@/app/constants/NavigationStructure";
-import NavLink from "./NavLink";
+import { getFilteredNavigation } from "@/app/constants/NavigationStructure";
 import NavigationDropdown from "./NavigationDropdown";
 import MobileNavSection from "./MobileNavSection";
 
@@ -20,7 +19,6 @@ import Star from "../../../../public/images/starsIcon.svg";
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigationGroups = getFilteredNavigation();
-  const flatNavItems = getFlatNavItems();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

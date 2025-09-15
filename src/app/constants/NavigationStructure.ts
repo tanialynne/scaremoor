@@ -31,7 +31,7 @@ const getNavigationGroups = (): NavigationGroup[] => {
   } else {
     // If single series or feature disabled, show books directly
     booksItems.push({ name: "All Books", href: "/books" });
-    Books.slice(0, 5).map(book => { // Limit to first 5 books in nav
+    Books.map(book => { // Show all books in nav
       booksItems.push({
         name: book.bookTitle,
         href: `/book/${book.bookSlug}`

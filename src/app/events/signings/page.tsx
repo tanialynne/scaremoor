@@ -5,13 +5,12 @@ import Link from "next/link";
 import Herobox from "../../components/Herobox";
 import Button from "../../components/Button";
 import InfoCard from "../../components/InfoCard";
-import SAMPLE_EVENTS, { 
-  getUpcomingEvents, 
+import {
   getEventsByType,
-  formatEventDate, 
+  formatEventDate,
   formatEventLocation,
   Event,
-  EventType 
+  EventType
 } from "../../constants/Events";
 
 import BackgroundImage from "../../../../public/images/singleBookBackground.png";
@@ -225,7 +224,7 @@ const BookSigningsPage = () => {
               Upcoming Book Signings
             </h2>
             <p className="max-w-[60ch] mx-auto">
-              Don't miss these opportunities to meet T.L. Griffith in person! 
+              Don&apos;t miss these opportunities to meet T.L. Griffith in person! 
               Perfect for getting books signed and connecting with the Scaremoor community.
             </p>
           </div>

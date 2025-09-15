@@ -13,13 +13,13 @@ export const FEATURE_FLAGS = {
   MULTI_SERIES_ENABLED: false,
 
   // Event calendar and management
-  EVENTS_ENABLED: true,
+  EVENTS_ENABLED: false,
 
   // Direct book sales integration
-  DIRECT_SALES_ENABLED: true,
+  DIRECT_SALES_ENABLED: false,
 
   // Press kit for media resources
-  PRESS_KIT_ENABLED: true,
+  PRESS_KIT_ENABLED: false,
 
   // Add more feature flags here as needed
   // NEWSLETTER_ENABLED: true,

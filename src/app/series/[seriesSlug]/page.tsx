@@ -17,11 +17,12 @@ import CloudBottom from "../../../../public/images/cloudBottomLeft.png";
 import Graveyard from "../../../../public/images/booksBackgroundGuy.png";
 
 type Props = {
-  params: { seriesSlug: string };
+  params: Promise<{ seriesSlug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const series = getSeriesBySlug(params.seriesSlug);
+  const { seriesSlug } = await params;
+  const series = getSeriesBySlug(seriesSlug);
   
   if (!series) {
     return {
@@ -35,8 +36,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const SeriesDetailPage = ({ params }: Props) => {
-  const series = getSeriesBySlug(params.seriesSlug);
+const SeriesDetailPage = async ({ params }: Props) => {
+  const { seriesSlug } = await params;
+  const series = getSeriesBySlug(seriesSlug);
 
   if (!series) {
     notFound();
@@ -77,7 +79,7 @@ const SeriesDetailPage = ({ params }: Props) => {
             </p>
             
             <div className="pt-8">
-              <Link href={`/series/${params.seriesSlug}/books`}>
+              <Link href={`/series/${seriesSlug}/books`}>
                 <Button
                   buttonImage={OrangeBackgroundMd}
                   altText="view-all-books"

@@ -238,7 +238,7 @@ export default function PressKitPage() {
               </h3>
               <div className="space-y-3 text-gray-300 text-sm">
                 <p>• All materials are provided for editorial use in connection with coverage of Scaremoor books</p>
-                <p>• Please credit images as "Courtesy of Scaremoor Books" when possible</p>
+                <p>• Please credit images as &ldquo;Courtesy of Scaremoor Books&rdquo; when possible</p>
                 <p>• High-resolution versions are available upon request</p>
                 <p>• For additional materials or interview requests, please contact media@scaremoor.com</p>
               </div>

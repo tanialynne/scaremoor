@@ -1,6 +1,5 @@
 import { StaticImageData } from "next/image";
 import { Book } from "./Books";
-import { slugify } from "../utils";
 
 export type Series = {
   seriesId: string;

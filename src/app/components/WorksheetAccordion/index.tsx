@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { OnlineWorksheet } from '../Worksheets/types';
 
@@ -13,7 +12,15 @@ interface WorksheetAccordionProps {
 }
 
 interface ActivityCardProps {
-  section: any;
+  section: {
+    id: string;
+    title: string;
+    type: string;
+    questions: any[];
+    timeEstimate?: string;
+    instructions?: string;
+    solStandards?: any;
+  };
   storySlug: string;
   grade: number;
   index: number;
@@ -75,9 +82,7 @@ const getActivityDescription = (type: string, title: string) => {
   }
 };
 
-const getActivityMaterials = (type: string, title: string) => {
-  const lowerTitle = title.toLowerCase();
-
+const getActivityMaterials = (type: string) => {
   switch (type) {
     case 'sequencing': return 'Scissors, Event cards';
     case 'drawing': return 'Drawing materials';
@@ -86,7 +91,7 @@ const getActivityMaterials = (type: string, title: string) => {
 };
 
 // Activity Card Component (matching the Grade-Level Activities design)
-const ActivityCard: React.FC<ActivityCardProps> = ({ section, storySlug, grade, index }) => {
+const ActivityCard: React.FC<ActivityCardProps> = ({ section, storySlug, grade }) => {
   const getActivityIcon = (title: string) => {
     const lowerTitle = title.toLowerCase();
     if (lowerTitle.includes('story') || lowerTitle.includes('elements')) return '📖';
@@ -172,9 +177,9 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ section, storySlug, grade, 
 
         <p className="text-gray-400 text-sm mb-4">Instructions: {section.instructions}</p>
 
-        {getActivityMaterials(section.type, section.title) && (
+        {getActivityMaterials(section.type) && (
           <p className="text-blue-300 text-sm mb-4">
-            Materials: {getActivityMaterials(section.type, section.title)}
+            Materials: {getActivityMaterials(section.type)}
           </p>
         )}
 

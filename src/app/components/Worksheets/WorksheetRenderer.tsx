@@ -22,7 +22,6 @@ const WorksheetRenderer: React.FC<WorksheetRendererProps> = ({
   printMode = false
 }) => {
   const [responses, setResponses] = React.useState<Record<string, Record<string, string>>>({});
-  const [isCompleted, setIsCompleted] = React.useState<Record<string, boolean>>({});
   const [showBlankPrint, setShowBlankPrint] = React.useState(false);
 
   const handleSectionResponse = (sectionId: string, sectionResponses: Record<string, string>) => {
@@ -64,12 +63,6 @@ const WorksheetRenderer: React.FC<WorksheetRendererProps> = ({
     }, 100);
   };
 
-  const markSectionComplete = (sectionId: string) => {
-    setIsCompleted(prev => ({
-      ...prev,
-      [sectionId]: true
-    }));
-  };
 
   const updateFieldValue = (sectionId: string, fieldId: string, value: string) => {
     setResponses(prev => ({

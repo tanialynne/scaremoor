@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { OnlineWorksheet, WorksheetResponse } from './types';
+import { OnlineWorksheet } from './types';
 
 interface WorksheetBaseProps {
   worksheet: OnlineWorksheet;
@@ -23,7 +23,6 @@ const WorksheetBase: React.FC<WorksheetBaseProps> = ({
   printMode = false
 }) => {
   const [studentName, setStudentName] = useState('');
-  const [responses] = useState<Record<string, string | string[]>>({});
 
   const getGradeColor = (grade: number) => {
     switch (grade) {

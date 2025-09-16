@@ -128,7 +128,7 @@ const WorksheetsPage = () => {
             <div className="space-y-12">
               <div className="text-center">
                 <h2 className="font-trickordead font-normal text-4xl sm:text-5xl gradient-text-accessible">
-                  Why Sppoky Stories?
+                  Why Spooky Stories?
                 </h2>
               </div>
 

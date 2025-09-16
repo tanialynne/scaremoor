@@ -51,10 +51,6 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
     }
   };
 
-  const getGradeColor = () => {
-    // All worksheets use gray theme for better printing
-    return 'from-gray-600 to-gray-800';
-  };
 
   const renderWorksheetSection = (section: WorksheetSection) => {
     const baseProps = {

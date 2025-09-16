@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -8,9 +8,17 @@ import Herobox from "../../components/Herobox";
 import Button from "../../components/Button";
 import WorksheetAnalytics from "../../components/WorksheetAnalytics";
 import WorksheetAccordion from "../../components/WorksheetAccordion";
-import { OnlineWorksheetLink, ContactLink } from "../../components/WorksheetAnalytics/WorksheetLink";
+import FunActivitiesAccordion from "../../components/FunActivitiesAccordion";
+import {
+  OnlineWorksheetLink,
+  ContactLink,
+} from "../../components/WorksheetAnalytics/WorksheetLink";
 import { DownloadLink } from "../../components/WorksheetAnalytics/DownloadLink";
-import { getWorksheetStoryBySlug, WorksheetActivity, DownloadableResource } from "../../constants/Worksheets";
+import {
+  getWorksheetStoryBySlug,
+  WorksheetActivity,
+  DownloadableResource,
+} from "../../constants/Worksheets";
 import { getStoryWorksheets } from "../../constants/OnlineWorksheets";
 import { isFeatureEnabled } from "../../constants/FeatureFlags";
 
@@ -32,35 +40,53 @@ interface ActivityCardProps {
 const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case 'comprehension': return '📚';
-      case 'vocabulary': return '📝';
-      case 'creative-writing': return '✍️';
-      case 'analysis': return '🔍';
-      case 'art': return '🎨';
-      case 'game': return '🎯';
-      default: return '📋';
+      case "comprehension":
+        return "📚";
+      case "vocabulary":
+        return "📝";
+      case "creative-writing":
+        return "✍️";
+      case "analysis":
+        return "🔍";
+      case "art":
+        return "🎨";
+      case "game":
+        return "🎯";
+      default:
+        return "📋";
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'comprehension': return 'border-blue-700/50 bg-blue-900/20';
-      case 'vocabulary': return 'border-green-700/50 bg-green-900/20';
-      case 'creative-writing': return 'border-purple-700/50 bg-purple-900/20';
-      case 'analysis': return 'border-orange-700/50 bg-orange-900/20';
-      case 'art': return 'border-pink-700/50 bg-pink-900/20';
-      case 'game': return 'border-yellow-700/50 bg-yellow-900/20';
-      default: return 'border-gray-700/50 bg-gray-900/20';
+      case "comprehension":
+        return "border-blue-700/50 bg-blue-900/20";
+      case "vocabulary":
+        return "border-green-700/50 bg-green-900/20";
+      case "creative-writing":
+        return "border-purple-700/50 bg-purple-900/20";
+      case "analysis":
+        return "border-orange-700/50 bg-orange-900/20";
+      case "art":
+        return "border-pink-700/50 bg-pink-900/20";
+      case "game":
+        return "border-yellow-700/50 bg-yellow-900/20";
+      default:
+        return "border-gray-700/50 bg-gray-900/20";
     }
   };
 
   return (
-    <div className={`rounded-lg p-6 border ${getTypeColor(activity.type)} hover:border-opacity-70 transition-all duration-300`}>
+    <div
+      className={`rounded-lg p-6 border ${getTypeColor(activity.type)} hover:border-opacity-70 transition-all duration-300`}
+    >
       <div className="flex items-start gap-3 mb-4">
         <span className="text-2xl">{getActivityIcon(activity.type)}</span>
         <div className="flex-1">
           <h4 className="font-semibold text-white mb-1">{activity.title}</h4>
-          <p className="text-base text-gray-400 capitalize">{activity.type.replace('-', ' ')} • {activity.timeEstimate}</p>
+          <p className="text-base text-gray-400 capitalize">
+            {activity.type.replace("-", " ")} • {activity.timeEstimate}
+          </p>
         </div>
       </div>
 
@@ -73,13 +99,16 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
 
         {activity.materials && (
           <p className="text-base text-gray-400">
-            <strong>Materials:</strong> {activity.materials.join(', ')}
+            <strong>Materials:</strong> {activity.materials.join(", ")}
           </p>
         )}
 
         <div className="flex flex-wrap gap-1 mt-3">
           {activity.solStandards.map((standard) => (
-            <span key={standard} className="text-sm bg-gray-700/50 text-gray-300 px-2 py-1 rounded">
+            <span
+              key={standard}
+              className="text-sm bg-gray-700/50 text-gray-300 px-2 py-1 rounded"
+            >
               SOL {standard}
             </span>
           ))}
@@ -97,30 +126,44 @@ interface ResourceCardProps {
 const ResourceCard: React.FC<ResourceCardProps> = ({ resource, storySlug }) => {
   const getFileIcon = (fileType: string) => {
     switch (fileType) {
-      case 'pdf': return '📄';
-      case 'docx': return '📝';
-      case 'png': return '🖼️';
-      case 'zip': return '📦';
-      default: return '📁';
+      case "pdf":
+        return "📄";
+      case "docx":
+        return "📝";
+      case "png":
+        return "🖼️";
+      case "zip":
+        return "📦";
+      default:
+        return "📁";
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'educator-packet': return 'bg-orange-900/30 border-orange-700/50';
-      case 'student-worksheet': return 'bg-blue-900/30 border-blue-700/50';
-      case 'answer-key': return 'bg-green-900/30 border-green-700/50';
-      case 'extension-activity': return 'bg-purple-900/30 border-purple-700/50';
-      default: return 'bg-gray-900/30 border-gray-700/50';
+      case "educator-packet":
+        return "bg-orange-900/30 border-orange-700/50";
+      case "student-worksheet":
+        return "bg-blue-900/30 border-blue-700/50";
+      case "answer-key":
+        return "bg-green-900/30 border-green-700/50";
+      case "extension-activity":
+        return "bg-purple-900/30 border-purple-700/50";
+      default:
+        return "bg-gray-900/30 border-gray-700/50";
     }
   };
 
   return (
-    <div className={`rounded-lg p-4 border ${getCategoryColor(resource.category)} hover:border-opacity-70 transition-all duration-300`}>
+    <div
+      className={`rounded-lg p-4 border ${getCategoryColor(resource.category)} hover:border-opacity-70 transition-all duration-300`}
+    >
       <div className="flex items-center gap-3 mb-3">
         <span className="text-2xl">{getFileIcon(resource.fileType)}</span>
         <div className="flex-1">
-          <h4 className="font-semibold text-white text-base">{resource.title}</h4>
+          <h4 className="font-semibold text-white text-base">
+            {resource.title}
+          </h4>
           <p className="text-sm text-gray-400 uppercase">{resource.fileType}</p>
         </div>
       </div>
@@ -143,8 +186,10 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource, storySlug }) => {
 const WorksheetStoryPage = ({ params }: Props) => {
   const [story, setStory] = useState<any>(null);
   const [onlineWorksheets, setOnlineWorksheets] = useState<any[]>([]);
-  const [openAccordions, setOpenAccordions] = useState<Record<number, boolean>>({});
-  const [slug, setSlug] = useState<string>('');
+  const [openAccordions, setOpenAccordions] = useState<Record<number | string, boolean>>(
+    {}
+  );
+  const [slug, setSlug] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -176,10 +221,10 @@ const WorksheetStoryPage = ({ params }: Props) => {
     loadData();
   }, [params]);
 
-  const toggleAccordion = (grade: number) => {
-    setOpenAccordions(prev => ({
+  const toggleAccordion = (grade: number | string) => {
+    setOpenAccordions((prev) => ({
       ...prev,
-      [grade]: !prev[grade]
+      [grade]: !prev[grade],
     }));
   };
 
@@ -205,19 +250,32 @@ const WorksheetStoryPage = ({ params }: Props) => {
     );
   }
 
-  const { title, description, storyText, gradeRange, subjects, themes, readingTime, activities, downloadableResources, solStandards } = story;
+  const {
+    title,
+    description,
+    storyText,
+    gradeRange,
+    subjects,
+    themes,
+    readingTime,
+    activities,
+    downloadableResources,
+    solStandards,
+  } = story;
 
   return (
     <>
-      <WorksheetAnalytics pageType="story" storyTitle={title} storySlug={slug} />
+      <WorksheetAnalytics
+        pageType="story"
+        storyTitle={title}
+        storySlug={slug}
+      />
       <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
         <div className="items-center">
           <div className="space-y-5 lg:pt-10">
             <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-              <h2 className="hero-text-large">Educational Worksheet</h2>
-              <h1 className="hero-text-xlarge max-w-[20ch]">
-                {title}
-              </h1>
+              <h2 className="hero-text-large">Educational Worksheets</h2>
+              <h1 className="hero-text-xlarge max-w-[20ch]">{title}</h1>
             </div>
 
             <p
@@ -257,19 +315,26 @@ const WorksheetStoryPage = ({ params }: Props) => {
                   </h2>
                   <div className="prose prose-invert prose-orange max-w-none">
                     <div className="text-gray-300 leading-relaxed">
-                      {storyText.split('\n\n').slice(0, 6).map((paragraph, index) => (
-                        <p
-                          key={index}
-                          className="mb-4"
-                          dangerouslySetInnerHTML={{
-                            __html: paragraph
-                              .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                              .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                          }}
-                        />
-                      ))}
+                      {storyText
+                        .split("\n\n")
+                        .slice(0, 6)
+                        .map((paragraph: string, index: number) => (
+                          <p
+                            key={index}
+                            className="mb-4"
+                            dangerouslySetInnerHTML={{
+                              __html: paragraph
+                                .replace(
+                                  /\*\*(.*?)\*\*/g,
+                                  "<strong>$1</strong>"
+                                )
+                                .replace(/\*(.*?)\*/g, "<em>$1</em>"),
+                            }}
+                          />
+                        ))}
                       <div className="text-orange-400 italic">
-                        [Story continues... Full text available in downloadable materials]
+                        [Story continues... Full text available in downloadable
+                        materials]
                       </div>
                     </div>
                   </div>
@@ -281,7 +346,7 @@ const WorksheetStoryPage = ({ params }: Props) => {
                     🎯 Learning Themes
                   </h3>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {themes.map((theme) => (
+                    {themes.map((theme: string) => (
                       <span
                         key={theme}
                         className="bg-purple-900/30 text-purple-300 px-3 py-1 rounded-full border border-purple-700/50 text-sm"
@@ -291,9 +356,11 @@ const WorksheetStoryPage = ({ params }: Props) => {
                     ))}
                   </div>
 
-                  <h4 className="font-semibold text-white mb-3">📚 Subject Areas</h4>
+                  <h4 className="font-semibold text-white mb-3">
+                    📚 Subject Areas
+                  </h4>
                   <div className="flex flex-wrap gap-2">
-                    {subjects.map((subject) => (
+                    {subjects.map((subject: string) => (
                       <span
                         key={subject}
                         className="bg-blue-900/30 text-blue-300 px-3 py-1 rounded-full border border-blue-700/50 text-sm"
@@ -313,30 +380,45 @@ const WorksheetStoryPage = ({ params }: Props) => {
                   </h3>
                   <div className="space-y-3">
                     <div>
-                      <h4 className="font-semibold text-white text-sm mb-2">Grade 3</h4>
+                      <h4 className="font-semibold text-white text-sm mb-2">
+                        Grade 3
+                      </h4>
                       <div className="flex flex-wrap gap-1">
-                        {solStandards.grade3.map((standard) => (
-                          <span key={standard} className="text-sm bg-blue-700/30 text-blue-300 px-2 py-1 rounded">
+                        {solStandards.grade3.map((standard: string) => (
+                          <span
+                            key={standard}
+                            className="text-sm bg-blue-700/30 text-blue-300 px-2 py-1 rounded"
+                          >
                             {standard}
                           </span>
                         ))}
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-white text-sm mb-2">Grade 4</h4>
+                      <h4 className="font-semibold text-white text-sm mb-2">
+                        Grade 4
+                      </h4>
                       <div className="flex flex-wrap gap-1">
-                        {solStandards.grade4.map((standard) => (
-                          <span key={standard} className="text-sm bg-purple-700/30 text-purple-300 px-2 py-1 rounded">
+                        {solStandards.grade4.map((standard: string) => (
+                          <span
+                            key={standard}
+                            className="text-sm bg-purple-700/30 text-purple-300 px-2 py-1 rounded"
+                          >
                             {standard}
                           </span>
                         ))}
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-white text-sm mb-2">Grade 5</h4>
+                      <h4 className="font-semibold text-white text-sm mb-2">
+                        Grade 5
+                      </h4>
                       <div className="flex flex-wrap gap-1">
-                        {solStandards.grade5.map((standard) => (
-                          <span key={standard} className="text-sm bg-red-700/30 text-red-300 px-2 py-1 rounded">
+                        {solStandards.grade5.map((standard: string) => (
+                          <span
+                            key={standard}
+                            className="text-sm bg-red-700/30 text-red-300 px-2 py-1 rounded"
+                          >
                             {standard}
                           </span>
                         ))}
@@ -353,10 +435,20 @@ const WorksheetStoryPage = ({ params }: Props) => {
                   <p className="text-gray-300 text-base mb-4">
                     Get everything you need in one comprehensive packet.
                   </p>
-                  {downloadableResources.find(r => r.category === 'educator-packet') && (
+                  {downloadableResources.find(
+                    (r: any) => r.category === "educator-packet"
+                  ) && (
                     <DownloadLink
-                      href={downloadableResources.find(r => r.category === 'educator-packet')!.url}
-                      resourceTitle={downloadableResources.find(r => r.category === 'educator-packet')!.title}
+                      href={
+                        downloadableResources.find(
+                          (r: any) => r.category === "educator-packet"
+                        )!.url
+                      }
+                      resourceTitle={
+                        downloadableResources.find(
+                          (r: any) => r.category === "educator-packet"
+                        )!.title
+                      }
                       resourceType="educator-packet"
                       storySlug={slug}
                       className="inline-block w-full"
@@ -380,8 +472,9 @@ const WorksheetStoryPage = ({ params }: Props) => {
                 🖥️ Interactive Online Worksheets
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Complete worksheets online with instant feedback, or print them for traditional use.
-                Perfect for distance learning and classroom technology integration.
+                Complete worksheets online with instant feedback, or print them
+                for traditional use. Perfect for distance learning and classroom
+                technology integration.
               </p>
             </div>
 
@@ -396,6 +489,13 @@ const WorksheetStoryPage = ({ params }: Props) => {
                   onToggle={() => toggleAccordion(worksheet.grade)}
                 />
               ))}
+
+              {/* Fun Activities Accordion */}
+              <FunActivitiesAccordion
+                storySlug={slug}
+                isOpen={openAccordions["fun-activities"] || false}
+                onToggle={() => toggleAccordion("fun-activities")}
+              />
             </div>
 
             <div className="mt-12 bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-xl p-6 border border-blue-700/30">
@@ -436,7 +536,6 @@ const WorksheetStoryPage = ({ params }: Props) => {
           </div>
         </section>
 
-
         {/* Back to Worksheets */}
         <section className="px-8 md:px-20 py-20 space-y-8">
           <div className="max-w-4xl mx-auto text-center">
@@ -445,8 +544,8 @@ const WorksheetStoryPage = ({ params }: Props) => {
                 Looking for More Resources?
               </h3>
               <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                Explore our full collection of educational materials and mysterious stories
-                designed to engage young readers.
+                Explore our full collection of educational materials and
+                mysterious stories designed to engage young readers.
               </p>
               <div className="flex gap-5 items-center justify-center flex-col lg:flex-row">
                 <Link href="/worksheets">
@@ -456,10 +555,7 @@ const WorksheetStoryPage = ({ params }: Props) => {
                     text="View All Worksheets"
                   />
                 </Link>
-                <ContactLink
-                  href="/contact"
-                  source="worksheet_story_page"
-                >
+                <ContactLink href="/contact" source="worksheet_story_page">
                   <Button
                     buttonImage={YellowBackground}
                     altText="contact-us"

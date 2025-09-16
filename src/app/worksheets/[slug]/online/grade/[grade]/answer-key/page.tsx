@@ -259,6 +259,7 @@ const AnswerKeyPage = ({ params }: Props) => {
             <div className="space-y-8">
               {worksheet.sections.map((section, index) => {
                 const answerContent = getAnswerKeyContent(section);
+                if (!answerContent) return null;
                 return (
                   <div key={section.id} className={`bg-gradient-to-br ${getGradeColor(worksheet.grade)} bg-opacity-10 rounded-xl p-6 border border-gray-700/30`}>
                     <div className="flex items-center gap-3 mb-6">
@@ -289,7 +290,7 @@ const AnswerKeyPage = ({ params }: Props) => {
                           )}
                           {item.word && (
                             <>
-                              <h4 className="font-semibold text-white mb-2">"{item.word}"</h4>
+                              <h4 className="font-semibold text-white mb-2">&quot;{item.word}&quot;</h4>
                               <p className="text-gray-300">{item.answer}</p>
                             </>
                           )}
@@ -330,11 +331,71 @@ const AnswerKeyPage = ({ params }: Props) => {
               })}
             </div>
 
+            {/* Extension Activities */}
+            <div className="mt-12 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-xl p-8 border border-gray-600/30">
+              <h3 className="text-2xl font-bold text-orange-400 mb-6 flex items-center gap-3">
+                <span className="text-3xl">🎯</span>
+                Extension Activities & Ideas
+              </h3>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-3">📚 Cross-Curricular Extensions:</h4>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>• Create a class book of &quot;If I Could Change One Thing&quot; stories</li>
+                    <li>• Research myths and stories about wishes with consequences (King Midas, The Monkey&apos;s Paw)</li>
+                    <li>• Design your own hallway of drawers art project with construction paper</li>
+                    <li>• Write diary entries from Dani's perspective before and after finding the door</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-3">🎭 Drama & Discussion:</h4>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>• Act out key scenes from the story with different character interpretations</li>
+                    <li>• Hold a class debate: "Should Dani have kept some of her changes?"</li>
+                    <li>• Create a news report about the "strange happenings" at school</li>
+                    <li>• Interview classmates about what they would change about their lives</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-3">✍️ Advanced Writing:</h4>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>• Write a sequel where the door appears to a different student</li>
+                    <li>• Create a "Choose Your Own Adventure" version of the story</li>
+                    <li>• Write warning signs for dangerous changes (like medicine labels)</li>
+                    <li>• Develop a prequel explaining how the door came to be in the school</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-lg font-semibold text-white mb-3">🎨 Creative Projects:</h4>
+                  <ul className="space-y-2 text-gray-300">
+                    <li>• Draw a detailed map of the hallway showing different drawers and their labels</li>
+                    <li>• Design book covers for stories about other magical doors</li>
+                    <li>• Create a storyboard showing the key events in sequence</li>
+                    <li>• Make a collage representing the theme "be careful what you wish for"</li>
+                  </ul>
+                </div>
+
+                <div className="bg-orange-900/20 rounded-lg p-4 border border-orange-700/30">
+                  <h4 className="text-lg font-semibold text-orange-400 mb-3">💡 Teaching Tips:</h4>
+                  <ul className="space-y-2 text-orange-200">
+                    <li>• Pause after Dani discovers the door to build suspense and predict what might happen</li>
+                    <li>• Discuss "be careful what you wish for" before reading to activate prior knowledge</li>
+                    <li>• Connect to students' own experiences with wanting to change things about their lives</li>
+                    <li>• Use this as a mentor text for teaching theme, consequences, and character development</li>
+                    <li>• Perfect introduction to science fiction/fantasy genre elements</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             {/* Print Button */}
             <div className="mt-12 text-center">
               <button
                 onClick={() => window.print()}
-                className="px-6 py-3 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors font-medium"
+                className="px-6 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors font-medium"
               >
                 🖨️ Print Answer Key
               </button>

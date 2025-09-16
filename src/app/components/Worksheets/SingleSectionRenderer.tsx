@@ -17,8 +17,7 @@ interface SingleSectionRendererProps {
 const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
   section,
   storyTitle,
-  worksheet,
-  onSave
+  worksheet
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [showBlankPrint, setShowBlankPrint] = useState(false);
@@ -30,7 +29,7 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
     }));
   };
 
-  const handleSectionResponse = (sectionId: string, sectionResponses: Record<string, string>) => {
+  const handleSectionResponse = (_sectionId: string, sectionResponses: Record<string, string>) => {
     setResponses(sectionResponses);
   };
 
@@ -76,7 +75,7 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
         return <CauseEffectWorksheet {...baseProps} pairs={section.customProps?.pairs as any || []} />;
 
       case 'plot-mountain':
-        return <PlotMountainWorksheet {...baseProps} plotPoints={section.customProps?.plotPoints as any} />;
+        return <PlotMountainWorksheet {...baseProps} plotPoints={section.customProps?.plotPoints as any || undefined} />;
 
       case 'vocabulary':
         return (
@@ -305,7 +304,7 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
       `}</style>
 
       {/* Compact Worksheet Header with Name */}
-      <div className={`worksheet-header bg-gradient-to-r ${getGradeColor()} text-white p-2 rounded-t-xl mb-3 print:p-1 print:mb-2`}>
+      <div className="worksheet-header bg-gradient-to-r from-gray-600 to-gray-800 text-white p-2 rounded-t-xl mb-3 print:p-1 print:mb-2 print:bg-gray-100 print:text-black print:border print:border-black print:rounded-none">
         <div className="flex justify-between items-center">
           <div className="flex-1">
             <label className="block text-xs text-white/80 mb-1">Name:</label>
@@ -338,7 +337,7 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
         <div className="flex flex-wrap gap-3 justify-center items-center">
           <button
             onClick={handleSmartPrint}
-            className="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors flex items-center gap-2"
+            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center gap-2"
           >
             🖨️ Print Worksheet
           </button>

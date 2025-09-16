@@ -1,4 +1,7 @@
+'use client';
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 import { getFlatNavItemsForFooter } from "@/app/constants/NavigationStructure";
 import { getCurrentYear } from "@/app/utils";
@@ -12,6 +15,15 @@ import RightGhosted from "../../../../public/images/ghost-animation-doubled.svg"
 import Eye from "../../../../public/images/eye.svg";
 
 const Footer = () => {
+  const pathname = usePathname();
+
+  // Hide footer only on individual worksheet section pages (printable pages)
+  const isWorksheetSectionPage = pathname?.includes('/worksheets/') && pathname?.includes('/online') && pathname?.includes('/section/');
+
+  if (isWorksheetSectionPage) {
+    return null;
+  }
+
   const flatNavItems = getFlatNavItemsForFooter();
 
   return (

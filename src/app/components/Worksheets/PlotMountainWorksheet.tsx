@@ -99,18 +99,10 @@ const PlotMountainWorksheet: React.FC<PlotMountainWorksheetProps> = ({
       `}</style>
 
       <div className="space-y-6">
-        {/* Instructions */}
-        <div className="instructions bg-red-50 border-l-4 border-red-400 p-4 rounded">
-          <h5 className="font-medium text-red-800 mb-2">Instructions:</h5>
-          <p className="text-base text-red-700">
-            Identify the main events that make up the story&apos;s plot structure.
-            Fill in what happens at each stage of the story.
-          </p>
-        </div>
 
         {/* Desktop Plot Mountain */}
         <div className="desktop-plot-mountain hidden md:block">
-          <div className="plot-mountain relative h-80 bg-gradient-to-br from-red-50 to-pink-50 border-2 border-red-200 rounded-xl p-8">
+          <div className="plot-mountain relative h-80 bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-300 rounded-xl p-8">
             {/* Mountain Line SVG */}
             <svg
               className="absolute inset-0 w-full h-full"
@@ -120,7 +112,7 @@ const PlotMountainWorksheet: React.FC<PlotMountainWorksheetProps> = ({
               <path
                 className="mountain-line"
                 d="M 50 250 L 150 200 L 300 50 L 450 200 L 550 250"
-                stroke="#dc2626"
+                stroke="#4b5563"
                 strokeWidth="3"
                 fill="none"
               />
@@ -130,9 +122,9 @@ const PlotMountainWorksheet: React.FC<PlotMountainWorksheetProps> = ({
             {plotPoints.map((point) => (
               <div
                 key={point.id}
-                className={`plot-point absolute bg-white border-2 border-red-400 rounded-lg p-3 w-32 text-center shadow-lg ${getPositionClass(point.stage)}`}
+                className={`plot-point absolute bg-white border-2 border-gray-400 rounded-lg p-3 w-32 text-center shadow-lg ${getPositionClass(point.stage)}`}
               >
-                <div className="font-semibold text-red-800 text-base mb-2">
+                <div className="font-semibold text-gray-800 text-base mb-2">
                   {point.label}
                 </div>
 
@@ -141,7 +133,7 @@ const PlotMountainWorksheet: React.FC<PlotMountainWorksheetProps> = ({
                   <textarea
                     value={responses[point.id] || ''}
                     onChange={(e) => handleInputChange(point.id, e.target.value)}
-                    className="w-full p-2 text-sm border border-gray-200 rounded resize-none focus:outline-none focus:ring-1 focus:ring-red-500"
+                    className="w-full p-2 text-sm border border-gray-200 rounded resize-none focus:outline-none focus:ring-1 focus:ring-gray-500"
                     rows={3}
                     placeholder="What happens here?"
                   />
@@ -164,9 +156,9 @@ const PlotMountainWorksheet: React.FC<PlotMountainWorksheetProps> = ({
             {plotPoints.map((point) => (
               <div
                 key={point.id}
-                className="plot-point-mobile bg-white border-2 border-red-400 rounded-lg p-4 shadow-sm"
+                className="plot-point-mobile bg-white border-2 border-gray-400 rounded-lg p-4 shadow-sm"
               >
-                <div className="font-semibold text-red-800 mb-3">
+                <div className="font-semibold text-gray-800 mb-3">
                   {point.label}
                 </div>
 
@@ -175,7 +167,7 @@ const PlotMountainWorksheet: React.FC<PlotMountainWorksheetProps> = ({
                   <textarea
                     value={responses[point.id] || ''}
                     onChange={(e) => handleInputChange(point.id, e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded resize-none focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full p-2 border border-gray-200 rounded resize-none focus:outline-none focus:ring-2 focus:ring-gray-500"
                     rows={3}
                     placeholder="Describe what happens in this part of the story..."
                   />
@@ -192,27 +184,6 @@ const PlotMountainWorksheet: React.FC<PlotMountainWorksheetProps> = ({
           </div>
         </div>
 
-        {/* Plot Definitions */}
-        <div className="definitions bg-white border border-red-200 rounded-lg p-4">
-          <h5 className="font-medium text-red-800 mb-3">Plot Structure Definitions:</h5>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-base">
-            <div className="definition">
-              <strong className="text-red-700">Exposition:</strong> Introduction of characters, setting, and background information
-            </div>
-            <div className="definition">
-              <strong className="text-red-700">Rising Action:</strong> Series of events that build tension and lead to the climax
-            </div>
-            <div className="definition">
-              <strong className="text-red-700">Climax:</strong> The turning point or most exciting moment of the story
-            </div>
-            <div className="definition">
-              <strong className="text-red-700">Falling Action:</strong> Events that happen after the climax and lead to resolution
-            </div>
-            <div className="definition">
-              <strong className="text-red-700">Resolution:</strong> The conclusion where conflicts are resolved (or left unresolved)
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

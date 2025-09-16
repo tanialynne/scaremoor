@@ -90,9 +90,9 @@ const StoryElementsWorksheet: React.FC<StoryElementsWorksheetProps> = ({
         {elements.map((element) => (
           <div
             key={element.id}
-            className="story-element-box bg-white border-2 border-gray-200 rounded-lg p-4 shadow-sm hover:border-blue-300 transition-colors"
+            className="story-element-box bg-white border-2 border-gray-200 rounded-lg p-4 shadow-sm hover:border-gray-400 transition-colors"
           >
-            <h4 className="text-lg font-semibold text-blue-600 mb-3">
+            <h4 className="text-lg font-semibold text-gray-800 mb-3">
               {element.label} - {element.question}
             </h4>
 
@@ -101,7 +101,7 @@ const StoryElementsWorksheet: React.FC<StoryElementsWorksheetProps> = ({
               <textarea
                 value={responses[element.id] || ''}
                 onChange={(e) => handleInputChange(element.id, e.target.value)}
-                className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full p-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
                 rows={element.lines}
                 placeholder={`Type your answer about ${element.label.toLowerCase()} here...`}
               />
@@ -119,14 +119,6 @@ const StoryElementsWorksheet: React.FC<StoryElementsWorksheetProps> = ({
           </div>
         ))}
 
-        {/* Instructions */}
-        <div className="instructions bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-          <h5 className="font-medium text-blue-800 mb-2">Instructions:</h5>
-          <p className="text-base text-blue-700">
-            Think about the story you just read. Fill in each box with information
-            about that part of the story. Use complete sentences and specific details.
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ import { isFeatureEnabled } from "../../../../../constants/FeatureFlags";
 // import WorksheetRenderer from "../../../../../components/Worksheets/WorksheetRenderer"; // Replaced with section links
 import Herobox from "../../../../../components/Herobox";
 import Button from "../../../../../components/Button";
-import Footer from "../../../../../components/Footer";
 
 import BackgroundImage from "../../../../../../../public/images/bookspage-image.png";
 import OrangeBackground from "../../../../../../../public/images/orangeBackground.png";
@@ -231,7 +230,6 @@ const OnlineWorksheetPage = ({ params }: Props) => {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 };

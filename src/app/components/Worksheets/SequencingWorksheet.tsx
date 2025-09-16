@@ -105,32 +105,7 @@ const SequencingWorksheet: React.FC<SequencingWorksheetProps> = ({
       `}</style>
 
       <div className="space-y-6">
-        {/* Instructions */}
-        <div className="instructions bg-orange-50 border-l-4 border-orange-400 p-4 rounded">
-          <h5 className="font-medium text-orange-800 mb-2">Instructions:</h5>
-          <p className="text-base text-orange-700 mb-2">
-            <strong>Online:</strong> Drag and drop the cards to put the events in the correct order.
-          </p>
-          <p className="text-base text-orange-700">
-            <strong>Print:</strong> Cut out the cards and arrange them in order, then write the numbers 1-{cards.length} in the circles.
-          </p>
-        </div>
 
-        {/* Online Controls */}
-        <div className="online-controls print:hidden flex gap-3">
-          <button
-            onClick={checkAnswers}
-            className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
-          >
-Check Answers
-          </button>
-          <button
-            onClick={resetCards}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
-          >
-Reset
-          </button>
-        </div>
 
         {/* Results */}
         {showAnswers && (
@@ -154,14 +129,14 @@ Reset
               onDragStart={(e) => handleDragStart(e, card.id)}
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, index)}
-              className={`sequence-card bg-white border-2 border-dashed border-blue-400 rounded-lg p-4 min-h-24 relative cursor-move hover:border-blue-600 transition-colors ${
+              className={`sequence-card bg-white border-2 border-dashed border-gray-400 rounded-lg p-4 min-h-24 relative cursor-move hover:border-gray-600 transition-colors ${
                 showAnswers && card.correctOrder !== index + 1 ? 'bg-red-50 border-red-400' : ''
               } ${
                 showAnswers && card.correctOrder === index + 1 ? 'bg-green-50 border-green-400' : ''
               }`}
             >
               {/* Number Circle */}
-              <div className="number absolute -top-3 -left-3 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-base">
+              <div className="number absolute -top-3 -left-3 w-8 h-8 bg-gray-500 text-white rounded-full flex items-center justify-center font-bold text-base">
                 {/* Online: Show current position, Print: Empty for student to fill */}
                 <span className="print:hidden">{index + 1}</span>
                 <span className="hidden print:inline">___</span>
@@ -182,16 +157,22 @@ Reset
           ))}
         </div>
 
-        {/* Print Instructions */}
-        <div className="print-instructions hidden print:block bg-gray-50 p-4 rounded border">
-          <p className="font-medium mb-2">After cutting out the cards:</p>
-          <ol className="text-base space-y-1">
-            <li>1. Read each event carefully</li>
-            <li>2. Think about what happened first, second, third, etc.</li>
-            <li>3. Arrange the cards in order</li>
-            <li>4. Write the numbers 1-{cards.length} in the circles</li>
-          </ol>
+        {/* Online Controls - Moved to bottom */}
+        <div className="online-controls print:hidden flex gap-3 justify-center">
+          <button
+            onClick={checkAnswers}
+            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+          >
+            Check Answers
+          </button>
+          <button
+            onClick={resetCards}
+            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors"
+          >
+            Reset
+          </button>
         </div>
+
       </div>
     </div>
   );

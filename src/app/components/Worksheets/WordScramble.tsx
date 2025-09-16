@@ -5,6 +5,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 interface WordScrambleProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
+  storyData?: Record<string, unknown>;
 }
 
 interface ScrambledWord {
@@ -16,22 +17,31 @@ interface ScrambledWord {
 
 const WordScramble: React.FC<WordScrambleProps> = ({
   sectionId,
-  onResponseChange
+  onResponseChange,
+  storyData
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
 
-  const scrambledWords: ScrambledWord[] = useMemo(() => [
-    { id: 'word1', scrambled: 'TROGFOTEN', answer: 'FORGOTTEN', hint: 'What happens to memories' },
-    { id: 'word2', scrambled: 'NETIYITD', answer: 'IDENTITY', hint: 'Who Dani is' },
-    { id: 'word3', scrambled: 'RAWDRE', answer: 'DRAWER', hint: 'Contains memories' },
-    { id: 'word4', scrambled: 'PHSIWER', answer: 'WHISPER', hint: 'What Dani hears' },
-    { id: 'word5', scrambled: 'LLOSCH TSELCO', answer: 'SCHOOL CLOSET', hint: 'Where the door appears' },
-    { id: 'word6', scrambled: 'SASRB YEK', answer: 'BRASS KEY', hint: 'Opens the door' },
-    { id: 'word7', scrambled: 'CSECOIH', answer: 'CHOICES', hint: 'What Dani must make' },
-    { id: 'word8', scrambled: 'REPPTCEF', answer: 'PERFECT', hint: 'What Dani wants her life to be' },
-    { id: 'word9', scrambled: 'PAPSDAIRE', answer: 'DISAPPEAR', hint: 'What happens to people' },
-    { id: 'word10', scrambled: 'TYEMP', answer: 'EMPTY', hint: 'What Dani\'s drawer becomes' }
-  ], []);
+  // Function to scramble a word
+  const scrambleWord = (word: string): string => {
+    const letters = word.split('');
+    for (let i = letters.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [letters[i], letters[j]] = [letters[j], letters[i]];
+    }
+    return letters.join('');
+  };
+
+  const scrambledWords: ScrambledWord[] = useMemo(() => {
+    const storyWords = (storyData?.scrambledWords as Array<{word: string, hint: string}>) || [];
+
+    return storyWords.map((wordData, index) => ({
+      id: `word${index + 1}`,
+      scrambled: scrambleWord(wordData.word),
+      answer: wordData.word,
+      hint: wordData.hint
+    }));
+  }, [storyData]);
 
   const handleInputChange = useCallback((wordId: string, value: string) => {
     const newResponses = { ...responses, [wordId]: value };

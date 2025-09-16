@@ -1,78 +1,70 @@
 import { OnlineWorksheet, SequencingCard, CauseEffectPair } from '../components/Worksheets/types';
+import { getStoryBySlug } from './StoryContent';
+import { buildOnlineWorksheetsForStory } from '../utils/StoryBuilder';
 
-// Sequencing cards for "The Forgotten Door"
-const forgottenDoorSequencingCards: SequencingCard[] = [
+// Sequencing cards for "The Pencil"
+const pencilSequencingCards: SequencingCard[] = [
   {
-    id: 'supply-closet',
-    text: 'Dani goes to the supply closet to get a microscope kit',
+    id: 'lost-found',
+    text: 'Narrator finds a strange pencil in the Lost & Found',
     correctOrder: 1
   },
   {
-    id: 'finds-door',
-    text: 'Dani discovers a mysterious wooden door in the closet',
+    id: 'draws-cat',
+    text: 'Narrator draws a black cat in their notebook',
     correctOrder: 2
   },
   {
-    id: 'first-change',
-    text: 'Ava is back in class and Trevor has disappeared',
+    id: 'cat-appears',
+    text: 'A real black cat appears at the classroom window',
     correctOrder: 3
   },
   {
-    id: 'pizza-lunch',
-    text: 'Dani finds pizza in her lunch bag instead of her usual sandwich',
+    id: 'draws-spill',
+    text: 'Narrator draws a water bottle spilling',
     correctOrder: 4
   },
   {
-    id: 'finds-key',
-    text: 'Dani discovers a brass key in her lunch bag',
+    id: 'bottle-spills',
+    text: 'A real water bottle spills in the exact same way',
     correctOrder: 5
   },
   {
-    id: 'enters-hallway',
-    text: 'Dani unlocks the door and enters the hallway of drawers',
+    id: 'teacher-speaks',
+    text: 'Teacher says the strange phrase about pencils',
     correctOrder: 6
   },
   {
-    id: 'name-disappears',
-    text: 'Dani realizes her name is missing from everything',
+    id: 'pencil-draws',
+    text: 'The pencil makes drawing sounds by itself',
     correctOrder: 7
-  },
-  {
-    id: 'escapes',
-    text: 'Dani runs from the hallway back to the real world',
-    correctOrder: 8
   }
 ];
 
-// Cause and Effect pairs for "The Forgotten Door"
-const forgottenDoorCauseEffectPairs: CauseEffectPair[] = [
+// Cause and Effect pairs for "The Pencil"
+const pencilCauseEffectPairs: CauseEffectPair[] = [
   {
-    id: 'door-appears',
-    cause: 'Dani enters the supply closet looking for a microscope kit',
-    effect: '' // Student fills in: A mysterious door appears that wasn't there before
+    id: 'draws-cat',
+    cause: 'The narrator draws a black cat on the windowsill',
+    effect: '' // Student fills in: A real black cat appears at the window
   },
   {
-    id: 'uses-door',
-    cause: 'Dani touches the drawer labeled "Lunchtime"',
-    effect: '' // Student fills in: Her lunch changes and reality shifts around her
+    id: 'draws-spill',
+    cause: 'The narrator sketches a water bottle spilling',
+    effect: '' // Student fills in: A real water bottle spills in the exact same way
   },
   {
-    id: 'keeps-changing',
-    cause: 'Dani continues to use the door to make her life "better"',
-    effect: '' // Student fills in: Parts of her identity start disappearing
-  },
-  {
-    id: 'runs-away',
-    cause: 'Dani sees her name drawer is empty',
-    effect: '' // Student fills in: She realizes the danger and runs back to reality
+    id: 'ignores-pencil',
+    cause: 'The narrator tries to ignore the pencil all night',
+    effect: '' // Student fills in: The pencil draws by itself and makes scratching sounds
   }
 ];
 
-// Grade 3 Worksheet for "The Forgotten Door"
-export const forgottenDoorGrade3Worksheet: OnlineWorksheet = {
-  id: 'forgotten-door-grade3',
-  storyId: 'forgotten-door',
-  title: 'The Forgotten Door - Grade 3 Activities',
+// Grade 3 Worksheet for "The Pencil"
+export const pencilGrade3Worksheet: OnlineWorksheet = {
+  id: 'the-pencil-grade3',
+  storyId: 'the-pencil',
+  title: 'The Pencil - Grade 3 Activities',
   grade: 3,
   sections: [
     {
@@ -123,7 +115,7 @@ export const forgottenDoorGrade3Worksheet: OnlineWorksheet = {
       instructions: 'Drag and drop the events to put them in the correct order from the story.',
       questions: [],
       customProps: {
-        cards: forgottenDoorSequencingCards
+        cards: pencilSequencingCards
       }
     },
     {
@@ -137,36 +129,36 @@ export const forgottenDoorGrade3Worksheet: OnlineWorksheet = {
       questions: [
         {
           id: 'vocab-1',
-          question: 'The door was painted a kind of gray that looked like it had forgotten how to be any other color.',
+          question: 'The pencil had this weird silvery shimmer in the grain.',
           fields: [
             {
-              id: 'forgotten-meaning',
+              id: 'shimmer-meaning',
               type: 'text',
-              label: 'I think "forgotten" means:',
+              label: 'I think "shimmer" means:',
               placeholder: 'Write your guess here...'
             }
           ]
         },
         {
           id: 'vocab-2',
-          question: 'She felt like someone had moved her half an inch to the left—like the world was mostly the same, but not quite.',
+          question: 'The cat looked curious. Hungry, maybe.',
           fields: [
             {
-              id: 'quite-meaning',
+              id: 'curious-meaning',
               type: 'text',
-              label: 'I think "not quite" means:',
+              label: 'I think "curious" means:',
               placeholder: 'Write your guess here...'
             }
           ]
         },
         {
           id: 'vocab-3',
-          question: 'The hallway pulsed and the drawers shimmered.',
+          question: 'It must be a coincidence that the cat appeared after I drew it.',
           fields: [
             {
-              id: 'shimmered-meaning',
+              id: 'coincidence-meaning',
               type: 'text',
-              label: 'I think "shimmered" means:',
+              label: 'I think "coincidence" means:',
               placeholder: 'Write your guess here...'
             }
           ]
@@ -180,17 +172,17 @@ export const forgottenDoorGrade3Worksheet: OnlineWorksheet = {
       grade: 3,
       solStandards: ['3.5'],
       timeEstimate: '20 minutes',
-      instructions: 'Draw your favorite scene from the story, then write 3 sentences describing your drawing.',
+      instructions: 'Draw your favorite scene from "The Pencil", then write 3 sentences describing your drawing.',
       questions: []
     }
   ]
 };
 
-// Grade 4 Worksheet for "The Forgotten Door"
-export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
-  id: 'forgotten-door-grade4',
-  storyId: 'forgotten-door',
-  title: 'The Forgotten Door - Grade 4 Activities',
+// Grade 4 Worksheet for "The Pencil"
+export const pencilGrade4Worksheet: OnlineWorksheet = {
+  id: 'the-pencil-grade4',
+  storyId: 'the-pencil',
+  title: 'The Pencil - Grade 4 Activities',
   grade: 4,
   sections: [
     {
@@ -203,7 +195,7 @@ export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
       instructions: 'Complete the cause and effect chains from the story. Think about what happened and what resulted from each action.',
       questions: [],
       customProps: {
-        pairs: forgottenDoorCauseEffectPairs
+        pairs: pencilCauseEffectPairs
       }
     },
     {
@@ -213,7 +205,7 @@ export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
       grade: 4,
       solStandards: ['4.5'],
       timeEstimate: '25 minutes',
-      instructions: 'Use clues from the story to determine the author\'s message about choices and consequences.',
+      instructions: 'Use clues from the story to determine the author\'s message about creativity and consequences.',
       questions: [
         {
           id: 'theme-clues',
@@ -222,21 +214,21 @@ export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
             {
               id: 'clue-1',
               type: 'textarea',
-              label: 'Clue 1: Dani can change things but can\'t control them',
-              placeholder: 'What does this teach us?',
+              label: 'Clue 1: The pencil brings drawings to life',
+              placeholder: 'What does this teach us about creativity?',
               lines: 2
             },
             {
               id: 'clue-2',
               type: 'textarea',
-              label: 'Clue 2: Each change has unexpected consequences',
+              label: 'Clue 2: The drawings have unexpected results',
               placeholder: 'What lesson does this show?',
               lines: 2
             },
             {
               id: 'clue-3',
               type: 'textarea',
-              label: 'Clue 3: Dani almost loses herself completely',
+              label: 'Clue 3: The pencil draws by itself at night',
               placeholder: 'What warning does this give us?',
               lines: 2
             }
@@ -244,7 +236,7 @@ export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
         },
         {
           id: 'theme-statement',
-          question: 'Based on these clues, what is the theme of "The Forgotten Door"?',
+          question: 'Based on these clues, what is the theme of "The Pencil"?',
           fields: [
             {
               id: 'theme',
@@ -263,17 +255,17 @@ export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
       grade: 4,
       solStandards: ['4.5'],
       timeEstimate: '20 minutes',
-      instructions: 'Analyze Dani\'s character traits and support each one with evidence from the story.',
+      instructions: 'Analyze the narrator\'s character traits and support each one with evidence from the story.',
       questions: [
         {
           id: 'character-traits',
-          question: 'What kind of person is Dani? Use evidence from the story!',
+          question: 'What kind of person is the narrator? Use evidence from the story!',
           fields: [
             {
               id: 'trait-1',
               type: 'text',
               label: 'Character Trait 1:',
-              placeholder: 'curious, brave, lonely, etc.'
+              placeholder: 'curious, creative, cautious, etc.'
             },
             {
               id: 'evidence-1',
@@ -316,11 +308,11 @@ export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
       grade: 4,
       solStandards: ['4.6'],
       timeEstimate: '30 minutes',
-      instructions: 'Write a short story about finding your own magical door. What would you be tempted to change? What might go wrong?',
+      instructions: 'Write a short story about finding your own magical art tool. What would you create? What might go wrong?',
       questions: [
         {
           id: 'writing-prompt',
-          question: 'If you found a door like Dani\'s, what would you change about your life? Write a story (5-8 sentences) about what happens.',
+          question: 'If you found a magical art tool like the pencil, what would you create? Write a story (5-8 sentences) about what happens.',
           fields: [
             {
               id: 'story',
@@ -334,11 +326,11 @@ export const forgottenDoorGrade4Worksheet: OnlineWorksheet = {
   ]
 };
 
-// Grade 5 Worksheet for "The Forgotten Door"
-export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
-  id: 'forgotten-door-grade5',
-  storyId: 'forgotten-door',
-  title: 'The Forgotten Door - Grade 5 Activities',
+// Grade 5 Worksheet for "The Pencil"
+export const pencilGrade5Worksheet: OnlineWorksheet = {
+  id: 'the-pencil-grade5',
+  storyId: 'the-pencil',
+  title: 'The Pencil - Grade 5 Activities',
   grade: 5,
   sections: [
     {
@@ -352,7 +344,7 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
       questions: [
         {
           id: 'inference-1',
-          question: 'Why do you think the door only appeared for Dani?',
+          question: 'Why do you think the pencil was in the Lost & Found?',
           fields: [
             {
               id: 'inference',
@@ -370,7 +362,7 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
         },
         {
           id: 'inference-2',
-          question: 'What do you think the whisper "Make it better" really wanted?',
+          question: 'What do you think will happen to the next person who finds the pencil?',
           fields: [
             {
               id: 'inference',
@@ -388,12 +380,12 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
         },
         {
           id: 'inference-3',
-          question: 'What do you think will happen after the story ends?',
+          question: 'Why doesn\'t the narrator throw the pencil away?',
           fields: [
             {
               id: 'prediction',
               type: 'textarea',
-              label: 'Your prediction:',
+              label: 'Your inference:',
               lines: 2
             },
             {
@@ -433,14 +425,14 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
             {
               id: 'example-text',
               type: 'text',
-              label: 'Example: "The image burned in her mind like static on a screen"',
-              placeholder: 'This is a simile'
+              label: 'Example: "The pencil had this weird silvery shimmer in the grain"',
+              placeholder: 'This creates a mysterious mood'
             },
             {
               id: 'example-meaning',
               type: 'textarea',
               label: 'What it means/why the author used it:',
-              placeholder: 'The memory is stuck and uncomfortable, like TV static',
+              placeholder: 'The unusual description makes the pencil seem magical and otherworldly',
               lines: 2
             }
           ]
@@ -459,7 +451,7 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
               id: 'type-1',
               type: 'text',
               label: 'Type of figurative language:',
-              placeholder: 'simile, metaphor, personification, etc.'
+              placeholder: 'descriptive language, simile, metaphor, etc.'
             },
             {
               id: 'meaning-1',
@@ -477,7 +469,7 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
               id: 'type-2',
               type: 'text',
               label: 'Type of figurative language:',
-              placeholder: 'simile, metaphor, personification, etc.'
+              placeholder: 'descriptive language, simile, metaphor, etc.'
             },
             {
               id: 'meaning-2',
@@ -496,7 +488,7 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
       grade: 5,
       solStandards: ['5.6'],
       timeEstimate: '30 minutes',
-      instructions: 'Starting from "That night, Dani lay in bed...", write a different ending that maintains the story\'s mood.',
+      instructions: 'Starting from when the narrator first hears the pencil drawing at night, write a different ending that maintains the story\'s mood.',
       questions: [
         {
           id: 'alternate-ending',
@@ -505,7 +497,7 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
             {
               id: 'new-ending',
               type: 'textarea',
-              placeholder: 'That night, Dani lay in bed...',
+              placeholder: 'That night, when I heard the pencil drawing by itself...',
               lines: 15
             }
           ]
@@ -515,32 +507,36 @@ export const forgottenDoorGrade5Worksheet: OnlineWorksheet = {
   ]
 };
 
-// Helper function to get worksheet by story and grade
+// Helper function to get worksheet by story and grade - now uses template system
 export const getOnlineWorksheet = (storySlug: string, grade: 3 | 4 | 5): OnlineWorksheet | null => {
-  const worksheetId = `${storySlug}-grade${grade}`;
-
-  switch (worksheetId) {
-    case 'forgotten-door-grade3':
-      return forgottenDoorGrade3Worksheet;
-    case 'forgotten-door-grade4':
-      return forgottenDoorGrade4Worksheet;
-    case 'forgotten-door-grade5':
-      return forgottenDoorGrade5Worksheet;
-    default:
-      return null;
-  }
-};
-
-// Get all available worksheets for a story
-export const getStoryWorksheets = (storySlug: string): OnlineWorksheet[] => {
-  const worksheets: OnlineWorksheet[] = [];
-
-  for (let grade = 3; grade <= 5; grade++) {
-    const worksheet = getOnlineWorksheet(storySlug, grade as 3 | 4 | 5);
-    if (worksheet) {
-      worksheets.push(worksheet);
+  // Return specific worksheets for each story
+  if (storySlug === 'the-pencil') {
+    switch (grade) {
+      case 3: return pencilGrade3Worksheet;
+      case 4: return pencilGrade4Worksheet;
+      case 5: return pencilGrade5Worksheet;
     }
   }
 
-  return worksheets;
+  // Fallback to template system for other stories
+  const worksheets = getStoryWorksheets(storySlug);
+  const result = worksheets.find(w => w.grade === grade) || null;
+  return result;
+};
+
+// Get all available worksheets for a story - now uses template system
+export const getStoryWorksheets = (storySlug: string): OnlineWorksheet[] => {
+  // Return specific worksheets for each story
+  if (storySlug === 'the-pencil') {
+    return [pencilGrade3Worksheet, pencilGrade4Worksheet, pencilGrade5Worksheet];
+  }
+
+  // Fallback to template system for other stories
+  const storyContent = getStoryBySlug(storySlug);
+  if (!storyContent) {
+    return [];
+  }
+
+  // Use the new template system to build worksheets
+  return buildOnlineWorksheetsForStory(storyContent);
 };

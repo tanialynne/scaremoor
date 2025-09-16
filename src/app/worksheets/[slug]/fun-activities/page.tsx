@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { getWorksheetStoryBySlug, WorksheetStory } from "../../../constants/Worksheets";
+import { getStoryBySlug } from "../../../constants/StoryContent";
+import { buildFunActivitiesForStory } from "../../../utils/StoryBuilder";
 import { isFeatureEnabled } from "../../../constants/FeatureFlags";
 import Herobox from "../../../components/Herobox";
 import Button from "../../../components/Button";
@@ -28,24 +30,28 @@ interface FunActivity {
 
 const FunActivitiesPage = ({ params }: Props) => {
   const [story, setStory] = useState<WorksheetStory | null>(null);
+  const [funActivities, setFunActivities] = useState<FunActivity[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
       // Redirect if worksheets are disabled
       if (!isFeatureEnabled("WORKSHEETS_ENABLED")) {
         redirect("/");
-        return;
       }
 
       const { slug: paramSlug } = await params;
       const storyData = getWorksheetStoryBySlug(paramSlug);
+      const storyContent = getStoryBySlug(paramSlug);
 
-      if (!storyData) {
+      if (!storyData || !storyContent) {
         notFound();
-        return;
       }
 
       setStory(storyData);
+
+      // Build fun activities dynamically from story content
+      const activities = buildFunActivitiesForStory(storyContent);
+      setFunActivities(activities);
 
       // Set page title
       document.title = `${storyData.title} - Fun Activities`;
@@ -53,63 +59,6 @@ const FunActivitiesPage = ({ params }: Props) => {
 
     loadData();
   }, [params]);
-
-  const funActivities: FunActivity[] = [
-    {
-      id: 'word-search',
-      title: 'Word Search Puzzle',
-      description: 'Find hidden words from the story in an interactive grid. Words can go across, down, or diagonal.',
-      icon: '🔤',
-      estimatedTime: '15 minutes',
-      skills: ['Vocabulary', 'Pattern Recognition', 'Spelling'],
-      difficulty: 'Easy'
-    },
-    {
-      id: 'story-bingo',
-      title: 'Story Bingo',
-      description: 'Mark off story elements as they appear. Get five in a row to win! Perfect for story review.',
-      icon: '🎯',
-      estimatedTime: '10 minutes',
-      skills: ['Reading Comprehension', 'Listening Skills', 'Story Elements'],
-      difficulty: 'Easy'
-    },
-    {
-      id: 'cryptogram',
-      title: 'Secret Message Puzzles',
-      description: 'Decode three different cryptograms with important messages from the story using various cipher systems.',
-      icon: '🔐',
-      estimatedTime: '20 minutes',
-      skills: ['Problem Solving', 'Logic', 'Pattern Recognition'],
-      difficulty: 'Hard'
-    },
-    {
-      id: 'word-scramble',
-      title: 'Word Scramble',
-      description: 'Unscramble mixed-up words from the story. Use hints to help you figure out each word.',
-      icon: '🔤',
-      estimatedTime: '15 minutes',
-      skills: ['Vocabulary', 'Spelling', 'Word Recognition'],
-      difficulty: 'Medium'
-    },
-    {
-      id: 'crossword',
-      title: 'Crossword Puzzle',
-      description: 'Complete a crossword puzzle with clues about characters, events, and themes from the story.',
-      icon: '✏️',
-      estimatedTime: '25 minutes',
-      skills: ['Reading Comprehension', 'Vocabulary', 'Critical Thinking'],
-      difficulty: 'Medium'
-    },
-    {
-      id: 'hidden-message',
-      title: 'Hidden Message Puzzle',
-      description: 'Answer questions about the story, then use the first letter of each answer to reveal a secret message.',
-      icon: '🔍',
-      estimatedTime: '20 minutes',
-      skills: ['Reading Comprehension', 'Critical Thinking', 'Problem Solving'],
-      difficulty: 'Medium'
-    }
-  ];
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {

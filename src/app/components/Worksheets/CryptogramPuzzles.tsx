@@ -5,6 +5,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 interface CryptogramPuzzlesProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
+  storyData?: Record<string, unknown>;
 }
 
 interface CryptogramData {
@@ -18,36 +19,78 @@ interface CryptogramData {
 
 const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
   sectionId,
-  onResponseChange
+  onResponseChange,
+  storyData
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
 
-  const cryptograms: CryptogramData[] = useMemo(() => [
-    {
-      id: 'crypto1',
-      title: 'Cryptogram #1',
-      cipher: 'Reverse Alphabet: A=Z, B=Y, C=X, etc.',
-      encoded: 'NZPV RG YVGGVI',
-      answer: 'MAKE IT BETTER',
-      hint: 'This is what the whisper told Dani'
-    },
-    {
-      id: 'crypto2',
-      title: 'Cryptogram #2',
-      cipher: 'Number Cipher: A=1, B=2, C=3, etc.',
-      encoded: '2-5-20-20-5-18 / 13-5-1-14-19 / 7-15-14-5',
-      answer: 'BETTER MEANS GONE',
-      hint: 'This is the warning Dani learns too late'
-    },
-    {
-      id: 'crypto3',
-      title: 'Cryptogram #3 (Challenge)',
-      cipher: 'Symbol Cipher: 🚪=D, 🔑=K, 📦=R, 🎭=E, ⭐=A, 💫=W, 🌙=O, 🎯=C, 🎨=H, 🎪=I, 🔥=S',
-      encoded: '🎯🎨🌙🌙⭐🔥 / 💫🎪⭐🔥🔥🎨',
-      answer: 'CHOOSE WISELY',
-      hint: 'The final message in Dani\'s dreams'
+  // Cipher encoding functions
+  const encodeCaesar = (text: string, shift: number = 3): string => {
+    return text.split('').map(char => {
+      if (char.match(/[A-Z]/)) {
+        return String.fromCharCode(((char.charCodeAt(0) - 65 + shift) % 26) + 65);
+      }
+      return char;
+    }).join('');
+  };
+
+  const encodeReverse = (text: string): string => {
+    return text.split('').map(char => {
+      if (char.match(/[A-Z]/)) {
+        return String.fromCharCode(90 - (char.charCodeAt(0) - 65));
+      }
+      return char;
+    }).join('');
+  };
+
+  const encodeAtbash = (text: string): string => {
+    return text.split('').map(char => {
+      if (char.match(/[A-Z]/)) {
+        // A=65, Z=90. ROT13: A→N, B→O, C→P, etc.
+        return String.fromCharCode(((char.charCodeAt(0) - 65 + 13) % 26) + 65);
+      }
+      return char;
+    }).join('');
+  };
+
+  const encodeMessage = (message: string, cipher: string): string => {
+    switch (cipher) {
+      case 'caesar-3':
+        return encodeCaesar(message, 3);
+      case 'reverse':
+        return encodeReverse(message);
+      case 'atbash':
+        return encodeAtbash(message);
+      default:
+        return message;
     }
-  ], []);
+  };
+
+  const getCipherDescription = (cipher: string): string => {
+    switch (cipher) {
+      case 'caesar-3':
+        return 'Caesar Cipher (shift 3): A→D, B→E, C→F, etc.';
+      case 'reverse':
+        return 'Reverse Alphabet: A→Z, B→Y, C→X, etc.';
+      case 'atbash':
+        return 'ROT13 Cipher: A→N, B→O, C→P, etc.';
+      default:
+        return 'Unknown cipher';
+    }
+  };
+
+  const cryptograms: CryptogramData[] = useMemo(() => {
+    const storyMessages = (storyData?.cryptogramMessages as Array<{message: string, cipher: string}>) || (storyData?.messages as Array<{message: string, cipher: string}>) || [];
+
+    return storyMessages.map((messageData, index) => ({
+      id: `crypto${index + 1}`,
+      title: `Cryptogram #${index + 1}`,
+      cipher: getCipherDescription(messageData.cipher),
+      encoded: encodeMessage(messageData.message, messageData.cipher),
+      answer: messageData.message,
+      hint: `Hidden message from the story`
+    }));
+  }, [storyData]);
 
   const handleInputChange = useCallback((cryptogramId: string, value: string) => {
     const newResponses = { ...responses, [cryptogramId]: value };

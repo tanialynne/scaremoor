@@ -5,6 +5,7 @@ import React, { useState, useCallback } from 'react';
 interface CrosswordPuzzleProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
+  storyData?: Record<string, unknown>;
 }
 
 interface Clue {
@@ -18,30 +19,162 @@ interface Clue {
 
 const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
   sectionId,
-  onResponseChange
+  onResponseChange,
+  storyData
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
 
-  const clues: Clue[] = [
-    // ACROSS
-    { number: 2, direction: 'across', clue: "Dani's best friend who mysteriously returns", answer: 'AVA', startRow: 1, startCol: 0 },
-    { number: 4, direction: 'across', clue: 'The type of key Dani finds in her lunch', answer: 'BRASS', startRow: 3, startCol: 0 },
-    { number: 6, direction: 'across', clue: 'What Trevor used to call Dani', answer: 'WEIRDO', startRow: 5, startCol: 2 },
-    { number: 8, direction: 'across', clue: 'The forgotten door leads to this magical place', answer: 'HALLWAY', startRow: 7, startCol: 0 },
-    { number: 9, direction: 'across', clue: "Dani's favorite food she couldn't eat before", answer: 'PIZZA', startRow: 8, startCol: 8 },
-    { number: 10, direction: 'across', clue: 'Each one contains a piece of Dani\'s life', answer: 'DRAWER', startRow: 9, startCol: 3 },
-    { number: 11, direction: 'across', clue: 'The boy with yogurt on his chin', answer: 'MAX', startRow: 10, startCol: 10 },
-    { number: 12, direction: 'across', clue: 'What Mr. _____ teaches', answer: 'DEVLIN', startRow: 11, startCol: 3 },
+  // Get story-specific crossword clues or fallback to default
+  const getStoryCrosswordClues = (): Clue[] => {
+    // Check both possible data structures
+    const storyCrosswordData = (storyData?.crosswordClues as Clue[]) || (storyData?.clues as Clue[]) || [];
 
-    // DOWN
-    { number: 1, direction: 'down', clue: 'What Dani must make about changing her life', answer: 'CHOICE', startRow: 0, startCol: 4 },
-    { number: 3, direction: 'down', clue: 'Where Dani first finds the door', answer: 'CLOSET', startRow: 1, startCol: 8 },
-    { number: 5, direction: 'down', clue: '"Better means ____"', answer: 'GONE', startRow: 3, startCol: 4 },
-    { number: 7, direction: 'down', clue: 'Color of the forgotten door', answer: 'GRAY', startRow: 6, startCol: 2 },
-    { number: 9, direction: 'down', clue: 'What happens to Dani\'s identity', answer: 'PERFECT', startRow: 8, startCol: 8 },
-    { number: 11, direction: 'down', clue: '"_____ it better" - the door\'s whisper', answer: 'MAKE', startRow: 10, startCol: 10 },
-    { number: 12, direction: 'down', clue: 'What disappears when things get "better"', answer: 'FRIENDS', startRow: 11, startCol: 3 }
-  ];
+
+    if (storyCrosswordData && storyCrosswordData.length > 0) {
+      return storyCrosswordData;
+    }
+
+    // Default fallback clues (generic/template) - positions will be auto-generated
+    return [
+      // ACROSS
+      { number: 1, direction: 'across', clue: "Main character in the story", answer: 'HERO', startRow: 0, startCol: 0 },
+      { number: 3, direction: 'across', clue: 'Setting of the story', answer: 'SCHOOL', startRow: 0, startCol: 0 },
+      { number: 5, direction: 'across', clue: 'Important theme', answer: 'LESSON', startRow: 0, startCol: 0 },
+      { number: 7, direction: 'across', clue: 'Story outcome', answer: 'END', startRow: 0, startCol: 0 },
+
+      // DOWN
+      { number: 2, direction: 'down', clue: 'Type of story', answer: 'TALE', startRow: 0, startCol: 0 },
+      { number: 4, direction: 'down', clue: 'Story problem', answer: 'CONFLICT', startRow: 0, startCol: 0 },
+      { number: 6, direction: 'down', clue: 'Story mood', answer: 'TONE', startRow: 0, startCol: 0 },
+      { number: 8, direction: 'down', clue: 'Character trait', answer: 'BRAVE', startRow: 0, startCol: 0 }
+    ];
+  };
+
+  // Simple crossword layout - ensure we get both across and down words
+  const generateCrosswordLayout = (inputClues: Clue[]): Clue[] => {
+    const gridSize = 15;
+    const grid: (string | null)[][] = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
+    const placedWords: Clue[] = [];
+
+    // Separate across and down words
+    const acrossWords = inputClues.filter(c => c.direction === 'across');
+    const downWords = inputClues.filter(c => c.direction === 'down');
+
+    // Place all across words first with enough vertical spacing
+    let currentNumber = 1;
+    const rowSpacing = 2; // 2 rows between each across word
+    let currentRow = 2; // Start at row 2 to leave room for down words above
+
+    // Place across words
+    acrossWords.forEach((word, index) => {
+      if (currentRow + (index * rowSpacing) < gridSize - 1) {
+        const row = currentRow + (index * rowSpacing);
+        const startCol = Math.max(1, Math.floor((gridSize - word.answer.length) / 2));
+
+        // Check if word fits
+        if (startCol + word.answer.length < gridSize) {
+          const clue: Clue = {
+            ...word,
+            startRow: row,
+            startCol: startCol,
+            number: currentNumber++
+          };
+
+          // Place letters in grid
+          for (let i = 0; i < word.answer.length; i++) {
+            grid[row][startCol + i] = word.answer[i];
+          }
+
+          placedWords.push(clue);
+        }
+      }
+    });
+
+    // Now place down words by finding intersections
+    downWords.forEach(downWord => {
+      let placed = false;
+
+      // Try to intersect with each placed across word
+      for (const acrossClue of placedWords.filter(p => p.direction === 'across')) {
+        if (placed) break;
+
+        // Look for common letters
+        for (let acrossPos = 0; acrossPos < acrossClue.answer.length; acrossPos++) {
+          if (placed) break;
+
+          for (let downPos = 0; downPos < downWord.answer.length; downPos++) {
+            if (acrossClue.answer[acrossPos].toLowerCase() === downWord.answer[downPos].toLowerCase()) {
+              const newRow = acrossClue.startRow - downPos;
+              const newCol = acrossClue.startCol + acrossPos;
+
+              // Check if placement is valid (within bounds and no conflicts)
+              if (newRow >= 0 && newRow + downWord.answer.length <= gridSize && newCol >= 0 && newCol < gridSize) {
+                let canPlace = true;
+
+                for (let k = 0; k < downWord.answer.length; k++) {
+                  const checkRow = newRow + k;
+                  if (grid[checkRow][newCol] !== null && grid[checkRow][newCol] !== downWord.answer[k]) {
+                    canPlace = false;
+                    break;
+                  }
+                }
+
+                if (canPlace) {
+                  const clue: Clue = {
+                    ...downWord,
+                    startRow: newRow,
+                    startCol: newCol,
+                    number: currentNumber++
+                  };
+
+                  // Place letters in grid
+                  for (let k = 0; k < downWord.answer.length; k++) {
+                    grid[newRow + k][newCol] = downWord.answer[k];
+                  }
+
+                  placedWords.push(clue);
+                  placed = true;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return placedWords;
+  };
+
+  // Validate if a word can be placed at the given position
+  const isValidPlacement = (grid: (string | null)[][], word: string, startRow: number, startCol: number, direction: 'across' | 'down', gridSize: number): boolean => {
+    // Check bounds
+    const endRow = direction === 'down' ? startRow + word.length - 1 : startRow;
+    const endCol = direction === 'across' ? startCol + word.length - 1 : startCol;
+
+    if (startRow < 0 || startCol < 0 || endRow >= gridSize || endCol >= gridSize) {
+      return false;
+    }
+
+    // Check each letter position
+    for (let i = 0; i < word.length; i++) {
+      const row = direction === 'across' ? startRow : startRow + i;
+      const col = direction === 'across' ? startCol + i : startCol;
+
+      const currentCell = grid[row][col];
+
+      // Cell must be empty or contain the same letter
+      if (currentCell !== null && currentCell !== word[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+
+  const rawClues = getStoryCrosswordClues();
+  const clues: Clue[] = generateCrosswordLayout(rawClues);
 
   const gridSize = 15; // 15x15 grid
 

@@ -21,6 +21,7 @@ import {
 import { getStoryWorksheets } from "../../constants/OnlineWorksheets";
 import { OnlineWorksheet } from "../../components/Worksheets/types";
 import { isFeatureEnabled } from "../../constants/FeatureFlags";
+import { markdownToHtml } from "../../utils/StoryBuilder";
 
 import BackgroundImage from "../../../../public/images/bookspage-image.png";
 import OrangeBackground from "../../../../public/images/orangeBackground.png";
@@ -56,7 +57,6 @@ const WorksheetStoryPage = ({ params }: Props) => {
 
       if (!storyData) {
         notFound();
-        return;
       }
 
       const worksheetData = getStoryWorksheets(paramSlug);
@@ -151,29 +151,17 @@ const WorksheetStoryPage = ({ params }: Props) => {
                     📖 Story Preview
                   </h2>
                   <div className="prose prose-invert prose-orange max-w-none">
-                    <div className="text-gray-300 leading-relaxed">
-                      {storyText
-                        .split("\n\n")
-                        .slice(0, 6)
-                        .map((paragraph: string, index: number) => (
-                          <p
-                            key={index}
-                            className="mb-4"
-                            dangerouslySetInnerHTML={{
-                              __html: paragraph
-                                .replace(
-                                  /\*\*(.*?)\*\*/g,
-                                  "<strong>$1</strong>"
-                                )
-                                .replace(/\*(.*?)\*/g, "<em>$1</em>"),
-                            }}
-                          />
-                        ))}
-                      <div className="text-orange-400 italic">
-                        [Story continues... Full text available in downloadable
-                        materials]
-                      </div>
-                    </div>
+                    <div
+                      className="text-gray-300 leading-relaxed"
+                      dangerouslySetInnerHTML={{
+                        __html: markdownToHtml(
+                          storyText
+                            .split('\n\n')
+                            .slice(0, 6)
+                            .join('\n\n')
+                        ) + `<div class="text-orange-400 italic mt-4">[Story continues... Full text available in downloadable materials]</div>`
+                      }}
+                    />
                   </div>
                 </div>
 

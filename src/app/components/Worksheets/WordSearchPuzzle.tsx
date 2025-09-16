@@ -1,61 +1,152 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
 interface WordSearchPuzzleProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
+  storyData?: Record<string, unknown>;
+}
+
+interface WordPlacement {
+  word: string;
+  row: number;
+  col: number;
+  direction: 'horizontal' | 'vertical' | 'diagonal';
+  directionVector: [number, number];
 }
 
 const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
   sectionId,
-  onResponseChange
+  onResponseChange,
+  storyData
 }) => {
   const [foundWords, setFoundWords] = useState<Set<string>>(new Set());
   const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState<{row: number, col: number} | null>(null);
+  const [foundWordCells, setFoundWordCells] = useState<Set<string>>(new Set());
 
-  // The word search grid from the HTML file
-  const grid = [
-    ['D', 'O', 'O', 'R', 'W', 'A', 'Y', 'S', 'M', 'E', 'M', 'O', 'R', 'Y', 'B'],
-    ['R', 'E', 'P', 'L', 'M', 'I', 'C', 'R', 'O', 'S', 'C', 'O', 'P', 'E', 'R'],
-    ['A', 'P', 'I', 'Z', 'Z', 'A', 'L', 'O', 'C', 'K', 'E', 'R', 'T', 'D', 'A'],
-    ['W', 'I', 'D', 'E', 'N', 'T', 'I', 'T', 'Y', 'K', 'E', 'Y', 'R', 'I', 'S'],
-    ['E', 'S', 'P', 'E', 'R', 'F', 'E', 'C', 'T', 'I', 'O', 'N', 'E', 'S', 'S'],
-    ['R', 'C', 'H', 'O', 'I', 'C', 'E', 'S', 'T', 'A', 'V', 'A', 'V', 'A', 'K'],
-    ['S', 'L', 'O', 'S', 'U', 'P', 'P', 'L', 'Y', 'M', 'A', 'X', 'O', 'P', 'E'],
-    ['U', 'O', 'W', 'H', 'I', 'S', 'P', 'E', 'R', 'N', 'O', 'R', 'R', 'P', 'Y'],
-    ['P', 'S', 'H', 'A', 'L', 'L', 'W', 'A', 'Y', 'I', 'T', 'M', 'T', 'E', 'H'],
-    ['G', 'E', 'A', 'V', 'A', 'L', 'L', 'E', 'R', 'G', 'Y', 'A', 'R', 'A', 'O'],
-    ['R', 'T', 'R', 'E', 'A', 'L', 'I', 'T', 'Y', 'O', 'U', 'L', 'R', 'R', 'L'],
-    ['A', 'R', 'M', 'O', 'N', 'D', 'A', 'N', 'I', 'E', 'L', 'L', 'E', 'F', 'E'],
-    ['D', 'O', 'O', 'R', 'K', 'N', 'O', 'B', 'C', 'H', 'A', 'N', 'G', 'E', 'S'],
-    ['E', 'M', 'P', 'T', 'Y', 'F', 'O', 'R', 'G', 'O', 'T', 'T', 'E', 'N', 'D'],
-    ['S', 'C', 'H', 'O', 'O', 'L', 'F', 'R', 'I', 'E', 'N', 'D', 'S', 'H', 'I']
-  ];
+  // Word search generator
+  const generateWordSearch = useCallback((words: string[], gridSize: number = 16): { grid: string[][], placements: WordPlacement[] } => {
+    const grid: string[][] = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
+    const placements: WordPlacement[] = [];
+    const directions = [
+      { name: 'horizontal', vector: [0, 1] },
+      { name: 'vertical', vector: [1, 0] },
+      { name: 'diagonal', vector: [1, 1] }
+    ] as const;
 
-  const targetWords = [
-    'DOOR', 'DRAWER', 'KEY', 'BRASS', 'CLOSET', 'SUPPLY', 'MICROSCOPE',
-    'PIZZA', 'ALLERGY', 'IDENTITY', 'CHOICES', 'WHISPER', 'HALLWAY',
-    'TREVOR', 'AVA', 'MAX', 'LOCKER', 'PERFECT', 'DISAPPEAR', 'EMPTY',
-    'FORGOTTEN', 'NORMAL', 'REALITY', 'CHANGES', 'DANI'
-  ];
+
+    // Try to place each word
+    for (const word of words) {
+      const upperWord = word.toUpperCase();
+      let placed = false;
+      let attempts = 0;
+      const maxAttempts = 200;
+
+      while (!placed && attempts < maxAttempts) {
+        attempts++;
+
+        // Random direction
+        const direction = directions[Math.floor(Math.random() * directions.length)];
+        const [dr, dc] = direction.vector;
+
+        // Calculate valid starting positions
+        let maxRow, maxCol;
+        if (direction.name === 'horizontal') {
+          maxRow = gridSize - 1;
+          maxCol = gridSize - upperWord.length;
+        } else if (direction.name === 'vertical') {
+          maxRow = gridSize - upperWord.length;
+          maxCol = gridSize - 1;
+        } else { // diagonal
+          maxRow = gridSize - upperWord.length;
+          maxCol = gridSize - upperWord.length;
+        }
+
+        if (maxRow < 0 || maxCol < 0) continue;
+
+        const startRow = Math.floor(Math.random() * (maxRow + 1));
+        const startCol = Math.floor(Math.random() * (maxCol + 1));
+
+        // Check if word fits without conflicts
+        let canPlace = true;
+        for (let i = 0; i < upperWord.length; i++) {
+          const row = startRow + (dr * i);
+          const col = startCol + (dc * i);
+
+          // Check bounds
+          if (row < 0 || row >= gridSize || col < 0 || col >= gridSize) {
+            canPlace = false;
+            break;
+          }
+
+          // Allow overlapping if it's the same letter, but avoid conflicts
+          if (grid[row][col] !== '' && grid[row][col] !== upperWord[i]) {
+            canPlace = false;
+            break;
+          }
+        }
+
+        if (canPlace) {
+          // Place the word
+          for (let i = 0; i < upperWord.length; i++) {
+            const row = startRow + (dr * i);
+            const col = startCol + (dc * i);
+            grid[row][col] = upperWord[i];
+          }
+
+          placements.push({
+            word: upperWord,
+            row: startRow,
+            col: startCol,
+            direction: direction.name,
+            directionVector: [dr, dc]
+          });
+
+          placed = true;
+        }
+      }
+
+    }
+
+    // Fill empty cells with random letters
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
+        if (grid[i][j] === '') {
+          grid[i][j] = letters[Math.floor(Math.random() * letters.length)];
+        }
+      }
+    }
+
+    return { grid, placements };
+  }, []);
+
+  // Get story-specific words
+  const getStoryWords = (): string[] => {
+    const storyWords = (storyData?.wordSearchWords as string[]) || (storyData?.words as string[]) || [];
+
+    if (storyWords && storyWords.length > 0) {
+      return storyWords.slice(0, 12); // Limit to 12 words for reasonable grid size
+    }
+
+    // Default fallback words (shorter words that fit better)
+    return ['STORY', 'HERO', 'PLOT', 'THEME', 'BOOK', 'READ', 'TALE', 'END'];
+  };
+
+  const targetWords = useMemo(() => getStoryWords(), [storyData]);
+
+  const { grid, placements } = useMemo(() => {
+    return generateWordSearch(targetWords);
+  }, [targetWords, generateWordSearch]);
 
   const getCellId = (row: number, col: number) => `${row}-${col}`;
 
-  const handleCellClick = useCallback((row: number, col: number) => {
-    const cellId = getCellId(row, col);
-    setSelectedCells(prev => {
-      const newSelected = new Set(prev);
-      if (newSelected.has(cellId)) {
-        newSelected.delete(cellId);
-      } else {
-        newSelected.add(cellId);
-      }
-      return newSelected;
-    });
-  }, []);
+  const handleWordFound = useCallback((word: string, startPos?: {row: number, col: number}, endPos?: {row: number, col: number}) => {
+    if (foundWords.has(word)) return;
 
-  const handleWordFound = useCallback((word: string) => {
     setFoundWords(prev => {
       const newFound = new Set(prev);
       newFound.add(word);
@@ -69,7 +160,59 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
 
       return newFound;
     });
-  }, [sectionId, onResponseChange]);
+
+    // Highlight the word cells if positions are provided
+    if (startPos && endPos) {
+      const wordCells = getWordCells(startPos, endPos);
+      setFoundWordCells(prev => {
+        const newCells = new Set(prev);
+        wordCells.forEach(cell => newCells.add(cell));
+        return newCells;
+      });
+    } else {
+      // Find the word in placements and highlight it
+      const placement = placements.find(p => p.word === word.toUpperCase());
+      if (placement) {
+        const wordCells = new Set<string>();
+        for (let i = 0; i < placement.word.length; i++) {
+          const row = placement.row + (placement.directionVector[0] * i);
+          const col = placement.col + (placement.directionVector[1] * i);
+          wordCells.add(getCellId(row, col));
+        }
+        setFoundWordCells(prev => {
+          const newCells = new Set(prev);
+          wordCells.forEach(cell => newCells.add(cell));
+          return newCells;
+        });
+      }
+    }
+  }, [sectionId, onResponseChange, foundWords, placements]);
+
+  const getWordCells = useCallback((start: {row: number, col: number}, end: {row: number, col: number}): string[] => {
+    const cells: string[] = [];
+    const rowDiff = end.row - start.row;
+    const colDiff = end.col - start.col;
+
+    const rowStep = rowDiff === 0 ? 0 : rowDiff > 0 ? 1 : -1;
+    const colStep = colDiff === 0 ? 0 : colDiff > 0 ? 1 : -1;
+
+    let currentRow = start.row;
+    let currentCol = start.col;
+
+    while (currentRow >= 0 && currentRow < grid.length &&
+           currentCol >= 0 && currentCol < grid[0].length) {
+      cells.push(getCellId(currentRow, currentCol));
+
+      if (currentRow === end.row && currentCol === end.col) {
+        break;
+      }
+
+      currentRow += rowStep;
+      currentCol += colStep;
+    }
+
+    return cells;
+  }, [grid]);
 
   const checkForWord = useCallback((word: string) => {
     if (foundWords.has(word)) return;
@@ -77,6 +220,62 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
     // Simple implementation - just mark as found when user clicks "Found it!"
     handleWordFound(word);
   }, [foundWords, handleWordFound]);
+
+  const handleCellClick = useCallback((row: number, col: number) => {
+    const cellId = getCellId(row, col);
+
+    if (!isSelecting) {
+      // Start selection
+      setIsSelecting(true);
+      setSelectionStart({ row, col });
+      setSelectedCells(new Set([cellId]));
+    } else {
+      // End selection and check for words
+      setIsSelecting(false);
+
+      if (selectionStart) {
+        const selectedWord = getSelectedWord(selectionStart, { row, col });
+        if (selectedWord && targetWords.some(word => word.toUpperCase() === selectedWord.toUpperCase())) {
+          handleWordFound(selectedWord.toUpperCase(), selectionStart, { row, col });
+        }
+      }
+
+      setSelectedCells(new Set());
+      setSelectionStart(null);
+    }
+  }, [isSelecting, selectionStart, targetWords, handleWordFound]);
+
+  const getSelectedWord = useCallback((start: {row: number, col: number}, end: {row: number, col: number}): string => {
+    const rowDiff = end.row - start.row;
+    const colDiff = end.col - start.col;
+
+    // Determine direction
+    const rowStep = rowDiff === 0 ? 0 : rowDiff > 0 ? 1 : -1;
+    const colStep = colDiff === 0 ? 0 : colDiff > 0 ? 1 : -1;
+
+    // Only allow straight lines (horizontal, vertical, diagonal)
+    if (rowDiff !== 0 && colDiff !== 0 && Math.abs(rowDiff) !== Math.abs(colDiff)) {
+      return '';
+    }
+
+    let word = '';
+    let currentRow = start.row;
+    let currentCol = start.col;
+
+    while (currentRow >= 0 && currentRow < grid.length &&
+           currentCol >= 0 && currentCol < grid[0].length) {
+      word += grid[currentRow][currentCol];
+
+      if (currentRow === end.row && currentCol === end.col) {
+        break;
+      }
+
+      currentRow += rowStep;
+      currentCol += colStep;
+    }
+
+    return word;
+  }, [grid]);
 
   return (
     <div className="word-search-puzzle space-y-6">
@@ -109,11 +308,16 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
             {row.map((letter, colIndex) => {
               const cellId = getCellId(rowIndex, colIndex);
               const isSelected = selectedCells.has(cellId);
+              const isFoundWord = foundWordCells.has(cellId);
               return (
                 <div
                   key={colIndex}
                   className={`word-search-cell w-6 h-6 border border-gray-300 flex items-center justify-center cursor-pointer transition-colors ${
-                    isSelected ? 'bg-gray-500 text-white' : 'bg-white hover:bg-gray-100'
+                    isFoundWord
+                      ? 'bg-green-200 text-green-800 font-bold'
+                      : isSelected
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-white hover:bg-gray-100'
                   }`}
                   onClick={() => handleCellClick(rowIndex, colIndex)}
                 >
@@ -134,15 +338,17 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
             return (
               <div
                 key={word}
-                className={`text-sm p-2 rounded border-l-3 transition-all ${
+                className={`text-sm p-2 rounded border-l-4 transition-all ${
                   isFound
-                    ? 'bg-green-100 border-green-400 text-green-800 line-through'
+                    ? 'bg-green-100 border-green-500 text-green-800'
                     : 'bg-gray-100 border-gray-400 text-gray-700'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono">{word}</span>
-                  {!isFound && (
+                  <span className={`font-mono ${isFound ? 'line-through' : ''}`}>{word}</span>
+                  {isFound ? (
+                    <span className="text-green-600 font-bold">✓</span>
+                  ) : (
                     <button
                       onClick={() => checkForWord(word)}
                       className="online-controls print:hidden text-xs px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"

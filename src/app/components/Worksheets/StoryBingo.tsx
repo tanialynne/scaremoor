@@ -5,23 +5,43 @@ import React, { useState, useCallback } from 'react';
 interface StoryBingoProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
+  storyData?: Record<string, unknown>;
 }
 
 const StoryBingo: React.FC<StoryBingoProps> = ({
   sectionId,
-  onResponseChange
+  onResponseChange,
+  storyData
 }) => {
   const [markedCells, setMarkedCells] = useState<Set<number>>(new Set());
   const [bingoAchieved, setBingoAchieved] = useState<string[]>([]);
 
-  // Bingo card items from the HTML file
-  const bingoItems = [
-    'Brass Key', 'Pizza', 'Trevor Gone', 'Supply Closet', 'Whisper',
-    'Ava Returns', 'Gray Door', 'Empty Drawer', 'Hallway', 'Max',
-    'Microscope', 'Locker', '🆓 FREE', 'Mr. Devlin', 'Identity',
-    'Forgotten', 'Choose Wisely', 'Yogurt', 'Note from Mom', 'Changes',
-    'Perfect Life', 'Disappeared', 'Reality', 'Running Away', '"Make it Better"'
-  ];
+  // Get story-specific bingo items or fallback to default
+  const getStoryBingoItems = (): string[] => {
+    const storyItems = (storyData?.bingoItems as string[]) || (storyData?.items as string[]) || [];
+
+    // We need exactly 24 items (25 total with FREE space in the middle)
+    const targetCount = 24;
+    let items = [...storyItems];
+
+    // If we have too few items, duplicate some to reach 24
+    while (items.length < targetCount) {
+      items = [...items, ...storyItems.slice(0, targetCount - items.length)];
+    }
+
+    // If we have too many, take the first 24
+    if (items.length > targetCount) {
+      items = items.slice(0, targetCount);
+    }
+
+    // Insert FREE space at position 12 (middle of 5x5 grid)
+    const result = [...items];
+    result.splice(12, 0, '🆓 FREE');
+
+    return result;
+  };
+
+  const bingoItems = getStoryBingoItems();
 
   const checkForBingo = useCallback((marked: Set<number>) => {
     const bingos: string[] = [];
@@ -73,8 +93,8 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
         newMarked.add(index);
       }
 
-      // Always include free space
-      newMarked.add(12);
+      // Always include free space (position 12 in bingoItems + 5 for header = 17)
+      newMarked.add(17);
 
       const bingos = checkForBingo(newMarked);
       setBingoAchieved(bingos);
@@ -92,7 +112,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
 
   // Initialize with free space marked
   React.useEffect(() => {
-    setMarkedCells(new Set([12]));
+    setMarkedCells(new Set([17])); // Free space is at position 17 (12 + 5 for header)
   }, []);
 
   return (
@@ -152,7 +172,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
         {/* Bingo Items */}
         {bingoItems.map((item, index) => {
           const isMarked = markedCells.has(index + 5); // +5 because header takes first 5 positions
-          const isFreeSpace = index === 7; // Index 7 in bingoItems is the free space
+          const isFreeSpace = item === '🆓 FREE'; // Check if this item is the free space
           const actualIndex = index + 5;
 
           return (
@@ -194,10 +214,10 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
           <div className="online-controls print:hidden">
             <button
               onClick={() => {
-                setMarkedCells(new Set([12])); // Reset to just free space
+                setMarkedCells(new Set([17])); // Reset to just free space
                 setBingoAchieved([]);
                 onResponseChange?.(sectionId, {
-                  'marked-cells': '12',
+                  'marked-cells': '17',
                   'bingo-achieved': 'No',
                   'bingo-lines': ''
                 });

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { getWorksheetStoryBySlug, WorksheetStory } from "../../../../constants/Worksheets";
+import { getStoryBySlug } from "../../../../constants/StoryContent";
+import { getFunActivityDataForActivity } from "../../../../utils/StoryBuilder";
 import { isFeatureEnabled } from "../../../../constants/FeatureFlags";
 import WorksheetHeader from "../../../../components/WorksheetLayout/WorksheetHeader";
 import WorksheetFooter from "../../../../components/WorksheetLayout/WorksheetFooter";
@@ -28,7 +30,7 @@ interface ActivityConfig {
   estimatedTime: string;
   skills: string[];
   difficulty: 'Easy' | 'Medium' | 'Hard';
-  component: React.ComponentType<{ sectionId: string; onResponseChange: (sectionId: string, newResponses: Record<string, string>) => void; }>;
+  component: React.ComponentType<{ sectionId: string; onResponseChange: (sectionId: string, newResponses: Record<string, string>) => void; storyData?: Record<string, unknown>; }>;
 }
 
 const activities: ActivityConfig[] = [
@@ -101,30 +103,58 @@ const getActivityConfig = (id: string): ActivityConfig | undefined => {
 const FunActivityPage = ({ params }: Props) => {
   const [story, setStory] = useState<WorksheetStory | null>(null);
   const [activityId, setActivityId] = useState<string>('');
+  const [storyActivityData, setStoryActivityData] = useState<Record<string, unknown> | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      // Redirect if worksheets are disabled
-      if (!isFeatureEnabled("WORKSHEETS_ENABLED")) {
-        redirect("/");
-        return;
-      }
+      try {
+        const { slug: paramSlug, activityId: paramActivityId } = await params;
 
-      const { slug: paramSlug, activityId: paramActivityId } = await params;
-      const storyData = getWorksheetStoryBySlug(paramSlug);
+        // Get story content directly without relying on template system
+        const storyContent = getStoryBySlug(paramSlug);
 
-      if (!storyData) {
+        if (!storyContent) {
+          notFound();
+          return;
+        }
+
+        // Create minimal story object
+        const storyData: WorksheetStory = {
+          id: storyContent.id,
+          title: storyContent.title,
+          slug: storyContent.slug,
+          description: storyContent.description,
+          storyText: storyContent.storyText,
+          coverImage: storyContent.coverImage,
+          gradeRange: storyContent.gradeRange,
+          subjects: storyContent.subjects,
+          themes: storyContent.themes,
+          readingTime: storyContent.readingTime,
+          published: storyContent.published,
+          publishDate: storyContent.publishDate,
+          solStandards: { grade3: [], grade4: [], grade5: [] },
+          activities: { grade3: [], grade4: [], grade5: [] },
+          downloadableResources: storyContent.downloadableResources
+        };
+
+        // Get activity data
+        const activityData = getFunActivityDataForActivity(storyContent, paramActivityId);
+
+        setStory(storyData);
+        setActivityId(paramActivityId);
+        setStoryActivityData(activityData);
+
+        // Set page title
+        const activity = getActivityConfig(paramActivityId);
+        if (activity) {
+          document.title = `${storyData.title} - ${activity.title}`;
+        }
+      } catch (error) {
+        console.error('Error loading activity data:', error);
         notFound();
-        return;
-      }
-
-      setStory(storyData);
-      setActivityId(paramActivityId);
-
-      // Set page title
-      const activity = getActivityConfig(paramActivityId);
-      if (activity) {
-        document.title = `${storyData.title} - ${activity.title}`;
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -153,6 +183,17 @@ const FunActivityPage = ({ params }: Props) => {
   const handleResponseChange = () => {
     // Response change handler for activities
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">⏳</div>
+          <p className="text-gray-600">Loading activity...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!story) {
     return (
@@ -251,6 +292,7 @@ const FunActivityPage = ({ params }: Props) => {
             <ActivityComponent
               sectionId={activityId}
               onResponseChange={handleResponseChange}
+              storyData={storyActivityData || undefined}
             />
           </div>
 

@@ -5,6 +5,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 interface HiddenMessagePuzzleProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
+  storyData?: Record<string, unknown>;
 }
 
 interface PuzzleItem {
@@ -17,27 +18,41 @@ interface PuzzleItem {
 
 const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
   sectionId,
-  onResponseChange
+  onResponseChange,
+  storyData
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [revealedMessage, setRevealedMessage] = useState<string>('');
 
-  const puzzleItems: PuzzleItem[] = useMemo(() => [
-    { number: 1, question: 'What subject does Mr. Devlin teach?', answer: 'CHEMISTRY', firstLetter: 'C', hint: 'Science class with experiments' },
-    { number: 2, question: 'What does Dani use to open the door?', answer: 'HANDLE', firstLetter: 'H', hint: 'She touches the door with her...' },
-    { number: 3, question: "Dani's favorite food?", answer: 'ONION', firstLetter: 'O', hint: 'Rings on pizza, makes her allergic friend sick' },
-    { number: 4, question: 'The door is painted what color?', answer: 'OLD', firstLetter: 'O', hint: 'Ancient, aged, not new' },
-    { number: 5, question: 'What does the hallway contain?', answer: 'SHELVES', firstLetter: 'S', hint: 'Drawers sit on these' },
-    { number: 6, question: 'What happens to Trevor?', answer: 'ERASED', firstLetter: 'E', hint: 'Completely removed from existence' },
-    { number: 7, question: 'What must Dani do at the end?', answer: 'WALK', firstLetter: 'W', hint: 'Move away on foot' },
-    { number: 8, question: 'The brass object Dani finds?', answer: 'INSTRUMENT', firstLetter: 'I', hint: 'Musical tool, or in this case, a key' },
-    { number: 9, question: 'What does the door do to Dani\'s life?', answer: 'SIMPLIFIES', firstLetter: 'S', hint: 'Makes easier, removes complications' },
-    { number: 10, question: 'Who returns to Dani\'s class?', answer: 'EVA', firstLetter: 'E', hint: 'Friend whose name sounds like "Ava"' },
-    { number: 11, question: 'Where does Dani first find the door?', answer: 'LOCKER', firstLetter: 'L', hint: 'Storage space in school hallway' },
-    { number: 12, question: "What's Dani's friend with yogurt on chin?", answer: 'YOUNGSTER', firstLetter: 'Y', hint: 'Young person, kid' }
-  ], []);
+  // Get story-specific puzzle data or fallback to default
+  const getStoryPuzzleData = (): { items: PuzzleItem[], message: string } => {
+    const storyPuzzleData = (storyData?.hiddenMessagePuzzle as { items?: PuzzleItem[], message?: string }) ||
+                           (storyData?.questions as { items?: PuzzleItem[], message?: string });
 
-  const hiddenMessage = 'CHOOSE WISELY';
+    if (storyPuzzleData && storyPuzzleData.items && storyPuzzleData.items.length > 0) {
+      return {
+        items: storyPuzzleData.items,
+        message: storyPuzzleData.message || 'MYSTERY'
+      };
+    }
+
+    // Default fallback puzzles (generic/template)
+    return {
+      items: [
+        { number: 1, question: 'Main character in the story', answer: 'HERO', firstLetter: 'H', hint: 'Protagonist' },
+        { number: 2, question: 'Where does the story take place?', answer: 'EDUCATION', firstLetter: 'E', hint: 'Learning environment' },
+        { number: 3, question: 'What lesson is learned?', answer: 'LEARNING', firstLetter: 'L', hint: 'Gaining knowledge' },
+        { number: 4, question: 'What do characters find?', answer: 'PURPOSE', firstLetter: 'P', hint: 'Reason or meaning' },
+        { number: 5, question: 'Type of story genre?', answer: 'MYSTERY', firstLetter: 'M', hint: 'Unknown to be solved' },
+        { number: 6, question: 'Story outcome?', answer: 'ENDING', firstLetter: 'E', hint: 'Conclusion' }
+      ],
+      message: 'HELP ME'
+    };
+  };
+
+  const puzzleData = useMemo(() => getStoryPuzzleData(), [storyData]);
+  const puzzleItems: PuzzleItem[] = puzzleData.items;
+  const hiddenMessage = puzzleData.message;
 
   const handleInputChange = useCallback((itemNumber: number, value: string) => {
     const newResponses = { ...responses, [`item-${itemNumber}`]: value };

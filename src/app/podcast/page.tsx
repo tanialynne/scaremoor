@@ -4,10 +4,17 @@ import Link from "next/link";
 
 import Herobox from "../components/Herobox";
 import Button from "../components/Button";
-import { Testimonials } from "../components/Testimonials";
-import PodcastCard from "../components/PodcastCard";
+import dynamic from "next/dynamic";
+
+// Lazy load heavy components
+const Testimonials = dynamic(() => import("../components/Testimonials").then(mod => ({ default: mod.Testimonials })), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-800/20 rounded-lg" />
+});
+const PodcastCard = dynamic(() => import("../components/PodcastCard"), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-800/20 rounded-lg" />
+});
 import InfoCard from "../components/InfoCard";
-import PODCAST_EPISODES, { getEpisodesGroupedByBook } from "../constants/PodcastEpisodes";
+import { getEpisodesGroupedByBook } from "../constants/PodcastEpisodes";
 
 import BackgroundImage from "../../../public/images/singleBookBackground.png";
 import OrangeBackgroundMd from "../../../public/images/orangeBackgroundMd.png";
@@ -24,7 +31,7 @@ const PodcastPage = () => {
   
   return (
     <>
-      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22">
+      <Herobox backgroundImage={BackgroundImage} contentPaddingTop="lg:pt-22" priorityImage={false}>
         <div className="items-center">
           <div className="space-y-5 lg:pt-10">
             <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">

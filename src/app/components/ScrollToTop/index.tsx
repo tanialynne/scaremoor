@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import OptimizedImage from "../OptimizedImage";
 
 import ScrollTop from "../../../../public/images/scrollToTop.png";
 
@@ -35,7 +35,7 @@ export default function ScrollToTop() {
         aria-label="Scroll to top of page"
         type="button"
       >
-        <Image src={ScrollTop} alt="scroll-to-top" className="inline-block w-full" />
+        <OptimizedImage src={ScrollTop} alt="scroll-to-top" className="inline-block w-full" />
       </button>
     )
   );

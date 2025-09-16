@@ -2,14 +2,15 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
+import OptimizedImage from "@/app/components/OptimizedImage";
 import Markdown from "react-markdown";
 
 import { Book } from "@/app/constants/Books";
 import Button from "@/app/components/Button";
 import Herobox from "@/app/components/Herobox";
 import VideoPreview from "@/app/components/VideoPreview";
-import { BookCTATest } from "@/app/components/ABTestExamples/BookCTATest";
+import BookPurchaseOptions from "@/app/components/BookPurchaseOptions";
 import { LeadMagnetTest } from "@/app/components/ABTestExamples/LeadMagnetTest";
 import ABTestDebug from "@/app/components/ABTestDebug";
 import {
@@ -93,9 +94,8 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                   <Markdown>{selectedBook?.bookDescription}</Markdown>
                 </div>
                 <div className="mt-8">
-                  <BookCTATest
-                    purchaseLink={selectedBook.purchaseLink}
-                    bookTitle={selectedBook.bookTitle}
+                  <BookPurchaseOptions
+                    book={selectedBook}
                     onPurchaseClick={handlePurchaseClick}
                   />
                 </div>
@@ -103,7 +103,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
             )}
           </div>
           <div className="relative w-full max-w-[500px] lg:max-w-[400px] xl:max-w-[500px] mx-auto">
-            <Image
+            <OptimizedImage
               src={bookImage}
               alt={`${selectedBook.bookTitle} - ${selectedBook.bookSubHeading}`}
               className="inline-block h-auto w-full"
@@ -112,7 +112,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
             />
           </div>
         </div>
-        <Image
+        <OptimizedImage
           src={BlurLayer}
           alt="blur-layer"
           className="absolute -bottom-0 left-0 right-0"
@@ -120,13 +120,13 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
         />
       </Herobox>
       <main className=" text-white relative overflow-hidden px-8">
-        <Image
+        <OptimizedImage
           src={CloudRight}
           alt="cloud"
           className="absolute top-10 right-0"
           loading="lazy"
         />
-        <Image
+        <OptimizedImage
           src={CloudBottom}
           alt="cloud"
           className="absolute bottom-0 left-0"
@@ -158,9 +158,8 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                     bookTitle={selectedBook.bookTitle}
                   />
                   <div className="text-center mt-8">
-                    <BookCTATest
-                      purchaseLink={selectedBook.purchaseLink}
-                      bookTitle={selectedBook.bookTitle}
+                    <BookPurchaseOptions
+                      book={selectedBook}
                       onPurchaseClick={handlePurchaseClick}
                     />
                   </div>
@@ -196,9 +195,8 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
                     </div>
 
                     <div className="text-center mt-8">
-                      <BookCTATest
-                        purchaseLink={selectedBook.purchaseLink}
-                        bookTitle={selectedBook.bookTitle}
+                      <BookPurchaseOptions
+                        book={selectedBook}
                         onPurchaseClick={handlePurchaseClick}
                       />
                     </div>

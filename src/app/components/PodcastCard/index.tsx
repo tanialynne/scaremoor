@@ -11,33 +11,51 @@ interface PodcastCardProps {
   bookTitle?: string;
 }
 
-const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitle }: PodcastCardProps) => {
+const PodcastCard = ({
+  title,
+  description,
+  episode,
+  duration,
+  audioSrc,
+  bookTitle,
+}: PodcastCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Initialize random animation delays for CSS animations
-  const [animationDelays] = useState(() => 
-    Array.from({ length: 60 }, () => Math.random() * 0.7 + 0.2)
-  );
+  // Initialize random animation delays for CSS animations (lazy loaded)
+  const [animationDelays, setAnimationDelays] = useState<number[]>([]);
 
   const handleCardClick = async () => {
     if (!isFlipped) {
       setIsFlipped(true);
-      
-      // Auto-play when card flips
+
+      // Generate animation delays only when needed (when flipping to show waveform)
+      if (animationDelays.length === 0) {
+        setAnimationDelays(
+          Array.from({ length: 60 }, () => Math.random() * 0.7 + 0.2)
+        );
+      }
+
+      // Load and auto-play when card flips
       setTimeout(async () => {
         if (audioRef.current) {
           try {
-            // Reset and reload audio
-            audioRef.current.currentTime = 0;
+            // Now that card is flipped, load the audio
             audioRef.current.load();
-            
-            // Wait a bit for loading
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
+            audioRef.current.currentTime = 0;
+
+            // Wait for audio to be ready
+            await new Promise((resolve) => {
+              const handleCanPlay = () => {
+                audioRef.current?.removeEventListener('canplay', handleCanPlay);
+                resolve(undefined);
+              };
+              audioRef.current?.addEventListener('canplay', handleCanPlay);
+            });
+
             const playPromise = audioRef.current.play();
             if (playPromise !== undefined) {
               await playPromise;
@@ -111,17 +129,20 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
   };
 
   useEffect(() => {
+    // Only attach listeners when card is flipped (audio is active)
+    if (!isFlipped) return;
+
     const audio = audioRef.current;
     if (audio) {
       const handleEnded = () => {
         setIsPlaying(false);
       };
-      
+
       const handleError = (e: Event) => {
         console.error("Audio error:", e);
         setIsPlaying(false);
       };
-      
+
       audio.addEventListener("timeupdate", handleTimeUpdate);
       audio.addEventListener("loadedmetadata", handleLoadedMetadata);
       audio.addEventListener("ended", handleEnded);
@@ -137,7 +158,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
         audio.removeEventListener("error", handleError);
       };
     }
-  }, []);
+  }, [isFlipped]);
 
   return (
     <div className="relative w-full perspective-1000">
@@ -149,7 +170,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleCardClick();
           }
@@ -159,9 +180,14 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
       >
         {/* Front of card */}
         <div className="w-full h-full backface-hidden bg-gray-900/50 rounded-lg p-6 border border-gray-700 hover:border-orange-500/50 focus-within:border-orange-500/50 focus-within:ring-2 focus-within:ring-orange-400/50 transition-all duration-300 hover:transform hover:scale-105 focus-within:scale-105 cursor-pointer">
-          <div className="flex flex-col h-full min-h-[280px]">
+          <div className="flex flex-col h-full min-h-[240px]">
             <div className="space-y-3 flex-grow">
-              <h3 className="font-trickordead text-2xl" id={`podcast-title-${title.replace(/\s+/g, '-').toLowerCase()}`}>{title}</h3>
+              <h3
+                className="font-trickordead text-2xl"
+                id={`podcast-title-${title.replace(/\s+/g, "-").toLowerCase()}`}
+              >
+                {title}
+              </h3>
               <p className="card-description text-gray-300 text-lg leading-relaxed">
                 {description}
               </p>
@@ -169,7 +195,9 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
             <div className="pt-4 mt-4 border-t border-gray-700">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-400">
-                  {bookTitle && <span className="text-orange-400">{bookTitle}</span>}
+                  {bookTitle && (
+                    <span className="text-orange-400">{bookTitle}</span>
+                  )}
                   {bookTitle && episode && " • "}
                   {episode}
                 </span>
@@ -185,37 +213,44 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
         {/* Back of card */}
         <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gray-900/50 rounded-lg p-6 border border-orange-500/50">
           <div className="flex flex-col h-full">
-            <div className="flex-1">
-              <h3 className="font-trickordead text-xl mb-2 text-orange-400">{title}</h3>
-              <p className="text-sm text-gray-300 mb-4">Now Playing...</p>
+            <div>
+              <h3 className="font-trickordead text-xl mb-2 text-orange-400">
+                {title}
+              </h3>
+              <span className="text-xs text-gray-300 mb-4 block">
+                Now Playing...
+              </span>
             </div>
 
-            {/* Audio Controls */}
-            <div className="space-y-4">
+            {/* Audio Controls - Centered */}
+            <div className="flex-1 flex flex-col justify-center space-y-4">
               {/* Play/Pause Button with Waveform */}
               <div className="flex items-center justify-center relative">
                 {/* CSS-Based Waveform Animation */}
-                {isPlaying && (
-                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-16 flex items-center justify-center pointer-events-none px-2" aria-hidden="true">
+                {isPlaying && animationDelays.length > 0 && (
+                  <div
+                    className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-16 flex items-center justify-center pointer-events-none px-2"
+                    aria-hidden="true"
+                  >
                     <div className="sound-wave flex items-center justify-center h-full w-full">
                       {animationDelays.map((delay, i) => {
                         // Determine animation class based on position
-                        let animationClass = 'wave-lg';
+                        let animationClass = "wave-lg";
                         if (i < 7 || i >= animationDelays.length - 7) {
-                          animationClass = 'wave-md';
+                          animationClass = "wave-md";
                         }
                         if (i < 3 || i >= animationDelays.length - 3) {
-                          animationClass = 'wave-sm';
+                          animationClass = "wave-sm";
                         }
-                        
+
                         return (
                           <div
                             key={i}
                             className={`bar ${animationClass}`}
                             style={{
                               animationDuration: `${delay}s`,
-                              flex: '1 1 auto',
-                              maxWidth: '3px'
+                              flex: "1 1 auto",
+                              maxWidth: "3px",
                             }}
                           />
                         );
@@ -228,12 +263,20 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
                   className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-full transition-colors relative z-10"
                 >
                   {isPlaying ? (
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                     </svg>
                   ) : (
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8 5v14l11-7z" />
                     </svg>
                   )}
                 </button>
@@ -251,7 +294,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
                     onMouseDown={handleMouseDown}
                     className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900"
                     style={{
-                      background: `linear-gradient(to right, #ea580c ${totalDuration ? (currentTime / totalDuration) * 100 : 0}%, #374151 ${totalDuration ? (currentTime / totalDuration) * 100 : 0}%)`
+                      background: `linear-gradient(to right, #ea580c ${totalDuration ? (currentTime / totalDuration) * 100 : 0}%, #374151 ${totalDuration ? (currentTime / totalDuration) * 100 : 0}%)`,
                     }}
                     aria-label={`Audio progress: ${formatTime(currentTime)} of ${formatTime(totalDuration)}`}
                     aria-valuemin={0}
@@ -271,8 +314,10 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
                   <span>{formatTime(totalDuration)}</span>
                 </div>
               </div>
+            </div>
 
-              {/* Back Button */}
+            {/* Back Button - Fixed at bottom */}
+            <div>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -294,7 +339,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
           <audio
             ref={audioRef}
             src={audioSrc}
-            preload="auto"
+            preload="none"
             controls={false}
             onError={(e) => {
               console.error("Audio error:", e.currentTarget.error);
@@ -362,7 +407,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
           align-items: center;
           justify-content: center;
         }
-        
+
         .bar {
           animation-iteration-count: infinite;
           animation-timing-function: ease-in-out;
@@ -373,7 +418,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
           width: 2px;
           border-radius: 1px;
         }
-        
+
         @keyframes wave-sm {
           0% {
             opacity: 0.4;
@@ -384,7 +429,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
             height: 20px;
           }
         }
-        
+
         @keyframes wave-md {
           0% {
             opacity: 0.4;
@@ -395,7 +440,7 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
             height: 35px;
           }
         }
-        
+
         @keyframes wave-lg {
           0% {
             opacity: 0.4;
@@ -406,15 +451,15 @@ const PodcastCard = ({ title, description, episode, duration, audioSrc, bookTitl
             height: 50px;
           }
         }
-        
+
         .wave-sm {
           animation-name: wave-sm;
         }
-        
+
         .wave-md {
           animation-name: wave-md;
         }
-        
+
         .wave-lg {
           animation-name: wave-lg;
         }

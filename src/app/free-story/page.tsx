@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "../components/OptimizedImage";
 import { Metadata } from "next";
 
 import Herobox from "../components/Herobox";
@@ -57,7 +57,7 @@ const LeadMagnet = () => {
 
                 <ul className=" flex gap-4 pt-4 flex-col md:flex-row">
                   <li className="inline-flex items-center gap-2">
-                    <Image src={ListCheckIcon} alt="list-icon" />
+                    <OptimizedImage src={ListCheckIcon} alt="list-icon" />
                     <span>
                       Perfect for ages 8–12 (and brave grown-ups too). No spam,
                       just stories.
@@ -67,19 +67,23 @@ const LeadMagnet = () => {
               </div>
             </div>
             <div className="relative flex justify-center items-center ">
-              <Image
+              <OptimizedImage
                 src={HeroImage}
                 alt="book-image"
-                className="inline-block w-full max-w-[580px] "
+                className="inline-block w-full max-w-[580px]"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 70vw, 580px"
+                priority={true}
               />
             </div>
           </div>
         </Herobox>
         <div className="absolute -bottom-0 md:-bottom-6 left-0 right-0 w-full">
-          <Image
+          <OptimizedImage
             src={BlurLayer}
             alt="blur-layer"
             className="w-full h-auto"
+            sizes="100vw"
+            loading="eager"
           />
         </div>
       </div>
@@ -171,20 +175,23 @@ const LeadMagnet = () => {
               <RequestForm buttonText="Send my story" requestId="8174135" />
             </div>
           </div>
-          <Image
+          <OptimizedImage
             src={CloudRight}
             alt="cloud"
             className="absolute top-10 right-0"
+            loading="lazy"
           />
-          <Image
+          <OptimizedImage
             src={CloudBottom}
             alt="cloud"
             className="absolute bottom-0 left-0"
+            loading="lazy"
           />
-          <Image
+          <OptimizedImage
             src={CloudMiddle}
             alt="cloud"
             className="absolute top-1/2 -translate-y-1/2 left-0"
+            loading="lazy"
           />
         </section>
       </main>

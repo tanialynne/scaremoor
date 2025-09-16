@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { Book } from "@/app/constants/Books";
+import { isFeatureEnabled } from "@/app/constants/FeatureFlags";
 import Button from "../Button";
 
 import YellowBackground from "../../../../public/images/yellowBackgroundSmall.png";
@@ -23,9 +24,11 @@ const BookCard: React.FC<BookCardProps> = ({
   bookTitle,
   bookSubHeading,
   purchaseLink,
+  directSales,
   type,
   cardWidth = "max-w-sm",
 }) => {
+  const directSalesEnabled = isFeatureEnabled("DIRECT_SALES_ENABLED") && directSales?.enabled;
   return (
     <figure
       className={`group relative ${cardWidth} rounded-xl overflow-hidden shadow-lg mx-auto w-full flex flex-col justify-between min-h-[280px] sm:min-h-[400px] md:min-h-[400px] lg:min-h-[500px]`}
@@ -92,12 +95,21 @@ const BookCard: React.FC<BookCardProps> = ({
 
         {type === "open" && (
           <div className="mt-auto flex flex-row justify-center gap-3 pt-4 pb-10">
-            {purchaseLink && (
-              <Link href={purchaseLink} rel="noreferrer" target="_blank">
-                <Button buttonImage={OrangeBackground} altText="buy-book">
-                  Get the Book
+            {/* Show Shop Direct button if direct sales enabled, otherwise show external purchase link */}
+            {directSalesEnabled ? (
+              <Link href="/shop">
+                <Button buttonImage={OrangeBackground} altText="shop-direct">
+                  Shop Direct
                 </Button>
               </Link>
+            ) : (
+              purchaseLink && (
+                <Link href={purchaseLink} rel="noreferrer" target="_blank">
+                  <Button buttonImage={OrangeBackground} altText="buy-book">
+                    Get the Book
+                  </Button>
+                </Link>
+              )
             )}
             <Link href={`/book/${bookSlug}`}>
               <Button

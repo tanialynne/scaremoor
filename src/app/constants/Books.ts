@@ -29,6 +29,17 @@ export type Book = {
   bookDescription?: string;
   videoPreview?: string;
   leadMagnetId?: string;
+  seriesId?: string; // Add series association
+  directSales?: {
+    enabled: boolean;
+    variants: Array<{
+      format: "paperback" | "hardcover" | "ebook" | "audiobook";
+      price: number;
+      originalPrice?: number;
+      inStock: boolean;
+      isbn?: string;
+    }>;
+  };
 };
 
 const Books: Book[] = [
@@ -36,6 +47,7 @@ const Books: Book[] = [
     bookNumber: 1,
     bookTitle: "The Haunted Locker",
     bookSlug: slugify("The Haunted Locker"),
+    seriesId: "scaremoor",
     bookImage: {
       open: HauntedBookFlat,
       close: HauntedBook,
@@ -49,11 +61,34 @@ Now, Ben and Mia must race against time to stop the spirits from escaping, but t
 
 *A spine-chilling adventure perfect for young readers who love a good scare!*
     `.trim(),
+    directSales: {
+      enabled: true,
+      variants: [
+        {
+          format: "paperback",
+          price: 12.99,
+          originalPrice: 14.99,
+          inStock: true,
+          isbn: "978-0-123456-78-9"
+        },
+        {
+          format: "ebook",
+          price: 7.99,
+          inStock: true
+        },
+        {
+          format: "audiobook",
+          price: 14.99,
+          inStock: true
+        }
+      ]
+    }
   },
   {
     bookNumber: 2,
     bookTitle: "The Night of the Living Vines",
     bookSlug: slugify("The Night of the Living Vines"),
+    seriesId: "scaremoor",
     bookImage: {
       open: LivingVineFlat,
       close: LivingVine,
@@ -74,6 +109,7 @@ Will they find a way to stop the ancient force before it's too late? Or will the
     bookNumber: 3,
     bookTitle: "The Phantom Playground",
     bookSlug: slugify("The Phantom Playground"),
+    seriesId: "scaremoor",
     bookImage: {
       open: PhantomGroundFlat,
       close: PhantomGround,
@@ -94,6 +130,7 @@ If Emily and her friends can't uncover the truth—and survive it—they might b
     bookNumber: 4,
     bookTitle: "The Changing Portrait",
     bookSlug: slugify("The Changing Portrait"),
+    seriesId: "scaremoor",
     bookImage: {
       open: ChangingPortraitFlat,
       close: ChangingPortrait,
@@ -114,6 +151,7 @@ As the past bleeds into the present, Haley must solve the mystery before the man
     bookNumber: 5,
     bookTitle: "The Vanishing Words",
     bookSlug: slugify("The Vanishing Words"),
+    seriesId: "scaremoor",
     bookImage: {
       open: VanishingWordsFlat,
       close: VanishingWords,
@@ -134,6 +172,7 @@ Because some words don't just have meaning. They have a mind of their own.
     bookNumber: 6,
     bookTitle: "The Mask Room",
     bookSlug: slugify("The Mask Room"),
+    seriesId: "scaremoor",
     bookImage: {
       open: MaskRoomFlat,
       close: MaskRoom,
@@ -151,6 +190,29 @@ Now the masks are spreading. The school is shifting. And Natalie might be the on
 
 Would you recognize yourself... without your face?
     `.trim(),
+    directSales: {
+      enabled: true,
+      variants: [
+        {
+          format: "paperback",
+          price: 13.99,
+          inStock: true,
+          isbn: "978-0-987654-32-1"
+        },
+        {
+          format: "hardcover",
+          price: 19.99,
+          originalPrice: 22.99,
+          inStock: true,
+          isbn: "978-0-987654-33-8"
+        },
+        {
+          format: "ebook",
+          price: 8.99,
+          inStock: true
+        }
+      ]
+    }
   },
 ];
 

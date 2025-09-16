@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
+import OptimizedImage from "../OptimizedImage";
 import dynamic from "next/dynamic";
 
 import Nav from "../Navigation";
@@ -18,9 +19,11 @@ type HeroboxProps = {
   contentPaddingTop?: string;
   landingAssets?: boolean;
   fogEffect?: boolean;
+  fullScreen?: boolean;
+  priorityImage?: boolean;
 };
 
-const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPaddingTop = "lg:pt-12", landingAssets = false, fogEffect = false }) => {
+const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPaddingTop = "lg:pt-12", landingAssets = false, fogEffect = false, fullScreen = false, priorityImage = true }) => {
   return (
     <>
       {/* Navigation outside of stacking context with proper padding */}
@@ -28,14 +31,14 @@ const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPad
         <Nav />
       </div>
       
-      <div className="min-h-screen h-full relative px-8 md:px-20 pt-24 pb-8 overflow-hidden isolate">
+      <div className={`${fullScreen ? 'min-h-screen' : 'min-h-fit'} h-full relative px-8 md:px-20 pt-24 pb-24 overflow-hidden isolate`}>
         {/* Optimized responsive background image */}
         {backgroundImage && (
-          <Image 
+          <OptimizedImage
             src={backgroundImage}
             alt="Hero background"
             fill
-            priority
+            priority={priorityImage}
             className="absolute inset-0 object-cover -z-30"
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 100vw, 100vw"
             placeholder="blur"
@@ -48,9 +51,9 @@ const Herobox: React.FC<HeroboxProps> = ({ children, backgroundImage, contentPad
 
         {landingAssets && (
           <div className="absolute bottom-0 left-0 right-0 -z-5">
-            <Image 
-              src={LandingPageAsset} 
-              alt="landingpage-assets" 
+            <OptimizedImage
+              src={LandingPageAsset}
+              alt="landingpage-assets"
               className="w-full h-auto"
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 100vw, 100vw"
               placeholder="blur"

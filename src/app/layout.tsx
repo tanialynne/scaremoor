@@ -5,9 +5,13 @@ import dynamic from "next/dynamic";
 import Script from "next/script";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Footer from "./components/Footer";
+import ConditionalFooter from "./components/ConditionalFooter";
 import ScrollToTop from "./components/ScrollToTop";
 import SpookyToast from "./components/SpookyToast";
+import { CartProvider } from "./contexts/CartContext";
+
+// Shopping cart components
+const ShoppingCart = dynamic(() => import("./components/ShoppingCart"));
 // Lazy load the background animation to reduce initial bundle size
 const StarryBackground = dynamic(() => import("./components/Starfield"), {
   loading: () => <div className="fixed inset-0 bg-black -z-50" />,
@@ -216,9 +220,10 @@ export default function RootLayout({
           `}
         </Script>
         <noscript>
-          <img 
-            height="1" 
-            width="1" 
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
             style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=228729539194546&ev=PageView&noscript=1"
             alt=""
@@ -228,14 +233,17 @@ export default function RootLayout({
       <body
         className={`${poppins.className} ${TrickOrDead.variable} antialiased relative bg-black`}
       >
-        <ImagePreloader images={criticalImages} priority />
-        <WebVitalsTracker />
-        <StarryBackground starCount={300} />
-        {children}
-        <Footer />
-        <ScrollToTop />
-        <SpookyToast />
-        <ExitIntentPopup />
+        <CartProvider>
+          <ImagePreloader images={criticalImages} priority />
+          <WebVitalsTracker />
+          <StarryBackground starCount={300} />
+          {children}
+          <ConditionalFooter />
+          <ScrollToTop />
+          <SpookyToast />
+          <ExitIntentPopup />
+          <ShoppingCart />
+        </CartProvider>
         <SpeedInsights />
         <Analytics />
       </body>

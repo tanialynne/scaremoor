@@ -24,7 +24,7 @@ export const LeadMagnetTest: React.FC<LeadMagnetTestProps> = ({
   useABTest("lead_magnet_layout");
 
   return (
-    <div className={`space-y-5 lg:pt-10 ${className}`}>
+    <div className={`${className}`}>
       <ABTest
         testId="lead_magnet_layout"
         variants={{
@@ -32,8 +32,8 @@ export const LeadMagnetTest: React.FC<LeadMagnetTestProps> = ({
             // Original layout
             <>
               <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-                <p className="text-3xl md:text-6xl">Get Chapter One…</p>
-                <h3 className="text-5xl md:text-7xl">If You Dare.</h3>
+                <h3 className="text-2xl md:text-4xl">Get Chapter One…</h3>
+                <h1 className="text-5xl md:text-7xl">If You Dare.</h1>
               </div>
 
               <div
@@ -74,10 +74,10 @@ export const LeadMagnetTest: React.FC<LeadMagnetTestProps> = ({
             // Urgency-focused layout
             <>
               <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-                <p className="text-3xl md:text-6xl text-orange-400">
+                <h3 className="text-2xl md:text-4xl text-orange-400">
                   FREE Chapter!
-                </p>
-                <h3 className="text-5xl md:text-7xl">Get Yours Now</h3>
+                </h3>
+                <h1 className="text-5xl md:text-7xl">Get Yours Now</h1>
               </div>
 
               <div
@@ -118,8 +118,8 @@ export const LeadMagnetTest: React.FC<LeadMagnetTestProps> = ({
             // Social proof focused layout
             <>
               <div className="font-trickordead font-normal space-y-4 [text-shadow:0_0_10px_rgba(0,0,0,0.8)]">
-                <p className="text-3xl md:text-6xl">Readers Love</p>
-                <h3 className="text-5xl md:text-7xl">{bookTitle}</h3>
+                <h3 className="text-2xl md:text-4xl">Readers Love</h3>
+                <h1 className="text-5xl md:text-7xl">{bookTitle}</h1>
               </div>
 
               <div

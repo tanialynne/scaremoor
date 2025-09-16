@@ -186,11 +186,10 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource, storySlug }) => {
 const WorksheetStoryPage = ({ params }: Props) => {
   const [story, setStory] = useState<any>(null);
   const [onlineWorksheets, setOnlineWorksheets] = useState<any[]>([]);
-  const [openAccordions, setOpenAccordions] = useState<Record<number | string, boolean>>(
-    {}
-  );
+  const [openAccordions, setOpenAccordions] = useState<
+    Record<number | string, boolean>
+  >({});
   const [slug, setSlug] = useState<string>("");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -212,7 +211,6 @@ const WorksheetStoryPage = ({ params }: Props) => {
       const worksheetData = getStoryWorksheets(paramSlug);
       setStory(storyData);
       setOnlineWorksheets(worksheetData);
-      setLoading(false);
 
       // Set page title dynamically
       document.title = `${storyData.title} - Educational Worksheets | Scaremoor`;
@@ -228,18 +226,7 @@ const WorksheetStoryPage = ({ params }: Props) => {
     }));
   };
 
-  if (loading || !slug) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">📚</div>
-          <p className="text-gray-600">Loading worksheet...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!story) {
+  if (!story || !slug) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -469,7 +456,7 @@ const WorksheetStoryPage = ({ params }: Props) => {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="font-trickordead font-normal text-4xl sm:text-5xl gradient-text-accessible mb-4">
-                🖥️ Interactive Online Worksheets
+                Interactive Online Worksheets
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
                 Complete worksheets online with instant feedback, or print them

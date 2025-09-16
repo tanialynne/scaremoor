@@ -6,8 +6,11 @@ import Footer from './Footer';
 export default function ConditionalFooter() {
   const pathname = usePathname();
 
-  // Don't show the large footer on worksheet pages
-  if (pathname?.includes('/worksheets/')) {
+  // Hide footer on printable/educational pages
+  const isWorksheetSectionPage = pathname?.includes('/worksheets/') && pathname?.includes('/online') && pathname?.includes('/section/');
+  const isFunActivitiesPage = pathname?.includes('/worksheets/') && pathname?.includes('/fun-activities/');
+
+  if (isWorksheetSectionPage || isFunActivitiesPage) {
     return null;
   }
 

@@ -29,7 +29,6 @@ interface FunActivity {
 
 const FunActivitiesPage = ({ params }: Props) => {
   const [story, setStory] = useState<WorksheetStory | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -48,7 +47,6 @@ const FunActivitiesPage = ({ params }: Props) => {
       }
 
       setStory(storyData);
-      setLoading(false);
 
       // Set page title
       document.title = `${storyData.title} - Fun Activities`;
@@ -122,17 +120,6 @@ const FunActivitiesPage = ({ params }: Props) => {
       default: return 'bg-gray-700/30 text-gray-300 border-gray-600/50';
     }
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🎮</div>
-          <p className="text-gray-600">Loading fun activities...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!story) {
     return (

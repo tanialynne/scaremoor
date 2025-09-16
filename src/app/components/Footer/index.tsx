@@ -1,6 +1,6 @@
 'use client';
 
-import Image from "next/image";
+import OptimizedImage from "../OptimizedImage";
 import { usePathname } from "next/navigation";
 
 import { getFlatNavItemsForFooter } from "@/app/constants/NavigationStructure";
@@ -32,19 +32,19 @@ const Footer = () => {
       style={{ backgroundImage: `url(${footerBg.src})` }}
     >
       <div className="p-8 md:p-20 ">
-        <Image src={Eye} alt="eye" className="absolute top-3/4 right-2/5" />
-        <Image src={Eye} alt="eye" className="absolute top-20" />
-        <Image src={Eye} alt="eye" className="absolute top-1/5 left-1/2" />
-        <Image src={Eye} alt="eye" className="absolute right-20 bottom-2/5" />
+        <OptimizedImage src={Eye} alt="eye" className="absolute top-3/4 right-2/5" />
+        <OptimizedImage src={Eye} alt="eye" className="absolute top-20" />
+        <OptimizedImage src={Eye} alt="eye" className="absolute top-1/5 left-1/2" />
+        <OptimizedImage src={Eye} alt="eye" className="absolute right-20 bottom-2/5" />
         <div className="relative flex items-start gap-x-20 pb-12 z-50">
           <div className="relative isolate">
-            <Image
+            <OptimizedImage
               src={LeftGhosted}
               alt="ghost"
               className="absolute -left-10 -top-30 md:-top-50 -z-10 w-2/4"
               style={{ height: "320px !important" }}
             />
-            <Image
+            <OptimizedImage
               src={RightGhosted}
               alt="ghost"
               className="absolute -right-10 -top-30 md:-top-50 -z-10 w-2/4"

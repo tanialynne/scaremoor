@@ -34,7 +34,6 @@ interface ActivityConfig {
 const FunActivityPage = ({ params }: Props) => {
   const [story, setStory] = useState<WorksheetStory | null>(null);
   const [activityId, setActivityId] = useState<string>('');
-  const [loading, setLoading] = useState(true);
   const [responses, setResponses] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -55,7 +54,6 @@ const FunActivityPage = ({ params }: Props) => {
 
       setStory(storyData);
       setActivityId(paramActivityId);
-      setLoading(false);
 
       // Set page title
       const activity = getActivityConfig(paramActivityId);
@@ -167,17 +165,6 @@ const FunActivityPage = ({ params }: Props) => {
       [sectionId]: JSON.stringify(newResponses)
     }));
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🎮</div>
-          <p className="text-gray-600">Loading activity...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!story) {
     return (

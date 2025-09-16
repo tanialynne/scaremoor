@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
+import OptimizedImage from "@/app/components/OptimizedImage";
 import Markdown from "react-markdown";
 
 import { Book } from "@/app/constants/Books";
@@ -102,7 +103,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
             )}
           </div>
           <div className="relative w-full max-w-[500px] lg:max-w-[400px] xl:max-w-[500px] mx-auto">
-            <Image
+            <OptimizedImage
               src={bookImage}
               alt={`${selectedBook.bookTitle} - ${selectedBook.bookSubHeading}`}
               className="inline-block h-auto w-full"
@@ -111,7 +112,7 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
             />
           </div>
         </div>
-        <Image
+        <OptimizedImage
           src={BlurLayer}
           alt="blur-layer"
           className="absolute -bottom-0 left-0 right-0"
@@ -119,13 +120,13 @@ const BookPageClient: React.FC<BookPageClientProps> = ({ selectedBook }) => {
         />
       </Herobox>
       <main className=" text-white relative overflow-hidden px-8">
-        <Image
+        <OptimizedImage
           src={CloudRight}
           alt="cloud"
           className="absolute top-10 right-0"
           loading="lazy"
         />
-        <Image
+        <OptimizedImage
           src={CloudBottom}
           alt="cloud"
           className="absolute bottom-0 left-0"

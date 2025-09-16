@@ -22,7 +22,6 @@ type Props = {
 const AnswerKeyPage = ({ params }: Props) => {
   const [story, setStory] = useState<WorksheetStory | null>(null);
   const [worksheet, setWorksheet] = useState<OnlineWorksheet | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -51,7 +50,6 @@ const AnswerKeyPage = ({ params }: Props) => {
 
       setStory(storyData);
       setWorksheet(worksheetData);
-      setLoading(false);
 
       // Set page title
       document.title = `${storyData.title} - Grade ${paramGrade} Answer Key`;
@@ -184,17 +182,6 @@ const AnswerKeyPage = ({ params }: Props) => {
         };
     }
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">📚</div>
-          <p className="text-gray-600">Loading answer key...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!story || !worksheet) {
     return (

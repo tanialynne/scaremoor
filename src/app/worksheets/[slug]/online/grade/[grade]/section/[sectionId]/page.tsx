@@ -21,7 +21,6 @@ const SingleSectionPage = ({ params }: Props) => {
   const [section, setSection] = useState<WorksheetSection | null>(null);
   const [allSections, setAllSections] = useState<WorksheetSection[]>([]);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -62,7 +61,6 @@ const SingleSectionPage = ({ params }: Props) => {
       setSection(sectionData);
       setAllSections(worksheetData.sections);
       setCurrentSectionIndex(sectionIndex);
-      setLoading(false);
 
       // Set page title
       document.title = `${storyData.title} - ${sectionData.title} - Grade ${paramGrade}`;
@@ -82,17 +80,6 @@ const SingleSectionPage = ({ params }: Props) => {
       document.body.removeChild(notification);
     }, 3000);
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">📚</div>
-          <p className="text-gray-600">Loading worksheet section...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!story || !worksheet || !section) {
     return (

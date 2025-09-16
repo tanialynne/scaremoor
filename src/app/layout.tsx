@@ -6,7 +6,7 @@ import Script from "next/script";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import ConditionalFooter from "./components/ConditionalFooter";
-// import ScrollToTop from "./components/ScrollToTop"; // Removed scroll to top button
+import ScrollToTop from "./components/ScrollToTop";
 import SpookyToast from "./components/SpookyToast";
 import { CartProvider } from "./contexts/CartContext";
 
@@ -239,7 +239,7 @@ export default function RootLayout({
           <StarryBackground starCount={300} />
           {children}
           <ConditionalFooter />
-          {/* <ScrollToTop /> */} {/* Removed scroll to top button */}
+          <ScrollToTop />
           <SpookyToast />
           <ExitIntentPopup />
           <ShoppingCart />

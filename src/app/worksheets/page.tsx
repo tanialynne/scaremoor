@@ -7,7 +7,10 @@ import Herobox from "../components/Herobox";
 import Button from "../components/Button";
 import WorksheetAnalytics from "../components/WorksheetAnalytics";
 import { WorksheetCardLink } from "../components/WorksheetAnalytics/WorksheetLink";
-import { getPublishedWorksheetStories, WorksheetStory } from "../constants/Worksheets";
+import {
+  getPublishedWorksheetStories,
+  WorksheetStory,
+} from "../constants/Worksheets";
 import { isFeatureEnabled } from "../constants/FeatureFlags";
 
 import BackgroundImage from "../../../public/images/landingpage-Image.png";
@@ -15,7 +18,8 @@ import OrangeBackgroundMd from "../../../public/images/orangeBackgroundMd.png";
 
 export const metadata: Metadata = {
   title: "Educational Worksheets & Printables",
-  description: "Free educational resources, worksheets, and activities for teachers. Standards-aligned materials for grades 3-5 featuring mysterious stories and engaging activities.",
+  description:
+    "Free educational resources, worksheets, and activities for teachers. Standards-aligned materials for grades 3-5 featuring mysterious stories and engaging activities.",
 };
 
 interface WorksheetCardProps {
@@ -113,9 +117,10 @@ const WorksheetsPage = () => {
                 textShadow: "0 0 10px rgba(0, 0, 0, 0.8)",
               }}
             >
-              Free, standards-aligned educational materials featuring mysterious stories
-              that captivate young readers while building critical thinking skills.
-              Perfect for grades 3-5 classrooms, homeschool families, and reading enrichment.
+              Free, standards-aligned educational materials featuring mysterious
+              stories that captivate young readers while building critical
+              thinking skills. Perfect for grades 3-5 classrooms, homeschool
+              families, and reading enrichment.
             </p>
           </div>
         </div>
@@ -135,69 +140,80 @@ const WorksheetsPage = () => {
               <div className="grid lg:grid-cols-2 gap-12 items-start">
                 <div className="space-y-6">
                   <div className="space-y-4 text-gray-300">
-                  <p>
-                    Mystery and suspense naturally engage young readers, making complex
-                    themes like consequences, identity, and moral choices more accessible
-                    and memorable.
-                  </p>
-                  <p>
-                    Each story comes with differentiated activities for grades 3-5,
-                    aligned to Virginia Standards of Learning (SOL) for English Language Arts.
-                  </p>
+                    <p>
+                      Mystery and suspense naturally engage young readers,
+                      making complex themes like consequences, identity, and
+                      moral choices more accessible and memorable.
+                    </p>
+                    <p>
+                      Each story comes with differentiated activities for grades
+                      3-5, aligned to Standards of Learning (SOL) for English
+                      Language Arts.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 text-base">
+                    <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
+                      <div className="text-orange-400 font-semibold mb-1">
+                        📚 Reading Level
+                      </div>
+                      <div className="text-gray-300">Grades 3-5</div>
+                    </div>
+                    <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
+                      <div className="text-orange-400 font-semibold mb-1">
+                        ⏱️ Read Time
+                      </div>
+                      <div className="text-gray-300">10-15 minutes</div>
+                    </div>
+                    <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
+                      <div className="text-orange-400 font-semibold mb-1">
+                        🎯 Prep Time
+                      </div>
+                      <div className="text-gray-300">Zero required</div>
+                    </div>
+                    <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
+                      <div className="text-orange-400 font-semibold mb-1">
+                        📋 Standards
+                      </div>
+                      <div className="text-gray-300">SOL Aligned</div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 text-base">
-                  <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
-                    <div className="text-orange-400 font-semibold mb-1">📚 Reading Level</div>
-                    <div className="text-gray-300">Grades 3-5</div>
-                  </div>
-                  <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
-                    <div className="text-orange-400 font-semibold mb-1">⏱️ Read Time</div>
-                    <div className="text-gray-300">10-15 minutes</div>
-                  </div>
-                  <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
-                    <div className="text-orange-400 font-semibold mb-1">🎯 Prep Time</div>
-                    <div className="text-gray-300">Zero required</div>
-                  </div>
-                  <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
-                    <div className="text-orange-400 font-semibold mb-1">📋 Standards</div>
-                    <div className="text-gray-300">SOL Aligned</div>
-                  </div>
+                <div className="bg-gradient-to-br from-orange-900/20 to-yellow-900/20 rounded-xl p-8 border border-orange-700/30">
+                  <h3 className="font-trickordead text-2xl text-orange-400 mb-4">
+                    What&apos;s Included
+                  </h3>
+                  <ul className="space-y-3 text-gray-300">
+                    <li className="flex items-start gap-3">
+                      <span className="text-orange-400 mt-1">📖</span>
+                      <span>Original short story (10-15 min read-aloud)</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-orange-400 mt-1">📝</span>
+                      <span>
+                        Grade-differentiated worksheets (3rd, 4th, 5th)
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-orange-400 mt-1">🎯</span>
+                      <span>Ready-to-use activities (zero prep time)</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-orange-400 mt-1">✓</span>
+                      <span>Complete answer keys for teachers</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-orange-400 mt-1">🎨</span>
+                      <span>Extension activities for early finishers</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="text-orange-400 mt-1">📋</span>
+                      <span>Implementation guide with timing options</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
-
-              <div className="bg-gradient-to-br from-orange-900/20 to-yellow-900/20 rounded-xl p-8 border border-orange-700/30">
-                <h3 className="font-trickordead text-2xl text-orange-400 mb-4">
-                  What&apos;s Included
-                </h3>
-                <ul className="space-y-3 text-gray-300">
-                  <li className="flex items-start gap-3">
-                    <span className="text-orange-400 mt-1">📖</span>
-                    <span>Original short story (10-15 min read-aloud)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-orange-400 mt-1">📝</span>
-                    <span>Grade-differentiated worksheets (3rd, 4th, 5th)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-orange-400 mt-1">🎯</span>
-                    <span>Ready-to-use activities (zero prep time)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-orange-400 mt-1">✓</span>
-                    <span>Complete answer keys for teachers</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-orange-400 mt-1">🎨</span>
-                    <span>Extension activities for early finishers</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-orange-400 mt-1">📋</span>
-                    <span>Implementation guide with timing options</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
             </div>
           </div>
         </section>
@@ -210,8 +226,9 @@ const WorksheetsPage = () => {
                 Available Stories & Worksheets
               </h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Each story comes with a complete educational packet designed to spark
-                critical thinking and engage students in meaningful discussions.
+                Each story comes with a complete educational packet designed to
+                spark critical thinking and engage students in meaningful
+                discussions.
               </p>
             </div>
 
@@ -228,8 +245,8 @@ const WorksheetsPage = () => {
                   More Stories Coming Soon!
                 </h3>
                 <p className="text-gray-400 max-w-md mx-auto">
-                  We&apos;re working on additional mysterious stories and educational materials.
-                  Check back soon for new releases.
+                  We&apos;re working on additional mysterious stories and
+                  educational materials. Check back soon for new releases.
                 </p>
               </div>
             )}
@@ -244,7 +261,8 @@ const WorksheetsPage = () => {
                 How to Use These Materials
               </h2>
               <p className="text-gray-400">
-                Flexible implementation options to fit your classroom schedule and teaching style
+                Flexible implementation options to fit your classroom schedule
+                and teaching style
               </p>
             </div>
 
@@ -321,8 +339,9 @@ const WorksheetsPage = () => {
                 Questions About These Materials?
               </h3>
               <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                Need help implementing these activities in your classroom? Have suggestions
-                for future stories? We&apos;d love to hear from educators using these materials!
+                Need help implementing these activities in your classroom? Have
+                suggestions for future stories? We&apos;d love to hear from
+                educators using these materials!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/contact">

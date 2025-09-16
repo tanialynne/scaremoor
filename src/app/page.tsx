@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import OptimizedImage from "./components/OptimizedImage";
 import Link from "next/link";
 import { trackButtonClick } from "./utils/analytics";
 import { isFeatureEnabled } from "./constants/FeatureFlags";
@@ -161,13 +161,13 @@ const HomePage = () => {
             />
           </Link>*/}
 
-          <Image
+          <OptimizedImage
             src={CloudRight}
             alt="cloud"
             className="absolute top-10 right-0 -z-10"
             loading="lazy"
           />
-          <Image
+          <OptimizedImage
             src={CloudBottom}
             alt="cloud"
             className="absolute bottom-0 left-0 -z-10"

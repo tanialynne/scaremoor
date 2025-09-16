@@ -6,6 +6,7 @@ import { ShoppingCart, ExternalLink } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
 import { Book } from '../../constants/Books';
 import { formatPrice, calculateDiscount } from '../../constants/DirectSales';
+import { isFeatureEnabled } from '../../constants/FeatureFlags';
 import Button from '../Button';
 
 import OrangeBackground from '../../../../public/images/orangeBackground.png';
@@ -21,7 +22,7 @@ const BookPurchaseOptions: React.FC<BookPurchaseOptionsProps> = ({ book, onPurch
     book.directSales?.variants[0]?.format || 'paperback'
   );
 
-  const hasDirectSales = book.directSales?.enabled && book.directSales.variants.length > 0;
+  const hasDirectSales = isFeatureEnabled("DIRECT_SALES_ENABLED") && book.directSales?.enabled && book.directSales.variants.length > 0;
 
   const selectedVariant = hasDirectSales 
     ? book.directSales!.variants.find(variant => variant.format === selectedFormat) || book.directSales!.variants[0]

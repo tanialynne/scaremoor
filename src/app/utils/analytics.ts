@@ -283,6 +283,26 @@ export const setUserProperties = (properties: { [key: string]: string | number }
   }
 };
 
+export const trackWorksheetCardClick = (storyTitle: string, storySlug: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'select_content', {
+      content_type: 'worksheet_story',
+      item_id: storySlug,
+      custom_parameters: {
+        story_title: storyTitle,
+        story_slug: storySlug,
+        click_source: 'worksheet_card'
+      }
+    });
+  }
+
+  // Track in Clarity
+  trackClarityEvent('worksheet_card_click', {
+    story_title: storyTitle,
+    story_slug: storySlug
+  });
+};
+
 // Enhanced Configuration
 export const configureGA = () => {
   if (typeof window !== 'undefined' && window.gtag) {
@@ -498,9 +518,143 @@ export const trackQuizBookPurchase = (recommendedBook: string, purchaseUrl: stri
       }
     });
   }
-  
+
   trackClarityEvent('quiz_book_purchase_click', {
     recommended_book: recommendedBook,
     purchase_source: 'quiz_result'
+  });
+};
+
+// Worksheets-specific tracking
+export const trackWorksheetsPageView = () => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'page_view', {
+      page_title: 'Educational Worksheets & Printables | Scaremoor',
+      page_location: window.location.href,
+      content_group1: 'Educational Resources',
+      content_group2: 'Worksheets Landing',
+      custom_parameters: {
+        page_type: 'worksheets_landing',
+        resource_type: 'educational_materials'
+      }
+    });
+  }
+
+  // Track in Clarity
+  setClarityCustomTag('page_type', 'worksheets_landing');
+  setClarityCustomTag('resource_type', 'educational_materials');
+
+  trackClarityEvent('worksheets_page_view', {
+    page_type: 'worksheets_landing'
+  });
+
+  // Set user journey stage
+  trackUserJourneyStage('discovery');
+};
+
+export const trackWorksheetStoryView = (storyTitle: string, storySlug: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'page_view', {
+      page_title: `${storyTitle} - Educational Worksheets | Scaremoor`,
+      page_location: window.location.href,
+      content_group1: 'Educational Resources',
+      content_group2: 'Worksheet Story',
+      custom_parameters: {
+        story_title: storyTitle,
+        story_slug: storySlug,
+        page_type: 'worksheet_story',
+        resource_type: 'story_worksheets'
+      }
+    });
+  }
+
+  // Track in Clarity
+  setClarityCustomTag('page_type', 'worksheet_story');
+  setClarityCustomTag('story_title', storyTitle);
+  setClarityCustomTag('story_slug', storySlug);
+
+  trackClarityEvent('worksheet_story_view', {
+    story_title: storyTitle,
+    story_slug: storySlug
+  });
+
+  // Set user journey stage
+  trackUserJourneyStage('interest');
+};
+
+export const trackWorksheetDownload = (resourceTitle: string, resourceType: string, storySlug?: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'file_download', {
+      event_category: 'Educational Resource',
+      event_label: resourceTitle,
+      custom_parameters: {
+        resource_title: resourceTitle,
+        resource_type: resourceType,
+        story_slug: storySlug || 'unknown',
+        download_source: 'worksheet_page'
+      }
+    });
+
+    // Track as lead generation
+    window.gtag('event', 'generate_lead', {
+      currency: 'USD',
+      value: 4.00, // Value of educational resource download
+      method: 'Worksheet Download',
+      custom_parameters: {
+        resource_title: resourceTitle,
+        resource_type: resourceType,
+        lead_source: 'educational_download'
+      }
+    });
+  }
+
+  // Track in Clarity
+  trackClarityEvent('worksheet_download', {
+    resource_title: resourceTitle,
+    resource_type: resourceType,
+    story_slug: storySlug || 'unknown'
+  });
+
+  // Set user journey stage
+  trackUserJourneyStage('consideration');
+};
+
+export const trackOnlineWorksheetStart = (storySlug: string, grade: number) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'engagement', {
+      event_category: 'Interactive Worksheet',
+      event_label: `Grade ${grade} Online Worksheet`,
+      custom_parameters: {
+        story_slug: storySlug,
+        grade_level: grade,
+        worksheet_type: 'online_interactive',
+        engagement_type: 'worksheet_start'
+      }
+    });
+  }
+
+  // Track in Clarity
+  trackClarityEvent('online_worksheet_start', {
+    story_slug: storySlug,
+    grade_level: grade
+  });
+};
+
+export const trackWorksheetContact = (source: string) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'click', {
+      event_category: 'Educational Contact',
+      event_label: 'Contact from Worksheets',
+      custom_parameters: {
+        contact_source: source,
+        page_type: 'worksheets',
+        intent: 'educator_support'
+      }
+    });
+  }
+
+  // Track in Clarity
+  trackClarityEvent('worksheet_contact_click', {
+    contact_source: source
   });
 };

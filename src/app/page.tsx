@@ -32,6 +32,7 @@ const HomePage = () => {
       <Herobox
         backgroundImage={BackgroundImage}
         landingAssets={true}
+        fullScreen={true}
         fogEffect={true}
         contentPaddingTop="lg:pt-22"
       >

@@ -16,7 +16,7 @@ const Footer = () => {
 
   return (
     <div
-      className={`relative flex flex-col justify-end  bg-cover bg-repeat leading-none min-h-screen text-white overflow-hidden after:content-[" "] after:bg-black after:absolute after:bottom-0 after:left-0 after:right-0 after:h-40`}
+      className={`relative flex flex-col justify-end bg-cover bg-no-repeat bg-bottom leading-none min-h-screen text-white`}
       style={{ backgroundImage: `url(${footerBg.src})` }}
     >
       <div className="p-8 md:p-20 ">
@@ -30,27 +30,31 @@ const Footer = () => {
               src={LeftGhosted}
               alt="ghost"
               className="absolute -left-10 -top-30 md:-top-50 -z-10 w-2/4"
+              style={{ height: "320px !important" }}
             />
             <Image
               src={RightGhosted}
               alt="ghost"
               className="absolute -right-10 -top-30 md:-top-50 -z-10 w-2/4"
+              style={{ height: "320px !important" }}
             />
             <RandomMessage />
           </div>
           <div className="hidden lg:grid grid-cols-2 gap-x-8 gap-y-3 max-w-md">
             {flatNavItems.map((item) => (
-              <FooterNavLink 
-                key={item.href} 
-                text={item.name} 
-                href={item.href} 
+              <FooterNavLink
+                key={item.href}
+                text={item.name}
+                href={item.href}
               />
             ))}
           </div>
         </div>
 
         <div className="relative flex justify-between flex-col md:flex-row md:items-end gap-12 z-50">
-          <p className="order-3 md:order-1 footer-text-small">©{getCurrentYear()} Scaremoor.</p>
+          <p className="order-3 md:order-1 footer-text-small">
+            ©{getCurrentYear()} Scaremoor.
+          </p>
           <div className="tracking-wide order-2 flex flex-col gap-4">
             <FooterNavLink text="Contact Us" href="/contact" />
             <FooterNavLink text="Privacy Policy" href="/privacy" />

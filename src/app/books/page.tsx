@@ -99,7 +99,7 @@ const BooksPage = () => {
         </section>
 
         <section
-          className="flex flex-col justify-center px-8 md:px-20 py-20 min-h-180 h-full relative overflow-hidden"
+          className="flex flex-col justify-center px-8 md:px-20 py-20 pb-32 min-h-180 h-full relative overflow-hidden"
           style={{
             backgroundImage: `url(${Graveyard.src})`,
             backgroundSize: "cover",

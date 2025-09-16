@@ -21,6 +21,9 @@ export const FEATURE_FLAGS = {
   // Press kit for media resources
   PRESS_KIT_ENABLED: false,
 
+  // Educational worksheets and printables section
+  WORKSHEETS_ENABLED: true,
+
   // Add more feature flags here as needed
   // NEWSLETTER_ENABLED: true,
   // TESTIMONIALS_ENABLED: true,

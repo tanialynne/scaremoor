@@ -39,16 +39,22 @@ const PodcastCard = ({
         );
       }
 
-      // Auto-play when card flips
+      // Load and auto-play when card flips
       setTimeout(async () => {
         if (audioRef.current) {
           try {
-            // Reset and reload audio
-            audioRef.current.currentTime = 0;
+            // Now that card is flipped, load the audio
             audioRef.current.load();
+            audioRef.current.currentTime = 0;
 
-            // Wait a bit for loading
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            // Wait for audio to be ready
+            await new Promise((resolve) => {
+              const handleCanPlay = () => {
+                audioRef.current?.removeEventListener('canplay', handleCanPlay);
+                resolve(undefined);
+              };
+              audioRef.current?.addEventListener('canplay', handleCanPlay);
+            });
 
             const playPromise = audioRef.current.play();
             if (playPromise !== undefined) {
@@ -123,6 +129,9 @@ const PodcastCard = ({
   };
 
   useEffect(() => {
+    // Only attach listeners when card is flipped (audio is active)
+    if (!isFlipped) return;
+
     const audio = audioRef.current;
     if (audio) {
       const handleEnded = () => {
@@ -149,7 +158,7 @@ const PodcastCard = ({
         audio.removeEventListener("error", handleError);
       };
     }
-  }, []);
+  }, [isFlipped]);
 
   return (
     <div className="relative w-full perspective-1000">
@@ -330,7 +339,7 @@ const PodcastCard = ({
           <audio
             ref={audioRef}
             src={audioSrc}
-            preload="auto"
+            preload="none"
             controls={false}
             onError={(e) => {
               console.error("Audio error:", e.currentTarget.error);

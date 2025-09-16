@@ -5,7 +5,14 @@ import StoryElementsWorksheet from './StoryElementsWorksheet';
 import SequencingWorksheet from './SequencingWorksheet';
 import CauseEffectWorksheet from './CauseEffectWorksheet';
 import PlotMountainWorksheet from './PlotMountainWorksheet';
-import { OnlineWorksheet, WorksheetSection, WorksheetQuestion, WorksheetField } from './types';
+import { OnlineWorksheet, WorksheetSection, WorksheetQuestion, WorksheetField, SequencingCard, CauseEffectPair, PlotPoint } from './types';
+
+interface StoryElement {
+  id: string;
+  label: string;
+  question: string;
+  lines: number;
+}
 
 interface SingleSectionRendererProps {
   section: WorksheetSection;
@@ -62,16 +69,16 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
 
     switch (section.type) {
       case 'story-elements':
-        return <StoryElementsWorksheet {...baseProps} elements={section.customProps?.elements as any} />;
+        return <StoryElementsWorksheet {...baseProps} elements={section.customProps?.elements as StoryElement[]} />;
 
       case 'sequencing':
-        return <SequencingWorksheet {...baseProps} cards={section.customProps?.cards as any || []} />;
+        return <SequencingWorksheet {...baseProps} cards={section.customProps?.cards as SequencingCard[] || []} />;
 
       case 'cause-effect':
-        return <CauseEffectWorksheet {...baseProps} pairs={section.customProps?.pairs as any || []} />;
+        return <CauseEffectWorksheet {...baseProps} pairs={section.customProps?.pairs as CauseEffectPair[] || []} />;
 
       case 'plot-mountain':
-        return <PlotMountainWorksheet {...baseProps} plotPoints={section.customProps?.plotPoints as any || undefined} />;
+        return <PlotMountainWorksheet {...baseProps} plotPoints={section.customProps?.plotPoints as PlotPoint[] || undefined} />;
 
       case 'vocabulary':
         return (
@@ -311,7 +318,7 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
               {storyTitle} - {section.title}
             </h1>
             <div className="text-xs opacity-90 print:text-xs">
-              Grade {worksheet.grade} • SOL: {section.solStandards.join(', ')}
+              Grade {worksheet.grade} • SOL: {section.solStandards?.join(', ') || 'N/A'}
             </div>
           </div>
         </div>

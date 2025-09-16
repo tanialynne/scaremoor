@@ -13,7 +13,7 @@ import Button from "../../../../../components/Button";
 import BackgroundImage from "../../../../../../../public/images/bookspage-image.png";
 import OrangeBackground from "../../../../../../../public/images/orangeBackground.png";
 import YellowBackground from "../../../../../../../public/images/yellowBackground.png";
-import { WorksheetResponse, OnlineWorksheet } from "../../../../../components/Worksheets/types";
+import { OnlineWorksheet } from "../../../../../components/Worksheets/types";
 
 type Props = {
   params: Promise<{ slug: string; grade: string }>;
@@ -60,20 +60,6 @@ const OnlineWorksheetPage = ({ params }: Props) => {
     loadData();
   }, [params]);
 
-  const handleSave = async (responses: WorksheetResponse) => {
-    // Log responses for debugging
-    console.log('Worksheet responses:', responses);
-
-    // Create a more user-friendly save notification
-    const notification = document.createElement('div');
-    notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50';
-    notification.textContent = 'Progress saved! ✓';
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-      document.body.removeChild(notification);
-    }, 3000);
-  };
 
   if (!story || !worksheet) {
     return (

@@ -16,10 +16,10 @@ interface ActivityCardProps {
     id: string;
     title: string;
     type: string;
-    questions: any[];
+    questions: unknown[];
     timeEstimate?: string;
     instructions?: string;
-    solStandards?: any;
+    solStandards?: string[];
   };
   storySlug: string;
   grade: number;
@@ -184,7 +184,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ section, storySlug, grade }
         )}
 
         <div className="flex flex-wrap gap-1 mb-4">
-          {section.solStandards.map((standard: string) => (
+          {section.solStandards?.map((standard: string) => (
             <span key={standard} className="text-sm bg-gray-700/50 text-gray-300 px-2 py-1 rounded">
               SOL {standard}
             </span>

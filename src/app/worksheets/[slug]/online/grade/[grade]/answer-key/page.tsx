@@ -13,7 +13,24 @@ import WorksheetFooter from "../../../../../../components/WorksheetLayout/Worksh
 import BackgroundImage from "../../../../../../../../public/images/bookspage-image.png";
 import OrangeBackground from "../../../../../../../../public/images/orangeBackground.png";
 import YellowBackground from "../../../../../../../../public/images/yellowBackground.png";
-import { OnlineWorksheet } from "../../../../../../components/Worksheets/types";
+import { OnlineWorksheet, WorksheetSection } from "../../../../../../components/Worksheets/types";
+
+interface AnswerItem {
+  question?: string;
+  answer?: string;
+  order?: number;
+  word?: string;
+  cause?: string;
+  effect?: string;
+  trait?: string;
+  evidence?: string;
+  note?: string;
+}
+
+interface AnswerContent {
+  title: string;
+  answers: AnswerItem[];
+}
 
 type Props = {
   params: Promise<{ slug: string; grade: string }>;
@@ -67,7 +84,7 @@ const AnswerKeyPage = ({ params }: Props) => {
     }
   };
 
-  const getAnswerKeyContent = (section: any) => {
+  const getAnswerKeyContent = (section: WorksheetSection): AnswerContent | undefined => {
     switch (section.type) {
       case 'story-elements':
         return {
@@ -109,9 +126,9 @@ const AnswerKeyPage = ({ params }: Props) => {
         return {
           title: 'Cause and Effect Answer Key',
           answers: [
-            { cause: 'Dani enters the supply closet looking for a microscope kit', effect: 'A mysterious door appears that wasn\'t there before' },
-            { cause: 'Dani touches the drawer labeled "Lunchtime"', effect: 'Her lunch changes and reality shifts around her' },
-            { cause: 'Dani continues to use the door to make her life "better"', effect: 'Parts of her identity start disappearing' },
+            { cause: 'Dani enters the supply closet looking for a microscope kit', effect: 'A mysterious door appears that wasn&apos;t there before' },
+            { cause: 'Dani touches the drawer labeled &quot;Lunchtime&quot;', effect: 'Her lunch changes and reality shifts around her' },
+            { cause: 'Dani continues to use the door to make her life &quot;better&quot;', effect: 'Parts of her identity start disappearing' },
             { cause: 'Dani sees her name drawer is empty', effect: 'She realizes the danger and runs back to reality' }
           ]
         };
@@ -123,7 +140,7 @@ const AnswerKeyPage = ({ params }: Props) => {
             title: 'Theme Detective Answer Key',
             answers: [
               { question: 'Theme', answer: 'Be careful what you wish for; changing things about your life can have unexpected consequences; accepting yourself is important' },
-              { question: 'Supporting Evidence', answer: 'Each time Dani uses the door, something unexpected happens; she loses parts of her identity; she must choose between a "perfect" life and being herself' }
+              { question: 'Supporting Evidence', answer: 'Each time Dani uses the door, something unexpected happens; she loses parts of her identity; she must choose between a &quot;perfect&quot; life and being herself' }
             ]
           };
         }
@@ -143,8 +160,8 @@ const AnswerKeyPage = ({ params }: Props) => {
             title: 'Inference Questions Answer Key',
             answers: [
               { question: 'Why did the door only appear for Dani?', answer: 'Possible answers: She was unhappy with her life; she was looking for change; the door appears to people who are dissatisfied' },
-              { question: 'What did the whisper "Make it better" really want?', answer: 'Possible answers: To tempt her; to make her dependent on the door; to eventually take her identity' },
-              { question: 'What will happen after the story ends?', answer: 'Possible answers: Dani will appreciate her real life more; she\'ll be more careful about wishing for changes; the door might appear again when she\'s older' }
+              { question: 'What did the whisper &quot;Make it better&quot; really want?', answer: 'Possible answers: To tempt her; to make her dependent on the door; to eventually take her identity' },
+              { question: 'What will happen after the story ends?', answer: 'Possible answers: Dani will appreciate her real life more; she&apos;ll be more careful about wishing for changes; the door might appear again when she&apos;s older' }
             ]
           };
         }
@@ -244,7 +261,7 @@ const AnswerKeyPage = ({ params }: Props) => {
 
             {/* Answer Key Sections */}
             <div className="space-y-8">
-              {worksheet.sections.map((section, index) => {
+              {worksheet.sections.map((section) => {
                 const answerContent = getAnswerKeyContent(section);
                 if (!answerContent) return null;
                 return (
@@ -262,7 +279,7 @@ const AnswerKeyPage = ({ params }: Props) => {
                     </div>
 
                     <div className="space-y-4">
-                      {answerContent.answers.map((item: any, answerIndex: number) => (
+                      {answerContent.answers.map((item: AnswerItem, answerIndex: number) => (
                         <div key={answerIndex} className="bg-black/20 rounded-lg p-4">
                           {item.question && (
                             <>
@@ -331,7 +348,7 @@ const AnswerKeyPage = ({ params }: Props) => {
                     <li>• Create a class book of &quot;If I Could Change One Thing&quot; stories</li>
                     <li>• Research myths and stories about wishes with consequences (King Midas, The Monkey&apos;s Paw)</li>
                     <li>• Design your own hallway of drawers art project with construction paper</li>
-                    <li>• Write diary entries from Dani's perspective before and after finding the door</li>
+                    <li>• Write diary entries from Dani&apos;s perspective before and after finding the door</li>
                   </ul>
                 </div>
 
@@ -339,8 +356,8 @@ const AnswerKeyPage = ({ params }: Props) => {
                   <h4 className="text-lg font-semibold text-white mb-3">🎭 Drama & Discussion:</h4>
                   <ul className="space-y-2 text-gray-300">
                     <li>• Act out key scenes from the story with different character interpretations</li>
-                    <li>• Hold a class debate: "Should Dani have kept some of her changes?"</li>
-                    <li>• Create a news report about the "strange happenings" at school</li>
+                    <li>• Hold a class debate: &quot;Should Dani have kept some of her changes?&quot;</li>
+                    <li>• Create a news report about the &quot;strange happenings&quot; at school</li>
                     <li>• Interview classmates about what they would change about their lives</li>
                   </ul>
                 </div>
@@ -349,7 +366,7 @@ const AnswerKeyPage = ({ params }: Props) => {
                   <h4 className="text-lg font-semibold text-white mb-3">✍️ Advanced Writing:</h4>
                   <ul className="space-y-2 text-gray-300">
                     <li>• Write a sequel where the door appears to a different student</li>
-                    <li>• Create a "Choose Your Own Adventure" version of the story</li>
+                    <li>• Create a &quot;Choose Your Own Adventure&quot; version of the story</li>
                     <li>• Write warning signs for dangerous changes (like medicine labels)</li>
                     <li>• Develop a prequel explaining how the door came to be in the school</li>
                   </ul>
@@ -361,7 +378,7 @@ const AnswerKeyPage = ({ params }: Props) => {
                     <li>• Draw a detailed map of the hallway showing different drawers and their labels</li>
                     <li>• Design book covers for stories about other magical doors</li>
                     <li>• Create a storyboard showing the key events in sequence</li>
-                    <li>• Make a collage representing the theme "be careful what you wish for"</li>
+                    <li>• Make a collage representing the theme &quot;be careful what you wish for&quot;</li>
                   </ul>
                 </div>
 
@@ -369,8 +386,8 @@ const AnswerKeyPage = ({ params }: Props) => {
                   <h4 className="text-lg font-semibold text-orange-400 mb-3">💡 Teaching Tips:</h4>
                   <ul className="space-y-2 text-orange-200">
                     <li>• Pause after Dani discovers the door to build suspense and predict what might happen</li>
-                    <li>• Discuss "be careful what you wish for" before reading to activate prior knowledge</li>
-                    <li>• Connect to students' own experiences with wanting to change things about their lives</li>
+                    <li>• Discuss &quot;be careful what you wish for&quot; before reading to activate prior knowledge</li>
+                    <li>• Connect to students&apos; own experiences with wanting to change things about their lives</li>
                     <li>• Use this as a mentor text for teaching theme, consequences, and character development</li>
                     <li>• Perfect introduction to science fiction/fantasy genre elements</li>
                   </ul>

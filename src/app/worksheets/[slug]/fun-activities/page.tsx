@@ -7,7 +7,6 @@ import { getWorksheetStoryBySlug, WorksheetStory } from "../../../constants/Work
 import { isFeatureEnabled } from "../../../constants/FeatureFlags";
 import Herobox from "../../../components/Herobox";
 import Button from "../../../components/Button";
-import WorksheetFooter from "../../../components/WorksheetLayout/WorksheetFooter";
 
 import BackgroundImage from "../../../../../public/images/bookspage-image.png";
 import OrangeBackground from "../../../../../public/images/orangeBackground.png";

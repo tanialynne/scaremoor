@@ -28,44 +28,10 @@ interface ActivityConfig {
   estimatedTime: string;
   skills: string[];
   difficulty: 'Easy' | 'Medium' | 'Hard';
-  component: React.ComponentType<any>;
+  component: React.ComponentType<{ sectionId: string; onResponseChange: (sectionId: string, newResponses: Record<string, string>) => void; }>;
 }
 
-const FunActivityPage = ({ params }: Props) => {
-  const [story, setStory] = useState<WorksheetStory | null>(null);
-  const [activityId, setActivityId] = useState<string>('');
-  const [responses, setResponses] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    const loadData = async () => {
-      // Redirect if worksheets are disabled
-      if (!isFeatureEnabled("WORKSHEETS_ENABLED")) {
-        redirect("/");
-        return;
-      }
-
-      const { slug: paramSlug, activityId: paramActivityId } = await params;
-      const storyData = getWorksheetStoryBySlug(paramSlug);
-
-      if (!storyData) {
-        notFound();
-        return;
-      }
-
-      setStory(storyData);
-      setActivityId(paramActivityId);
-
-      // Set page title
-      const activity = getActivityConfig(paramActivityId);
-      if (activity) {
-        document.title = `${storyData.title} - ${activity.title}`;
-      }
-    };
-
-    loadData();
-  }, [params]);
-
-  const activities: ActivityConfig[] = [
+const activities: ActivityConfig[] = [
     {
       id: 'word-search',
       title: 'Word Search Puzzle',
@@ -128,9 +94,42 @@ const FunActivityPage = ({ params }: Props) => {
     }
   ];
 
-  const getActivityConfig = (id: string): ActivityConfig | undefined => {
-    return activities.find(activity => activity.id === id);
-  };
+const getActivityConfig = (id: string): ActivityConfig | undefined => {
+  return activities.find(activity => activity.id === id);
+};
+
+const FunActivityPage = ({ params }: Props) => {
+  const [story, setStory] = useState<WorksheetStory | null>(null);
+  const [activityId, setActivityId] = useState<string>('');
+
+  useEffect(() => {
+    const loadData = async () => {
+      // Redirect if worksheets are disabled
+      if (!isFeatureEnabled("WORKSHEETS_ENABLED")) {
+        redirect("/");
+        return;
+      }
+
+      const { slug: paramSlug, activityId: paramActivityId } = await params;
+      const storyData = getWorksheetStoryBySlug(paramSlug);
+
+      if (!storyData) {
+        notFound();
+        return;
+      }
+
+      setStory(storyData);
+      setActivityId(paramActivityId);
+
+      // Set page title
+      const activity = getActivityConfig(paramActivityId);
+      if (activity) {
+        document.title = `${storyData.title} - ${activity.title}`;
+      }
+    };
+
+    loadData();
+  }, [params]);
 
   const getCurrentActivityIndex = (): number => {
     return activities.findIndex(activity => activity.id === activityId);
@@ -146,24 +145,13 @@ const FunActivityPage = ({ params }: Props) => {
     return currentIndex < activities.length - 1 ? activities[currentIndex + 1] : undefined;
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy': return 'bg-green-700/30 text-green-300 border-green-600/50';
-      case 'Medium': return 'bg-yellow-700/30 text-yellow-300 border-yellow-600/50';
-      case 'Hard': return 'bg-red-700/30 text-red-300 border-red-600/50';
-      default: return 'bg-gray-700/30 text-gray-300 border-gray-600/50';
-    }
-  };
 
   const handleSmartPrint = () => {
     window.print();
   };
 
-  const handleResponseChange = (sectionId: string, newResponses: Record<string, string>) => {
-    setResponses(prev => ({
-      ...prev,
-      [sectionId]: JSON.stringify(newResponses)
-    }));
+  const handleResponseChange = () => {
+    // Response change handler for activities
   };
 
   if (!story) {

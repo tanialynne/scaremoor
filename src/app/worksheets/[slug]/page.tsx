@@ -10,16 +10,16 @@ import WorksheetAnalytics from "../../components/WorksheetAnalytics";
 import WorksheetAccordion from "../../components/WorksheetAccordion";
 import FunActivitiesAccordion from "../../components/FunActivitiesAccordion";
 import {
-  OnlineWorksheetLink,
   ContactLink,
 } from "../../components/WorksheetAnalytics/WorksheetLink";
 import { DownloadLink } from "../../components/WorksheetAnalytics/DownloadLink";
 import {
   getWorksheetStoryBySlug,
-  WorksheetActivity,
+  WorksheetStory,
   DownloadableResource,
 } from "../../constants/Worksheets";
 import { getStoryWorksheets } from "../../constants/OnlineWorksheets";
+import { OnlineWorksheet } from "../../components/Worksheets/types";
 import { isFeatureEnabled } from "../../constants/FeatureFlags";
 
 import BackgroundImage from "../../../../public/images/bookspage-image.png";
@@ -33,159 +33,10 @@ type Props = {
 // Note: generateMetadata removed because this is now a client component
 // The page title will be set dynamically in useEffect
 
-interface ActivityCardProps {
-  activity: WorksheetActivity;
-}
-
-const ActivityCard: React.FC<ActivityCardProps> = ({ activity }) => {
-  const getActivityIcon = (type: string) => {
-    switch (type) {
-      case "comprehension":
-        return "📚";
-      case "vocabulary":
-        return "📝";
-      case "creative-writing":
-        return "✍️";
-      case "analysis":
-        return "🔍";
-      case "art":
-        return "🎨";
-      case "game":
-        return "🎯";
-      default:
-        return "📋";
-    }
-  };
-
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "comprehension":
-        return "border-blue-700/50 bg-blue-900/20";
-      case "vocabulary":
-        return "border-green-700/50 bg-green-900/20";
-      case "creative-writing":
-        return "border-purple-700/50 bg-purple-900/20";
-      case "analysis":
-        return "border-orange-700/50 bg-orange-900/20";
-      case "art":
-        return "border-pink-700/50 bg-pink-900/20";
-      case "game":
-        return "border-yellow-700/50 bg-yellow-900/20";
-      default:
-        return "border-gray-700/50 bg-gray-900/20";
-    }
-  };
-
-  return (
-    <div
-      className={`rounded-lg p-6 border ${getTypeColor(activity.type)} hover:border-opacity-70 transition-all duration-300`}
-    >
-      <div className="flex items-start gap-3 mb-4">
-        <span className="text-2xl">{getActivityIcon(activity.type)}</span>
-        <div className="flex-1">
-          <h4 className="font-semibold text-white mb-1">{activity.title}</h4>
-          <p className="text-base text-gray-400 capitalize">
-            {activity.type.replace("-", " ")} • {activity.timeEstimate}
-          </p>
-        </div>
-      </div>
-
-      <p className="text-gray-300 text-base mb-4">{activity.description}</p>
-
-      <div className="space-y-2">
-        <p className="text-base text-gray-400">
-          <strong>Instructions:</strong> {activity.instructions}
-        </p>
-
-        {activity.materials && (
-          <p className="text-base text-gray-400">
-            <strong>Materials:</strong> {activity.materials.join(", ")}
-          </p>
-        )}
-
-        <div className="flex flex-wrap gap-1 mt-3">
-          {activity.solStandards.map((standard) => (
-            <span
-              key={standard}
-              className="text-sm bg-gray-700/50 text-gray-300 px-2 py-1 rounded"
-            >
-              SOL {standard}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-interface ResourceCardProps {
-  resource: DownloadableResource;
-  storySlug: string;
-}
-
-const ResourceCard: React.FC<ResourceCardProps> = ({ resource, storySlug }) => {
-  const getFileIcon = (fileType: string) => {
-    switch (fileType) {
-      case "pdf":
-        return "📄";
-      case "docx":
-        return "📝";
-      case "png":
-        return "🖼️";
-      case "zip":
-        return "📦";
-      default:
-        return "📁";
-    }
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "educator-packet":
-        return "bg-orange-900/30 border-orange-700/50";
-      case "student-worksheet":
-        return "bg-blue-900/30 border-blue-700/50";
-      case "answer-key":
-        return "bg-green-900/30 border-green-700/50";
-      case "extension-activity":
-        return "bg-purple-900/30 border-purple-700/50";
-      default:
-        return "bg-gray-900/30 border-gray-700/50";
-    }
-  };
-
-  return (
-    <div
-      className={`rounded-lg p-4 border ${getCategoryColor(resource.category)} hover:border-opacity-70 transition-all duration-300`}
-    >
-      <div className="flex items-center gap-3 mb-3">
-        <span className="text-2xl">{getFileIcon(resource.fileType)}</span>
-        <div className="flex-1">
-          <h4 className="font-semibold text-white text-base">
-            {resource.title}
-          </h4>
-          <p className="text-sm text-gray-400 uppercase">{resource.fileType}</p>
-        </div>
-      </div>
-
-      <p className="text-gray-300 text-sm mb-4">{resource.description}</p>
-
-      <DownloadLink
-        href={resource.url}
-        resourceTitle={resource.title}
-        resourceType={resource.category}
-        storySlug={storySlug}
-        className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-sm px-3 py-2 rounded transition-colors duration-200"
-      >
-        📥 Download
-      </DownloadLink>
-    </div>
-  );
-};
 
 const WorksheetStoryPage = ({ params }: Props) => {
-  const [story, setStory] = useState<any>(null);
-  const [onlineWorksheets, setOnlineWorksheets] = useState<any[]>([]);
+  const [story, setStory] = useState<WorksheetStory | null>(null);
+  const [onlineWorksheets, setOnlineWorksheets] = useState<OnlineWorksheet[]>([]);
   const [openAccordions, setOpenAccordions] = useState<
     Record<number | string, boolean>
   >({});
@@ -245,7 +96,6 @@ const WorksheetStoryPage = ({ params }: Props) => {
     subjects,
     themes,
     readingTime,
-    activities,
     downloadableResources,
     solStandards,
   } = story;
@@ -423,17 +273,17 @@ const WorksheetStoryPage = ({ params }: Props) => {
                     Get everything you need in one comprehensive packet.
                   </p>
                   {downloadableResources.find(
-                    (r: any) => r.category === "educator-packet"
+                    (r: DownloadableResource) => r.category === "educator-packet"
                   ) && (
                     <DownloadLink
                       href={
                         downloadableResources.find(
-                          (r: any) => r.category === "educator-packet"
+                          (r: DownloadableResource) => r.category === "educator-packet"
                         )!.url
                       }
                       resourceTitle={
                         downloadableResources.find(
-                          (r: any) => r.category === "educator-packet"
+                          (r: DownloadableResource) => r.category === "educator-packet"
                         )!.title
                       }
                       resourceType="educator-packet"

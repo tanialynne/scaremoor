@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from 'react';
-import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+import { onCLS, onINP, onFCP, onLCP, onTTFB } from 'web-vitals';
 
 function sendToAnalytics(metric: {
   name: string;
@@ -28,11 +28,11 @@ function sendToAnalytics(metric: {
 export default function WebVitals() {
   useEffect(() => {
     // Measure Core Web Vitals
-    getCLS(sendToAnalytics);
-    getFID(sendToAnalytics);
-    getFCP(sendToAnalytics);
-    getLCP(sendToAnalytics);
-    getTTFB(sendToAnalytics);
+    onCLS(sendToAnalytics);
+    onINP(sendToAnalytics); // INP replaces FID in web-vitals v3
+    onFCP(sendToAnalytics);
+    onLCP(sendToAnalytics);
+    onTTFB(sendToAnalytics);
   }, []);
 
   return null; // This component doesn't render anything

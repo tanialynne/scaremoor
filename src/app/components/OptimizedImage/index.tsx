@@ -101,8 +101,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         {/* Fallback to original format */}
         <Image
           src={src}
-          alt={props.alt || ""}
           {...props}
+          alt={props.alt || ""}
         />
       </picture>
     );
@@ -112,8 +112,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   return (
     <Image
       src={src}
-      alt={props.alt || ""}
       {...props}
+      alt={props.alt || ""}
     />
   );
 };

@@ -13,15 +13,17 @@ interface HomeHeroTestProps {
  * A/B Test for Homepage Hero Section
  * Tests video trailer vs book covers grid to see what engages users more
  */
-export const HomeHeroTest: React.FC<HomeHeroTestProps> = ({ className = "" }) => {
-  const { trackConversion } = useABTest('home_hero_layout');
+export const HomeHeroTest: React.FC<HomeHeroTestProps> = ({
+  className = "",
+}) => {
+  const { trackConversion } = useABTest("home_hero_layout");
 
   const handleVideoPlay = () => {
-    trackConversion('video_play', 2);
+    trackConversion("video_play", 2);
   };
 
   const handleBookClick = () => {
-    trackConversion('book_click', 1);
+    trackConversion("book_click", 1);
   };
 
   return (
@@ -36,7 +38,7 @@ export const HomeHeroTest: React.FC<HomeHeroTestProps> = ({ className = "" }) =>
           controls
           preload="metadata"
           onPlay={handleVideoPlay}
-          poster="/images/home-hero-comingsoon.webp"
+          autoPlay
         />
       </ABTestWrapper>
 

@@ -1230,24 +1230,24 @@ The soft, scratchy whisper of something drawing.
         },
         {
           number: 2,
-          question: "What appears in the grain of the pencil?",
-          answer: "SHIMMER",
-          firstLetter: "S",
-          hint: "Silvery glow",
-        },
-        {
-          number: 3,
           question: "Where did the black cat appear?",
           answer: "OUTSIDE",
           firstLetter: "O",
           hint: "At the classroom opening",
         },
         {
-          number: 4,
+          number: 3,
           question: "What makes sounds at night?",
           answer: "SCRATCHING",
           firstLetter: "S",
           hint: "Drawing sounds",
+        },
+        {
+          number: 4,
+          question: "What appears in the grain of the pencil?",
+          answer: "SHIMMER",
+          firstLetter: "S",
+          hint: "Silvery glow",
         },
         {
           number: 5,
@@ -1265,7 +1265,7 @@ The soft, scratchy whisper of something drawing.
         },
         {
           number: 7,
-          question: "What liquid spilled like the drawing?",
+          question: "What spilled like the drawing?",
           answer: "LIQUID",
           firstLetter: "L",
           hint: "Water from a bottle",

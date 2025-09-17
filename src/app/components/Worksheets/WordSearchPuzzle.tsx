@@ -28,7 +28,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
   const [foundWordCells, setFoundWordCells] = useState<Set<string>>(new Set());
 
   // Word search generator
-  const generateWordSearch = useCallback((words: string[], gridSize: number = 16): { grid: string[][], placements: WordPlacement[] } => {
+  const generateWordSearch = useCallback((words: string[], gridSize: number = 18): { grid: string[][], placements: WordPlacement[] } => {
     const grid: string[][] = Array(gridSize).fill(null).map(() => Array(gridSize).fill(''));
     const placements: WordPlacement[] = [];
     const directions = [
@@ -38,77 +38,90 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
     ] as const;
 
 
+    // Sort words by length (place longer words first for better success rate)
+    const sortedWords = [...words].sort((a, b) => b.length - a.length);
+
     // Try to place each word
-    for (const word of words) {
+    for (const word of sortedWords) {
       const upperWord = word.toUpperCase();
       let placed = false;
       let attempts = 0;
-      const maxAttempts = 200;
+      const maxAttempts = 500; // Increased attempts for better placement
 
       while (!placed && attempts < maxAttempts) {
         attempts++;
 
-        // Random direction
-        const direction = directions[Math.floor(Math.random() * directions.length)];
-        const [dr, dc] = direction.vector;
+        // Try directions in order of preference (horizontal first for readability)
+        const directionOrder = attempts < 200 ? [0, 1, 2] : [Math.floor(Math.random() * 3)];
 
-        // Calculate valid starting positions
-        let maxRow, maxCol;
-        if (direction.name === 'horizontal') {
-          maxRow = gridSize - 1;
-          maxCol = gridSize - upperWord.length;
-        } else if (direction.name === 'vertical') {
-          maxRow = gridSize - upperWord.length;
-          maxCol = gridSize - 1;
-        } else { // diagonal
-          maxRow = gridSize - upperWord.length;
-          maxCol = gridSize - upperWord.length;
-        }
+        for (const dirIndex of directionOrder) {
+          if (placed) break;
 
-        if (maxRow < 0 || maxCol < 0) continue;
+          const direction = directions[dirIndex];
+          const [dr, dc] = direction.vector;
 
-        const startRow = Math.floor(Math.random() * (maxRow + 1));
-        const startCol = Math.floor(Math.random() * (maxCol + 1));
-
-        // Check if word fits without conflicts
-        let canPlace = true;
-        for (let i = 0; i < upperWord.length; i++) {
-          const row = startRow + (dr * i);
-          const col = startCol + (dc * i);
-
-          // Check bounds
-          if (row < 0 || row >= gridSize || col < 0 || col >= gridSize) {
-            canPlace = false;
-            break;
+          // Calculate valid starting positions
+          let maxRow, maxCol;
+          if (direction.name === 'horizontal') {
+            maxRow = gridSize - 1;
+            maxCol = gridSize - upperWord.length;
+          } else if (direction.name === 'vertical') {
+            maxRow = gridSize - upperWord.length;
+            maxCol = gridSize - 1;
+          } else { // diagonal
+            maxRow = gridSize - upperWord.length;
+            maxCol = gridSize - upperWord.length;
           }
 
-          // Allow overlapping if it's the same letter, but avoid conflicts
-          if (grid[row][col] !== '' && grid[row][col] !== upperWord[i]) {
-            canPlace = false;
-            break;
-          }
-        }
+          if (maxRow < 0 || maxCol < 0) continue;
 
-        if (canPlace) {
-          // Place the word
+          const startRow = Math.floor(Math.random() * (maxRow + 1));
+          const startCol = Math.floor(Math.random() * (maxCol + 1));
+
+          // Check if word fits without conflicts
+          let canPlace = true;
           for (let i = 0; i < upperWord.length; i++) {
             const row = startRow + (dr * i);
             const col = startCol + (dc * i);
-            grid[row][col] = upperWord[i];
+
+            // Check bounds
+            if (row < 0 || row >= gridSize || col < 0 || col >= gridSize) {
+              canPlace = false;
+              break;
+            }
+
+            // Allow overlapping if it's the same letter, but avoid conflicts
+            if (grid[row][col] !== '' && grid[row][col] !== upperWord[i]) {
+              canPlace = false;
+              break;
+            }
           }
 
-          placements.push({
-            word: upperWord,
-            row: startRow,
-            col: startCol,
-            direction: direction.name,
-            directionVector: [dr, dc]
-          });
+          if (canPlace) {
+            // Place the word
+            for (let i = 0; i < upperWord.length; i++) {
+              const row = startRow + (dr * i);
+              const col = startCol + (dc * i);
+              grid[row][col] = upperWord[i];
+            }
 
-          placed = true;
+            placements.push({
+              word: upperWord,
+              row: startRow,
+              col: startCol,
+              direction: direction.name,
+              directionVector: [dr, dc]
+            });
+
+            placed = true;
+          }
         }
       }
 
+      // Log if word couldn't be placed for debugging
+      if (!placed) {
+        console.warn(`Could not place word: ${upperWord}`);
+      }
     }
 
     // Fill empty cells with random letters
@@ -129,7 +142,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
     const storyWords = (storyData?.wordSearchWords as string[]) || (storyData?.words as string[]) || [];
 
     if (storyWords && storyWords.length > 0) {
-      return storyWords.slice(0, 12); // Limit to 12 words for reasonable grid size
+      return storyWords.map(word => word.toUpperCase()); // Ensure all words are uppercase
     }
 
     // Default fallback words (shorter words that fit better)

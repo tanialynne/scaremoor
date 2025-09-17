@@ -60,11 +60,20 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
 
     // Generate revealed message from first letters of correct answers
     let message = '';
-    puzzleItems.forEach(item => {
+    puzzleItems.forEach((item, index) => {
       const userAnswer = itemNumber === item.number ? value : responses[`item-${item.number}`] || '';
       const isCorrect = userAnswer.toUpperCase().trim() === item.answer.toUpperCase();
       message += isCorrect ? item.firstLetter : '_';
-      if (item.number === 6) message += ' '; // Add space between CHOOSE and WISELY
+
+      // Add spaces based on the hidden message structure
+      if (hiddenMessage.includes(' ')) {
+        // Find where spaces should be by checking the position in the target message
+        const currentLength = message.length;
+        const targetChar = hiddenMessage[currentLength];
+        if (targetChar === ' ') {
+          message += ' ';
+        }
+      }
     });
 
     setRevealedMessage(message);
@@ -191,7 +200,7 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
       <div className="hidden-message-display bg-gray-100 border-3 border-gray-400 rounded-lg p-6 text-center">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Hidden Message:</h3>
         <div className="text-3xl font-mono font-bold text-gray-800 tracking-widest">
-          {revealedMessage || '_ _ _ _ _ _   _ _ _ _ _ _'}
+          {revealedMessage || hiddenMessage.split('').map(char => char === ' ' ? ' ' : '_').join(' ')}
         </div>
         {revealedMessage === hiddenMessage && (
           <div className="mt-4 text-green-600 font-bold text-lg">
@@ -228,7 +237,7 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
       <div className="bg-gray-100 border-l-4 border-gray-400 p-4 rounded">
         <p className="text-sm text-gray-700">
           <strong>How it works:</strong> The first letter of each correct answer spells out the hidden message.
-          For example, if the answer to question 1 is &quot;CHEMISTRY&quot;, circle the &quot;C&quot;.
+          For example, if the answer to question 1 is &quot;PENCIL&quot;, circle the &quot;P&quot;.
           When you put all the first letters together, they reveal an important message from the story!
         </p>
       </div>

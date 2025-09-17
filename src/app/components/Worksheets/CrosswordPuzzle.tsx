@@ -50,90 +50,244 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
     ];
   };
 
-  // Simple crossword layout - ensure we get both across and down words
+  // Enhanced crossword generation algorithm that places all words
   const generateCrosswordLayout = (inputClues: Clue[]): Clue[] => {
-    const gridSize = 15;
+    const gridSize = 20; // Larger grid to accommodate more words
     const grid: (string | null)[][] = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
     const placedWords: Clue[] = [];
+    const unplacedWords = [...inputClues]; // Copy all clues to place
 
-    // Separate across and down words
-    const acrossWords = inputClues.filter(c => c.direction === 'across');
-    const downWords = inputClues.filter(c => c.direction === 'down');
-
-    // Place all across words first with enough vertical spacing
     let currentNumber = 1;
-    const rowSpacing = 2; // 2 rows between each across word
-    let currentRow = 2; // Start at row 2 to leave room for down words above
 
-    // Place across words
-    acrossWords.forEach((word, index) => {
-      if (currentRow + (index * rowSpacing) < gridSize - 1) {
-        const row = currentRow + (index * rowSpacing);
-        const startCol = Math.max(1, Math.floor((gridSize - word.answer.length) / 2));
+    // Helper function to check if a word can be placed at a position
+    const canPlaceWord = (word: string, row: number, col: number, direction: 'across' | 'down', allowIntersection: boolean = true): boolean => {
+      const dr = direction === 'down' ? 1 : 0;
+      const dc = direction === 'across' ? 1 : 0;
 
-        // Check if word fits
-        if (startCol + word.answer.length < gridSize) {
-          const clue: Clue = {
-            ...word,
-            startRow: row,
-            startCol: startCol,
-            number: currentNumber++
-          };
+      // Check bounds
+      if (direction === 'across' && col + word.length > gridSize) return false;
+      if (direction === 'down' && row + word.length > gridSize) return false;
 
-          // Place letters in grid
-          for (let i = 0; i < word.answer.length; i++) {
-            grid[row][startCol + i] = word.answer[i];
+      let hasIntersection = false;
+
+      // Check each position
+      for (let i = 0; i < word.length; i++) {
+        const r = row + (dr * i);
+        const c = col + (dc * i);
+
+        if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) return false;
+
+        const currentCell = grid[r][c];
+
+        // If cell is occupied, it must be the same letter (intersection)
+        if (currentCell !== null) {
+          if (currentCell !== word[i]) {
+            return false;
+          }
+          hasIntersection = true;
+        } else {
+          // For empty cells, check proper crossword spacing
+
+          // Check cell before word start
+          if (i === 0) {
+            const prevR = r - dr;
+            const prevC = c - dc;
+            if (prevR >= 0 && prevR < gridSize && prevC >= 0 && prevC < gridSize && grid[prevR][prevC] !== null) {
+              return false;
+            }
           }
 
-          placedWords.push(clue);
-        }
-      }
-    });
+          // Check cell after word end
+          if (i === word.length - 1) {
+            const nextR = r + dr;
+            const nextC = c + dc;
+            if (nextR >= 0 && nextR < gridSize && nextC >= 0 && nextC < gridSize && grid[nextR][nextC] !== null) {
+              return false;
+            }
+          }
 
-    // Now place down words by finding intersections
-    downWords.forEach(downWord => {
-      let placed = false;
+          // Check perpendicular cells for proper crossword spacing
+          const perpR1 = r + (direction === 'across' ? 1 : 0);
+          const perpC1 = c + (direction === 'down' ? 1 : 0);
+          const perpR2 = r - (direction === 'across' ? 1 : 0);
+          const perpC2 = c - (direction === 'down' ? 1 : 0);
 
-      // Try to intersect with each placed across word
-      for (const acrossClue of placedWords.filter(p => p.direction === 'across')) {
-        if (placed) break;
+          // Only allow perpendicular adjacency if it's part of an intersecting word
+          if (perpR1 >= 0 && perpR1 < gridSize && perpC1 >= 0 && perpC1 < gridSize) {
+            const perpCell1 = grid[perpR1][perpC1];
+            if (perpCell1 !== null) {
+              // Check if this is a valid intersection
+              const isValidIntersection = placedWords.some(placed => {
+                const placedDr = placed.direction === 'down' ? 1 : 0;
+                const placedDc = placed.direction === 'across' ? 1 : 0;
 
-        // Look for common letters
-        for (let acrossPos = 0; acrossPos < acrossClue.answer.length; acrossPos++) {
-          if (placed) break;
+                for (let j = 0; j < placed.answer.length; j++) {
+                  const placedR = placed.startRow + (placedDr * j);
+                  const placedC = placed.startCol + (placedDc * j);
 
-          for (let downPos = 0; downPos < downWord.answer.length; downPos++) {
-            if (acrossClue.answer[acrossPos].toLowerCase() === downWord.answer[downPos].toLowerCase()) {
-              const newRow = acrossClue.startRow - downPos;
-              const newCol = acrossClue.startCol + acrossPos;
-
-              // Check if placement is valid (within bounds and no conflicts)
-              if (newRow >= 0 && newRow + downWord.answer.length <= gridSize && newCol >= 0 && newCol < gridSize) {
-                let canPlace = true;
-
-                for (let k = 0; k < downWord.answer.length; k++) {
-                  const checkRow = newRow + k;
-                  if (grid[checkRow][newCol] !== null && grid[checkRow][newCol] !== downWord.answer[k]) {
-                    canPlace = false;
-                    break;
+                  if (placedR === perpR1 && placedC === perpC1 &&
+                      placedR === r && placedC === c) {
+                    return true;
                   }
                 }
+                return false;
+              });
 
-                if (canPlace) {
-                  const clue: Clue = {
-                    ...downWord,
-                    startRow: newRow,
-                    startCol: newCol,
-                    number: currentNumber++
-                  };
+              if (!isValidIntersection) return false;
+            }
+          }
 
-                  // Place letters in grid
-                  for (let k = 0; k < downWord.answer.length; k++) {
-                    grid[newRow + k][newCol] = downWord.answer[k];
+          if (perpR2 >= 0 && perpR2 < gridSize && perpC2 >= 0 && perpC2 < gridSize) {
+            const perpCell2 = grid[perpR2][perpC2];
+            if (perpCell2 !== null) {
+              // Check if this is a valid intersection
+              const isValidIntersection = placedWords.some(placed => {
+                const placedDr = placed.direction === 'down' ? 1 : 0;
+                const placedDc = placed.direction === 'across' ? 1 : 0;
+
+                for (let j = 0; j < placed.answer.length; j++) {
+                  const placedR = placed.startRow + (placedDr * j);
+                  const placedC = placed.startCol + (placedDc * j);
+
+                  if (placedR === perpR2 && placedC === perpC2 &&
+                      placedR === r && placedC === c) {
+                    return true;
                   }
+                }
+                return false;
+              });
 
-                  placedWords.push(clue);
+              if (!isValidIntersection) return false;
+            }
+          }
+        }
+      }
+
+      // If this is not the first word and we require intersection, ensure we have one
+      if (allowIntersection && placedWords.length > 0 && !hasIntersection) {
+        return false;
+      }
+
+      return true;
+    };
+
+    // Helper function to place a word
+    const placeWord = (word: string, row: number, col: number, direction: 'across' | 'down', clue: Clue): void => {
+      const dr = direction === 'down' ? 1 : 0;
+      const dc = direction === 'across' ? 1 : 0;
+
+      for (let i = 0; i < word.length; i++) {
+        const r = row + (dr * i);
+        const c = col + (dc * i);
+        grid[r][c] = word[i];
+      }
+
+      placedWords.push({
+        ...clue,
+        startRow: row,
+        startCol: col,
+        number: currentNumber++
+      });
+    };
+
+    // Find intersections between two words
+    const findIntersections = (word1: string, word2: string): Array<{pos1: number, pos2: number}> => {
+      const intersections: Array<{pos1: number, pos2: number}> = [];
+
+      for (let i = 0; i < word1.length; i++) {
+        for (let j = 0; j < word2.length; j++) {
+          if (word1[i].toLowerCase() === word2[j].toLowerCase()) {
+            intersections.push({pos1: i, pos2: j});
+          }
+        }
+      }
+
+      return intersections;
+    };
+
+    // Helper function to try placing a word with any direction
+    const tryPlaceWord = (clue: Clue, forceDirection?: 'across' | 'down'): boolean => {
+      const directions = forceDirection ? [forceDirection] : ['across', 'down'];
+
+      for (const direction of directions) {
+        // If no words placed yet, place first word in center
+        if (placedWords.length === 0) {
+          const centerRow = Math.floor(gridSize / 2);
+          const startCol = Math.floor((gridSize - clue.answer.length) / 2);
+
+          if (canPlaceWord(clue.answer, centerRow, startCol, direction)) {
+            placeWord(clue.answer, centerRow, startCol, direction, {...clue, direction});
+            return true;
+          }
+        } else {
+          // Try to intersect with any existing word
+          for (const existingWord of placedWords) {
+            const intersections = findIntersections(existingWord.answer, clue.answer);
+
+            for (const intersection of intersections) {
+              let newRow: number, newCol: number;
+
+              if (direction === 'across' && existingWord.direction === 'down') {
+                // New across word intersecting existing down word
+                newRow = existingWord.startRow + intersection.pos1;
+                newCol = existingWord.startCol - intersection.pos2;
+              } else if (direction === 'down' && existingWord.direction === 'across') {
+                // New down word intersecting existing across word
+                newRow = existingWord.startRow - intersection.pos2;
+                newCol = existingWord.startCol + intersection.pos1;
+              } else {
+                continue; // Skip same-direction intersections
+              }
+
+              if (canPlaceWord(clue.answer, newRow, newCol, direction)) {
+                placeWord(clue.answer, newRow, newCol, direction, {...clue, direction});
+                return true;
+              }
+            }
+          }
+        }
+      }
+
+      return false;
+    };
+
+    // Sort words by length (longer words first for better grid utilization)
+    unplacedWords.sort((a, b) => b.answer.length - a.answer.length);
+
+    // Place words iteratively
+    let maxAttempts = 100;
+    let attempts = 0;
+
+    while (unplacedWords.length > 0 && attempts < maxAttempts) {
+      attempts++;
+      let placedThisRound = false;
+
+      // Try to place each unplaced word
+      for (let i = unplacedWords.length - 1; i >= 0; i--) {
+        const clue = unplacedWords[i];
+
+        if (tryPlaceWord(clue)) {
+          unplacedWords.splice(i, 1);
+          placedThisRound = true;
+        }
+      }
+
+      // If we couldn't place any words this round, try with more flexibility
+      if (!placedThisRound && unplacedWords.length > 0) {
+        // Try placing words without intersection (standalone)
+        for (let i = unplacedWords.length - 1; i >= 0; i--) {
+          const clue = unplacedWords[i];
+          let placed = false;
+
+          // Try multiple positions across the grid with spacing
+          for (let row = 2; row < gridSize - 2 && !placed; row += 3) {
+            for (let col = 2; col < gridSize - 2 && !placed; col += 3) {
+              for (const direction of ['across', 'down'] as const) {
+                if (canPlaceWord(clue.answer, row, col, direction, false)) {
+                  placeWord(clue.answer, row, col, direction, {...clue, direction});
+                  unplacedWords.splice(i, 1);
                   placed = true;
+                  placedThisRound = true;
                   break;
                 }
               }
@@ -141,7 +295,14 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
           }
         }
       }
-    });
+
+      if (!placedThisRound) break; // Avoid infinite loop
+    }
+
+    // Log any words that couldn't be placed
+    if (unplacedWords.length > 0) {
+      console.warn(`Could not place ${unplacedWords.length} words:`, unplacedWords.map(w => w.answer));
+    }
 
     return placedWords;
   };
@@ -176,7 +337,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
   const rawClues = getStoryCrosswordClues();
   const clues: Clue[] = generateCrosswordLayout(rawClues);
 
-  const gridSize = 15; // 15x15 grid
+  const gridSize = 20; // Match the grid size used in generation
 
   const generateGrid = () => {
     // Create empty grid
@@ -187,19 +348,24 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
     clues.forEach(clue => {
       const { answer, startRow, startCol, direction, number } = clue;
 
-      // Place number at start position
-      if (!numbers[startRow][startCol]) {
-        numbers[startRow][startCol] = number;
-      }
-
-      // Place letters
-      for (let i = 0; i < answer.length; i++) {
-        const row = direction === 'across' ? startRow : startRow + i;
-        const col = direction === 'across' ? startCol + i : startCol;
-
-        if (row < gridSize && col < gridSize) {
-          grid[row][col] = answer[i];
+      // Bounds check before accessing arrays
+      if (startRow >= 0 && startRow < gridSize && startCol >= 0 && startCol < gridSize) {
+        // Place number at start position
+        if (!numbers[startRow][startCol]) {
+          numbers[startRow][startCol] = number;
         }
+
+        // Place letters
+        for (let i = 0; i < answer.length; i++) {
+          const row = direction === 'across' ? startRow : startRow + i;
+          const col = direction === 'across' ? startCol + i : startCol;
+
+          if (row >= 0 && row < gridSize && col >= 0 && col < gridSize) {
+            grid[row][col] = answer[i];
+          }
+        }
+      } else {
+        console.warn(`Clue out of bounds: ${answer} at (${startRow}, ${startCol})`);
       }
     });
 

@@ -423,50 +423,55 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
       `}</style>
 
 
-      {/* Crossword Grid */}
-      <div className="crossword-grid font-mono text-xs bg-white border border-gray-300 p-4 rounded inline-block">
-        {grid.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex">
-            {row.map((cell, colIndex) => {
-              const cellNumber = numbers[rowIndex][colIndex];
-              const isActive = cell !== null;
-              const isCorrect = isActive && isCorrectCell(rowIndex, colIndex);
-              const userValue = getInputValue(rowIndex, colIndex);
+      {/* Crossword Container */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Crossword Grid */}
+        <div className="flex-shrink-0">
+          <div className="crossword-grid font-mono text-xs bg-white border border-gray-300 p-2 sm:p-4 rounded inline-block overflow-x-auto max-w-full">
+            {grid.map((row, rowIndex) => (
+              <div key={rowIndex} className="flex">
+                {row.map((cell, colIndex) => {
+                  const cellNumber = numbers[rowIndex][colIndex];
+                  const isActive = cell !== null;
+                  const isCorrect = isActive && isCorrectCell(rowIndex, colIndex);
+                  const userValue = getInputValue(rowIndex, colIndex);
 
-              if (!isActive) {
-                return (
-                  <div
-                    key={colIndex}
-                    className="crossword-cell crossword-cell-blocked w-6 h-6 bg-gray-800 border border-gray-400"
-                  />
-                );
-              }
+                  if (!isActive) {
+                    return (
+                      <div
+                        key={colIndex}
+                        className="crossword-cell crossword-cell-blocked w-7 h-7 sm:w-8 sm:h-8 bg-gray-800 border border-gray-400"
+                      />
+                    );
+                  }
 
-              return (
-                <div key={colIndex} className="relative">
-                  <input
-                    type="text"
-                    maxLength={1}
-                    value={userValue}
-                    onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
-                    className={`crossword-cell crossword-cell-active w-6 h-6 text-center border border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-500 ${
-                      isCorrect ? 'bg-green-100' : 'bg-white'
-                    }`}
-                  />
-                  {cellNumber && (
-                    <div className="cell-number absolute top-0 left-0 text-xs font-bold text-gray-600 leading-none pointer-events-none">
-                      {cellNumber}
+                  return (
+                    <div key={colIndex} className="relative">
+                      <input
+                        type="text"
+                        maxLength={1}
+                        value={userValue}
+                        onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
+                        className={`crossword-cell crossword-cell-active w-7 h-7 sm:w-8 sm:h-8 text-center border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                          isCorrect ? 'bg-green-100' : 'bg-white'
+                        }`}
+                      />
+                      {cellNumber && (
+                        <div className="cell-number absolute top-0 left-0 text-xs font-bold text-gray-600 leading-none pointer-events-none">
+                          {cellNumber}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Clues */}
-      <div className="clues-section grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Clues */}
+        <div className="flex-1 min-w-0">
+          <div className="clues-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
         <div className="bg-white p-4 border border-gray-300 rounded">
           <h4 className="font-bold text-gray-800 mb-3 text-lg">ACROSS:</h4>
           <div className="space-y-2">
@@ -500,6 +505,8 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
                   </div>
                 );
               })}
+          </div>
+        </div>
           </div>
         </div>
       </div>

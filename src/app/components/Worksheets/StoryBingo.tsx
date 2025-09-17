@@ -118,6 +118,59 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
   return (
     <div className="story-bingo space-y-6">
       <style jsx>{`
+        .bingo-cell {
+          touch-action: manipulation;
+          user-select: none;
+          transition: all 0.2s ease;
+          cursor: pointer;
+          aspect-ratio: 1;
+        }
+
+        .bingo-cell:hover:not(.bingo-header):not(.free-space) {
+          transform: scale(1.02);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .bingo-cell:active:not(.bingo-header):not(.free-space) {
+          transform: scale(0.98);
+        }
+
+        .bingo-card {
+          max-width: 100%;
+          overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+          .bingo-cell {
+            font-size: 12px;
+            padding: 6px 4px;
+          }
+
+          .bingo-header {
+            font-size: 18px !important;
+          }
+
+          .bingo-card {
+            max-width: 90vw;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .bingo-cell {
+            font-size: 10px;
+            padding: 4px 2px;
+          }
+
+          .bingo-header {
+            font-size: 16px !important;
+          }
+
+          .bingo-card {
+            max-width: 95vw;
+            gap: 2px;
+          }
+        }
+
         @media print {
           .bingo-card {
             border: 3px solid #333 !important;
@@ -128,6 +181,8 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
             border: 2px solid #333 !important;
             font-size: 12px !important;
             min-height: 60px !important;
+            transform: none !important;
+            box-shadow: none !important;
           }
 
           .bingo-header {
@@ -153,19 +208,19 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
       {/* Bingo Card */}
       <div className="bingo-card grid grid-cols-5 gap-1 max-w-2xl mx-auto p-4 bg-white border-3 border-gray-600 rounded-lg">
         {/* Header Row */}
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 min-h-[60px]">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square">
           B
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 min-h-[60px]">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square">
           I
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 min-h-[60px]">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square">
           N
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 min-h-[60px]">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square">
           G
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 min-h-[60px]">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square">
           O
         </div>
 
@@ -178,12 +233,12 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
           return (
             <div
               key={actualIndex}
-              className={`bingo-cell border-2 border-gray-300 flex items-center justify-center text-center p-2 min-h-[60px] text-sm cursor-pointer transition-all ${
+              className={`bingo-cell border-2 border-gray-300 flex items-center justify-center text-center p-2 aspect-square text-sm rounded-lg transition-all ${
                 isFreeSpace
-                  ? 'free-space bg-gray-200 font-bold'
+                  ? 'free-space bg-gray-200 font-bold cursor-default'
                   : isMarked
-                  ? 'bg-gray-600 text-white'
-                  : 'bg-gray-50 hover:bg-gray-100'
+                  ? 'bg-gray-600 text-white font-semibold cursor-pointer'
+                  : 'bg-gray-50 hover:bg-gray-100 cursor-pointer'
               }`}
               onClick={() => !isFreeSpace && handleCellClick(actualIndex)}
             >

@@ -293,6 +293,41 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
   return (
     <div className="word-search-puzzle space-y-6">
       <style jsx>{`
+        .word-search-grid {
+          max-width: 100%;
+          overflow-x: auto;
+        }
+
+        .word-search-cell {
+          min-width: 32px;
+          min-height: 32px;
+          touch-action: manipulation;
+        }
+
+        @media (max-width: 640px) {
+          .word-search-cell {
+            min-width: 28px;
+            min-height: 28px;
+            font-size: 14px;
+          }
+
+          .word-search-grid {
+            font-size: 14px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .word-search-cell {
+            min-width: 24px;
+            min-height: 24px;
+            font-size: 12px;
+          }
+
+          .word-search-grid {
+            font-size: 12px;
+          }
+        }
+
         @media print {
           .word-search-grid {
             font-family: 'Courier New', monospace !important;
@@ -314,38 +349,42 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
       `}</style>
 
 
-      {/* Word Search Grid */}
-      <div className="word-search-grid font-mono text-sm bg-white border border-gray-300 p-4 rounded">
-        {grid.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex">
-            {row.map((letter, colIndex) => {
-              const cellId = getCellId(rowIndex, colIndex);
-              const isSelected = selectedCells.has(cellId);
-              const isFoundWord = foundWordCells.has(cellId);
-              return (
-                <div
-                  key={colIndex}
-                  className={`word-search-cell w-6 h-6 border border-gray-300 flex items-center justify-center cursor-pointer transition-colors ${
-                    isFoundWord
-                      ? 'bg-green-200 text-green-800 font-bold'
-                      : isSelected
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-white hover:bg-gray-100'
-                  }`}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
-                >
-                  {letter}
-                </div>
-              );
-            })}
+      {/* Word Search Container */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Word Search Grid */}
+        <div className="flex-shrink-0">
+          <div className="word-search-grid font-mono text-sm bg-white border border-gray-300 p-4 rounded inline-block">
+            {grid.map((row, rowIndex) => (
+              <div key={rowIndex} className="flex">
+                {row.map((letter, colIndex) => {
+                  const cellId = getCellId(rowIndex, colIndex);
+                  const isSelected = selectedCells.has(cellId);
+                  const isFoundWord = foundWordCells.has(cellId);
+                  return (
+                    <div
+                      key={colIndex}
+                      className={`word-search-cell w-7 h-7 sm:w-8 sm:h-8 border border-gray-300 flex items-center justify-center cursor-pointer transition-colors text-center ${
+                        isFoundWord
+                          ? 'bg-green-200 text-green-800 font-bold'
+                          : isSelected
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-white hover:bg-gray-100'
+                      }`}
+                      onClick={() => handleCellClick(rowIndex, colIndex)}
+                    >
+                      {letter}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Word List */}
-      <div>
-        <h4 className="font-semibold text-gray-800 mb-3">Find these words:</h4>
-        <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
+        {/* Word List */}
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-gray-800 mb-3">Find these words:</h4>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-2">
           {targetWords.map((word) => {
             const isFound = foundWords.has(word);
             return (
@@ -374,6 +413,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
               </div>
             );
           })}
+        </div>
         </div>
       </div>
 

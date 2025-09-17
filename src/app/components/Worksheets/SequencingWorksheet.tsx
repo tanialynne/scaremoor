@@ -9,13 +9,23 @@ interface SequencingWorksheetProps {
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
 }
 
+// Helper function to shuffle an array
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const SequencingWorksheet: React.FC<SequencingWorksheetProps> = ({
   sectionId,
   cards,
   onResponseChange
 }) => {
   const [draggedCard, setDraggedCard] = useState<string | null>(null);
-  const [orderedCards, setOrderedCards] = useState<SequencingCard[]>([...cards]);
+  const [orderedCards, setOrderedCards] = useState<SequencingCard[]>(() => shuffleArray(cards));
   const [showAnswers, setShowAnswers] = useState(false);
 
   const handleDragStart = (e: React.DragEvent, cardId: string) => {

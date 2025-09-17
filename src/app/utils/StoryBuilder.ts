@@ -302,6 +302,14 @@ const getIconForType = (type: string): string => {
 // Build questions for specific worksheet types
 const buildQuestionsForType = (type: string, data: Record<string, unknown>): WorksheetQuestion[] => {
   switch (type) {
+    case 'story-elements':
+      // Return empty array - story elements uses custom component that doesn't need questions
+      return [];
+
+    case 'sequencing':
+      // Return empty array - sequencing uses custom component that doesn't need questions
+      return [];
+
     case 'vocabulary':
       const words = data.words as Array<{ word: string; sentence: string; definition?: string }>;
       return words?.map((word, index) => ({
@@ -315,8 +323,237 @@ const buildQuestionsForType = (type: string, data: Record<string, unknown>): Wor
         }]
       })) || [];
 
-    case 'creative-writing':
+    case 'cause-effect':
+      // Return empty array - cause effect uses custom component that doesn't need questions
+      return [];
+
+    case 'plot-mountain':
+      // Return empty array - plot mountain uses custom component that doesn't need questions
+      return [];
+
+    case 'theme-detective':
+      return [
+        {
+          id: 'theme-clues',
+          question: 'What clues in the story help you understand the theme?',
+          fields: [
+            {
+              id: 'clue-1',
+              type: 'textarea',
+              label: 'Clue 1: The door grants wishes',
+              placeholder: 'What does this teach us about getting what we want?',
+              lines: 2
+            },
+            {
+              id: 'clue-2',
+              type: 'textarea',
+              label: 'Clue 2: Every wish has a hidden cost',
+              placeholder: 'What lesson does this show about consequences?',
+              lines: 2
+            },
+            {
+              id: 'clue-3',
+              type: 'textarea',
+              label: 'Clue 3: Dani becomes trapped by the door\'s power',
+              placeholder: 'What warning does this give us?',
+              lines: 2
+            }
+          ]
+        },
+        {
+          id: 'theme-statement',
+          question: 'Based on these clues, what is the theme of "The Forgotten Door"?',
+          fields: [
+            {
+              id: 'theme',
+              type: 'textarea',
+              placeholder: 'The theme of this story is...',
+              lines: 3
+            }
+          ]
+        }
+      ];
+
+    case 'character-analysis':
+      return [{
+        id: 'character-traits',
+        question: 'What kind of person is Dani? Use evidence from the story!',
+        fields: [
+          {
+            id: 'trait-1',
+            type: 'text',
+            label: 'Character Trait 1:',
+            placeholder: 'curious, lonely, desperate, etc.'
+          },
+          {
+            id: 'evidence-1',
+            type: 'textarea',
+            label: 'Evidence from the story:',
+            lines: 2
+          },
+          {
+            id: 'trait-2',
+            type: 'text',
+            label: 'Character Trait 2:',
+            placeholder: 'another trait...'
+          },
+          {
+            id: 'evidence-2',
+            type: 'textarea',
+            label: 'Evidence from the story:',
+            lines: 2
+          },
+          {
+            id: 'trait-3',
+            type: 'text',
+            label: 'Character Trait 3:',
+            placeholder: 'another trait...'
+          },
+          {
+            id: 'evidence-3',
+            type: 'textarea',
+            label: 'Evidence from the story:',
+            lines: 2
+          }
+        ]
+      }];
+
+    case 'inference':
+      return [
+        {
+          id: 'inference-1',
+          question: 'Why do you think the door appeared only when Dani was alone?',
+          fields: [
+            {
+              id: 'inference',
+              type: 'textarea',
+              label: 'Your inference:',
+              lines: 2
+            },
+            {
+              id: 'evidence',
+              type: 'textarea',
+              label: 'Evidence that supports this:',
+              lines: 2
+            }
+          ]
+        },
+        {
+          id: 'inference-2',
+          question: 'What do you think will happen to the next student who finds the door?',
+          fields: [
+            {
+              id: 'inference',
+              type: 'textarea',
+              label: 'Your inference:',
+              lines: 2
+            },
+            {
+              id: 'evidence',
+              type: 'textarea',
+              label: 'Evidence that supports this:',
+              lines: 2
+            }
+          ]
+        },
+        {
+          id: 'inference-3',
+          question: 'Why doesn\'t Dani tell anyone about the door?',
+          fields: [
+            {
+              id: 'prediction',
+              type: 'textarea',
+              label: 'Your inference:',
+              lines: 2
+            },
+            {
+              id: 'clues',
+              type: 'textarea',
+              label: 'Clues from the story:',
+              lines: 2
+            }
+          ]
+        }
+      ];
+
+    case 'figurative-language':
+      return [
+        {
+          id: 'example-given',
+          question: 'Here\'s an example of figurative language from the story:',
+          fields: [
+            {
+              id: 'example-text',
+              type: 'text',
+              label: 'Example: "Painted a kind of gray that looked like it had forgotten how to be any other color"',
+              placeholder: 'This creates a mysterious, forgotten mood'
+            },
+            {
+              id: 'example-meaning',
+              type: 'textarea',
+              label: 'What it means/why the author used it:',
+              placeholder: 'The unusual description makes the door seem ancient and otherworldly',
+              lines: 2
+            }
+          ]
+        },
+        {
+          id: 'find-your-own',
+          question: 'Now find your own examples:',
+          fields: [
+            {
+              id: 'student-example-1',
+              type: 'textarea',
+              label: 'Example 1 from the story:',
+              lines: 2
+            },
+            {
+              id: 'type-1',
+              type: 'text',
+              label: 'Type of figurative language:',
+              placeholder: 'descriptive language, simile, metaphor, etc.'
+            },
+            {
+              id: 'meaning-1',
+              type: 'textarea',
+              label: 'What it means/why the author used it:',
+              lines: 2
+            },
+            {
+              id: 'student-example-2',
+              type: 'textarea',
+              label: 'Example 2 from the story:',
+              lines: 2
+            },
+            {
+              id: 'type-2',
+              type: 'text',
+              label: 'Type of figurative language:',
+              placeholder: 'descriptive language, simile, metaphor, etc.'
+            },
+            {
+              id: 'meaning-2',
+              type: 'textarea',
+              label: 'What it means/why the author used it:',
+              lines: 2
+            }
+          ]
+        }
+      ];
+
     case 'alternate-ending':
+      return [{
+        id: 'alternate-ending',
+        question: 'Write your alternate ending:',
+        fields: [{
+          id: 'new-ending',
+          type: 'textarea',
+          placeholder: 'Starting from when Dani first touches the door, write a different ending where she makes a different choice...',
+          lines: 15
+        }]
+      }];
+
+    case 'creative-writing':
       const prompts = data.prompts as Array<{ prompt: string; startingText?: string }>;
       return prompts?.map((prompt, index) => ({
         id: `writing-${index + 1}`,

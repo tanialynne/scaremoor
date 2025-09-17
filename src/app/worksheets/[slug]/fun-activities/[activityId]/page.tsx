@@ -103,7 +103,6 @@ const FunActivityPage = ({ params }: Props) => {
   const [story, setStory] = useState<WorksheetStory | null>(null);
   const [activityId, setActivityId] = useState<string>('');
   const [storyActivityData, setStoryActivityData] = useState<Record<string, unknown> | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -152,8 +151,6 @@ const FunActivityPage = ({ params }: Props) => {
       } catch (error) {
         console.error('Error loading activity data:', error);
         notFound();
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -183,16 +180,6 @@ const FunActivityPage = ({ params }: Props) => {
     // Response change handler for activities
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">⏳</div>
-          <p className="text-gray-600">Loading activity...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (!story) {
     return (

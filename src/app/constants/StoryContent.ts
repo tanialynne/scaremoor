@@ -49,12 +49,14 @@ export interface StoryContent {
       effect?: string;
     }>;
     plotPoints?: Array<{
+      id: string;
       stage:
         | "exposition"
         | "rising-action"
         | "climax"
         | "falling-action"
         | "resolution";
+      label: string;
       content?: string;
     }>;
     themeClues?: Array<{
@@ -303,36 +305,49 @@ Was *waiting for her*.
       {
         id: "1",
         cause: "Dani touches the mysterious door",
-        effect: "She hears a whisper saying 'Make it better'",
+        effect: "",
       },
       {
         id: "2",
         cause: "Dani makes a wish through the door",
-        effect: "Her wish comes true but with hidden costs",
+        effect: "",
       },
       {
         id: "3",
         cause: "Dani keeps using the door",
-        effect: "She becomes trapped by its power",
+        effect: "",
       },
     ],
 
     plotPoints: [
       {
+        id: "exposition",
         stage: "exposition",
+        label: "Exposition",
         content: "Dani, a seventh-grader, gets supply closet duty",
       },
       {
+        id: "rising-action",
         stage: "rising-action",
+        label: "Rising Action",
         content: "Dani discovers the mysterious door and makes wishes",
       },
-      { stage: "climax", content: "Dani realizes the door's true cost" },
       {
+        id: "climax",
+        stage: "climax",
+        label: "Climax",
+        content: "Dani realizes the door's true cost"
+      },
+      {
+        id: "falling-action",
         stage: "falling-action",
+        label: "Falling Action",
         content: "Dani tries to resist the door's pull",
       },
       {
+        id: "resolution",
         stage: "resolution",
+        label: "Resolution",
         content: "Dani faces the consequences of her choices",
       },
     ],
@@ -1036,24 +1051,34 @@ The soft, scratchy whisper of something drawing.
 
     plotPoints: [
       {
+        id: "exposition",
         stage: "exposition",
+        label: "Exposition",
         content: "Narrator needs a pencil, finds one in Lost & Found",
       },
       {
+        id: "rising-action",
         stage: "rising-action",
+        label: "Rising Action",
         content: "Cat appears, water spills, teacher speaks strangely",
       },
       {
+        id: "climax",
         stage: "climax",
+        label: "Climax",
         content:
           "Substitute appears exactly as drawn / Finding the mysterious drawing",
       },
       {
+        id: "falling-action",
         stage: "falling-action",
+        label: "Falling Action",
         content: "Narrator tries to ignore the pencil",
       },
       {
+        id: "resolution",
         stage: "resolution",
+        label: "Resolution",
         content: "Pencil draws by itself - problem continues",
       },
     ],

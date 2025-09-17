@@ -49,6 +49,9 @@ const StoryElementsWorksheet: React.FC<StoryElementsWorksheetProps> = ({
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
 
+  // Ensure elements is always an array
+  const safeElements = Array.isArray(elements) ? elements : defaultElements;
+
   const handleInputChange = (elementId: string, value: string) => {
     const newResponses = { ...responses, [elementId]: value };
     setResponses(newResponses);
@@ -87,7 +90,7 @@ const StoryElementsWorksheet: React.FC<StoryElementsWorksheetProps> = ({
       `}</style>
 
       <div className="space-y-6">
-        {elements.map((element) => (
+        {safeElements.map((element) => (
           <div
             key={element.id}
             className="story-element-box bg-white border-2 border-gray-200 rounded-lg p-4 shadow-sm hover:border-gray-400 transition-colors"

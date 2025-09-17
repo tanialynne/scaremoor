@@ -384,6 +384,53 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
   return (
     <div className="crossword-puzzle space-y-6">
       <style jsx>{`
+        @media (max-width: 1024px) {
+          .crossword-grid {
+            overflow-x: auto;
+            max-width: 100vw;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .crossword-cell-active {
+            width: 28px !important;
+            height: 28px !important;
+            font-size: 14px;
+          }
+
+          .crossword-cell-blocked {
+            width: 28px !important;
+            height: 28px !important;
+          }
+
+          .crossword-grid {
+            font-size: 14px;
+            padding: 8px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .crossword-cell-active {
+            width: 24px !important;
+            height: 24px !important;
+            font-size: 12px;
+          }
+
+          .crossword-cell-blocked {
+            width: 24px !important;
+            height: 24px !important;
+          }
+
+          .crossword-grid {
+            font-size: 12px;
+            padding: 6px !important;
+          }
+
+          .cell-number {
+            font-size: 8px !important;
+          }
+        }
+
         @media print {
           .crossword-grid {
             font-family: 'Courier New', monospace !important;
@@ -403,7 +450,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
           }
 
           .crossword-cell-blocked {
-            background: #333 !important;
+            background: #d1d5db !important;
           }
 
           .cell-number {
@@ -426,8 +473,8 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
       {/* Crossword Container */}
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Crossword Grid */}
-        <div className="flex-shrink-0">
-          <div className="crossword-grid font-mono text-xs bg-white border border-gray-300 p-2 sm:p-4 rounded inline-block overflow-x-auto max-w-full">
+        <div className="flex-shrink-0 w-full lg:w-auto overflow-x-auto">
+          <div className="crossword-grid font-mono text-xs bg-white border border-gray-300 p-2 sm:p-4 rounded inline-block min-w-fit">
             {grid.map((row, rowIndex) => (
               <div key={rowIndex} className="flex">
                 {row.map((cell, colIndex) => {

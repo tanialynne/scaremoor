@@ -1,24 +1,30 @@
-'use client';
+"use client";
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from "react";
 
 interface StoryBingoProps {
   sectionId: string;
-  onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
+  onResponseChange?: (
+    sectionId: string,
+    responses: Record<string, string>
+  ) => void;
   storyData?: Record<string, unknown>;
 }
 
 const StoryBingo: React.FC<StoryBingoProps> = ({
   sectionId,
   onResponseChange,
-  storyData
+  storyData,
 }) => {
   const [markedCells, setMarkedCells] = useState<Set<number>>(new Set());
   const [bingoAchieved, setBingoAchieved] = useState<string[]>([]);
 
   // Get story-specific bingo items or fallback to default
   const getStoryBingoItems = (): string[] => {
-    const storyItems = (storyData?.bingoItems as string[]) || (storyData?.items as string[]) || [];
+    const storyItems =
+      (storyData?.bingoItems as string[]) ||
+      (storyData?.items as string[]) ||
+      [];
 
     // We need exactly 24 items (25 total with FREE space in the middle)
     const targetCount = 24;
@@ -36,7 +42,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
 
     // Insert FREE space at position 12 (middle of 5x5 grid)
     const result = [...items];
-    result.splice(12, 0, '🆓 FREE');
+    result.splice(12, 0, "🆓 FREE");
 
     return result;
   };
@@ -52,7 +58,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
       for (let col = 0; col < 5; col++) {
         rowCells.push(row * 5 + col);
       }
-      if (rowCells.every(cell => marked.has(cell))) {
+      if (rowCells.every((cell) => marked.has(cell))) {
         bingos.push(`Row ${row + 1}`);
       }
     }
@@ -63,7 +69,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
       for (let row = 0; row < 5; row++) {
         colCells.push(row * 5 + col);
       }
-      if (colCells.every(cell => marked.has(cell))) {
+      if (colCells.every((cell) => marked.has(cell))) {
         bingos.push(`Column ${col + 1}`);
       }
     }
@@ -72,43 +78,48 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
     const diagonal1 = [0, 6, 12, 18, 24];
     const diagonal2 = [4, 8, 12, 16, 20];
 
-    if (diagonal1.every(cell => marked.has(cell))) {
-      bingos.push('Diagonal (top-left to bottom-right)');
+    if (diagonal1.every((cell) => marked.has(cell))) {
+      bingos.push("Diagonal (top-left to bottom-right)");
     }
-    if (diagonal2.every(cell => marked.has(cell))) {
-      bingos.push('Diagonal (top-right to bottom-left)');
+    if (diagonal2.every((cell) => marked.has(cell))) {
+      bingos.push("Diagonal (top-right to bottom-left)");
     }
 
     return bingos;
   }, []);
 
-  const handleCellClick = useCallback((index: number) => {
-    if (index === 12) return; // Free space is always marked
+  const handleCellClick = useCallback(
+    (index: number) => {
+      if (index === 12) return; // Free space is always marked
 
-    setMarkedCells(prev => {
-      const newMarked = new Set(prev);
-      if (newMarked.has(index)) {
-        newMarked.delete(index);
-      } else {
-        newMarked.add(index);
-      }
+      setMarkedCells((prev) => {
+        const newMarked = new Set(prev);
+        if (newMarked.has(index)) {
+          newMarked.delete(index);
+        } else {
+          newMarked.add(index);
+        }
 
-      // Always include free space (position 12 in bingoItems + 5 for header = 17)
-      newMarked.add(17);
+        // Always include free space (position 12 in bingoItems + 5 for header = 17)
+        newMarked.add(17);
 
-      const bingos = checkForBingo(newMarked);
-      setBingoAchieved(bingos);
+        const bingos = checkForBingo(newMarked);
+        setBingoAchieved(bingos);
 
-      // Report progress
-      onResponseChange?.(sectionId, {
-        'marked-cells': Array.from(newMarked).sort((a, b) => a - b).join(','),
-        'bingo-achieved': bingos.length > 0 ? 'Yes' : 'No',
-        'bingo-lines': bingos.join(', ')
+        // Report progress
+        onResponseChange?.(sectionId, {
+          "marked-cells": Array.from(newMarked)
+            .sort((a, b) => a - b)
+            .join(","),
+          "bingo-achieved": bingos.length > 0 ? "Yes" : "No",
+          "bingo-lines": bingos.join(", "),
+        });
+
+        return newMarked;
       });
-
-      return newMarked;
-    });
-  }, [sectionId, onResponseChange, checkForBingo]);
+    },
+    [sectionId, onResponseChange, checkForBingo]
+  );
 
   // Initialize with free space marked
   React.useEffect(() => {
@@ -128,7 +139,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
 
         .bingo-cell:hover:not(.bingo-header):not(.free-space) {
           transform: scale(1.02);
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .bingo-cell:active:not(.bingo-header):not(.free-space) {
@@ -136,7 +147,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
         }
 
         .bingo-card {
-          max-width: 100%;
+          max-width: 60%;
           overflow-x: auto;
         }
 
@@ -151,7 +162,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
           }
 
           .bingo-card {
-            max-width: 90vw;
+            max-width: 80vw;
           }
         }
 
@@ -166,7 +177,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
           }
 
           .bingo-card {
-            max-width: 95vw;
+            max-width: 90vw;
             gap: 2px;
           }
         }
@@ -204,9 +215,8 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
         }
       `}</style>
 
-
       {/* Bingo Card */}
-      <div className="bingo-card grid grid-cols-5 gap-1 max-w-2xl mx-auto p-4 bg-white border-3 border-gray-600 rounded-lg">
+      <div className="bingo-card grid grid-cols-5 gap-1 max-w-xl mx-auto p-4 bg-white border-3 border-gray-600 rounded-lg">
         {/* Header Row */}
         <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square">
           B
@@ -227,7 +237,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
         {/* Bingo Items */}
         {bingoItems.map((item, index) => {
           const isMarked = markedCells.has(index + 5); // +5 because header takes first 5 positions
-          const isFreeSpace = item === '🆓 FREE'; // Check if this item is the free space
+          const isFreeSpace = item === "🆓 FREE"; // Check if this item is the free space
           const actualIndex = index + 5;
 
           return (
@@ -235,10 +245,10 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
               key={actualIndex}
               className={`bingo-cell border-2 border-gray-300 flex items-center justify-center text-center p-2 aspect-square text-sm rounded-lg transition-all ${
                 isFreeSpace
-                  ? 'free-space bg-gray-200 font-bold cursor-default'
+                  ? "free-space bg-gray-200 font-bold cursor-default"
                   : isMarked
-                  ? 'bg-gray-600 text-white font-semibold cursor-pointer'
-                  : 'bg-gray-50 hover:bg-gray-100 cursor-pointer'
+                    ? "bg-gray-600 text-white font-semibold cursor-pointer"
+                    : "bg-gray-50 hover:bg-gray-100 cursor-pointer"
               }`}
               onClick={() => !isFreeSpace && handleCellClick(actualIndex)}
             >
@@ -255,7 +265,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
             🎉 BINGO! 🎉
           </div>
           <div className="text-green-700">
-            You achieved BINGO on: {bingoAchieved.join(', ')}
+            You achieved BINGO on: {bingoAchieved.join(", ")}
           </div>
         </div>
       )}
@@ -264,7 +274,8 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
       <div className="bg-gray-50 p-4 rounded">
         <div className="flex items-center justify-between">
           <span className="text-gray-700">
-            Squares Marked: <span className="font-bold">{markedCells.size}</span> / 25
+            Squares Marked:{" "}
+            <span className="font-bold">{markedCells.size}</span> / 25
           </span>
           <div className="online-controls print:hidden">
             <button
@@ -272,9 +283,9 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
                 setMarkedCells(new Set([17])); // Reset to just free space
                 setBingoAchieved([]);
                 onResponseChange?.(sectionId, {
-                  'marked-cells': '17',
-                  'bingo-achieved': 'No',
-                  'bingo-lines': ''
+                  "marked-cells": "17",
+                  "bingo-achieved": "No",
+                  "bingo-lines": "",
                 });
               }}
               className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700 transition-colors"

@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getWorksheetStoryBySlug, WorksheetStory } from "../../../../constants/Worksheets";
+import { WorksheetStory } from "../../../../constants/Worksheets";
 import { getStoryBySlug } from "../../../../constants/StoryContent";
 import { getFunActivityDataForActivity } from "../../../../utils/StoryBuilder";
-import { isFeatureEnabled } from "../../../../constants/FeatureFlags";
 import WorksheetHeader from "../../../../components/WorksheetLayout/WorksheetHeader";
 import WorksheetFooter from "../../../../components/WorksheetLayout/WorksheetFooter";
 

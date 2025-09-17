@@ -209,7 +209,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
     const tryPlaceWord = (clue: Clue, forceDirection?: 'across' | 'down'): boolean => {
       const directions = forceDirection ? [forceDirection] : ['across', 'down'];
 
-      for (const direction of directions) {
+      for (const direction of directions as ('across' | 'down')[]) {
         // If no words placed yet, place first word in center
         if (placedWords.length === 0) {
           const centerRow = Math.floor(gridSize / 2);
@@ -255,7 +255,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
     unplacedWords.sort((a, b) => b.answer.length - a.answer.length);
 
     // Place words iteratively
-    let maxAttempts = 100;
+    const maxAttempts = 100;
     let attempts = 0;
 
     while (unplacedWords.length > 0 && attempts < maxAttempts) {
@@ -307,31 +307,6 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
     return placedWords;
   };
 
-  // Validate if a word can be placed at the given position
-  const isValidPlacement = (grid: (string | null)[][], word: string, startRow: number, startCol: number, direction: 'across' | 'down', gridSize: number): boolean => {
-    // Check bounds
-    const endRow = direction === 'down' ? startRow + word.length - 1 : startRow;
-    const endCol = direction === 'across' ? startCol + word.length - 1 : startCol;
-
-    if (startRow < 0 || startCol < 0 || endRow >= gridSize || endCol >= gridSize) {
-      return false;
-    }
-
-    // Check each letter position
-    for (let i = 0; i < word.length; i++) {
-      const row = direction === 'across' ? startRow : startRow + i;
-      const col = direction === 'across' ? startCol + i : startCol;
-
-      const currentCell = grid[row][col];
-
-      // Cell must be empty or contain the same letter
-      if (currentCell !== null && currentCell !== word[i]) {
-        return false;
-      }
-    }
-
-    return true;
-  };
 
 
   const rawClues = getStoryCrosswordClues();

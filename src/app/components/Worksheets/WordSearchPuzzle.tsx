@@ -138,7 +138,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
   }, []);
 
   // Get story-specific words
-  const getStoryWords = (): string[] => {
+  const getStoryWords = useCallback((): string[] => {
     const storyWords = (storyData?.wordSearchWords as string[]) || (storyData?.words as string[]) || [];
 
     if (storyWords && storyWords.length > 0) {
@@ -147,15 +147,41 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
 
     // Default fallback words (shorter words that fit better)
     return ['STORY', 'HERO', 'PLOT', 'THEME', 'BOOK', 'READ', 'TALE', 'END'];
-  };
+  }, [storyData]);
 
-  const targetWords = useMemo(() => getStoryWords(), [storyData]);
+  const targetWords = useMemo(() => getStoryWords(), [getStoryWords]);
 
   const { grid, placements } = useMemo(() => {
     return generateWordSearch(targetWords);
   }, [targetWords, generateWordSearch]);
 
   const getCellId = (row: number, col: number) => `${row}-${col}`;
+
+  const getWordCells = useCallback((start: {row: number, col: number}, end: {row: number, col: number}): string[] => {
+    const cells: string[] = [];
+    const rowDiff = end.row - start.row;
+    const colDiff = end.col - start.col;
+
+    const rowStep = rowDiff === 0 ? 0 : rowDiff > 0 ? 1 : -1;
+    const colStep = colDiff === 0 ? 0 : colDiff > 0 ? 1 : -1;
+
+    let currentRow = start.row;
+    let currentCol = start.col;
+
+    while (currentRow >= 0 && currentRow < grid.length &&
+           currentCol >= 0 && currentCol < grid[0].length) {
+      cells.push(getCellId(currentRow, currentCol));
+
+      if (currentRow === end.row && currentCol === end.col) {
+        break;
+      }
+
+      currentRow += rowStep;
+      currentCol += colStep;
+    }
+
+    return cells;
+  }, [grid]);
 
   const handleWordFound = useCallback((word: string, startPos?: {row: number, col: number}, endPos?: {row: number, col: number}) => {
     if (foundWords.has(word)) return;
@@ -199,33 +225,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
         });
       }
     }
-  }, [sectionId, onResponseChange, foundWords, placements]);
-
-  const getWordCells = useCallback((start: {row: number, col: number}, end: {row: number, col: number}): string[] => {
-    const cells: string[] = [];
-    const rowDiff = end.row - start.row;
-    const colDiff = end.col - start.col;
-
-    const rowStep = rowDiff === 0 ? 0 : rowDiff > 0 ? 1 : -1;
-    const colStep = colDiff === 0 ? 0 : colDiff > 0 ? 1 : -1;
-
-    let currentRow = start.row;
-    let currentCol = start.col;
-
-    while (currentRow >= 0 && currentRow < grid.length &&
-           currentCol >= 0 && currentCol < grid[0].length) {
-      cells.push(getCellId(currentRow, currentCol));
-
-      if (currentRow === end.row && currentCol === end.col) {
-        break;
-      }
-
-      currentRow += rowStep;
-      currentCol += colStep;
-    }
-
-    return cells;
-  }, [grid]);
+  }, [sectionId, onResponseChange, foundWords, placements, getWordCells]);
 
   const checkForWord = useCallback((word: string) => {
     if (foundWords.has(word)) return;
@@ -233,30 +233,6 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
     // Simple implementation - just mark as found when user clicks "Found it!"
     handleWordFound(word);
   }, [foundWords, handleWordFound]);
-
-  const handleCellClick = useCallback((row: number, col: number) => {
-    const cellId = getCellId(row, col);
-
-    if (!isSelecting) {
-      // Start selection
-      setIsSelecting(true);
-      setSelectionStart({ row, col });
-      setSelectedCells(new Set([cellId]));
-    } else {
-      // End selection and check for words
-      setIsSelecting(false);
-
-      if (selectionStart) {
-        const selectedWord = getSelectedWord(selectionStart, { row, col });
-        if (selectedWord && targetWords.some(word => word.toUpperCase() === selectedWord.toUpperCase())) {
-          handleWordFound(selectedWord.toUpperCase(), selectionStart, { row, col });
-        }
-      }
-
-      setSelectedCells(new Set());
-      setSelectionStart(null);
-    }
-  }, [isSelecting, selectionStart, targetWords, handleWordFound]);
 
   const getSelectedWord = useCallback((start: {row: number, col: number}, end: {row: number, col: number}): string => {
     const rowDiff = end.row - start.row;
@@ -289,6 +265,30 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
 
     return word;
   }, [grid]);
+
+  const handleCellClick = useCallback((row: number, col: number) => {
+    const cellId = getCellId(row, col);
+
+    if (!isSelecting) {
+      // Start selection
+      setIsSelecting(true);
+      setSelectionStart({ row, col });
+      setSelectedCells(new Set([cellId]));
+    } else {
+      // End selection and check for words
+      setIsSelecting(false);
+
+      if (selectionStart) {
+        const selectedWord = getSelectedWord(selectionStart, { row, col });
+        if (selectedWord && targetWords.some(word => word.toUpperCase() === selectedWord.toUpperCase())) {
+          handleWordFound(selectedWord.toUpperCase(), selectionStart, { row, col });
+        }
+      }
+
+      setSelectedCells(new Set());
+      setSelectionStart(null);
+    }
+  }, [isSelecting, selectionStart, targetWords, handleWordFound, getSelectedWord]);
 
   return (
     <div className="word-search-puzzle space-y-6">

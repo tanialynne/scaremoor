@@ -25,7 +25,7 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
   const [revealedMessage, setRevealedMessage] = useState<string>('');
 
   // Get story-specific puzzle data or fallback to default
-  const getStoryPuzzleData = (): { items: PuzzleItem[], message: string } => {
+  const getStoryPuzzleData = useCallback((): { items: PuzzleItem[], message: string } => {
     const storyPuzzleData = (storyData?.hiddenMessagePuzzle as { items?: PuzzleItem[], message?: string }) ||
                            (storyData?.questions as { items?: PuzzleItem[], message?: string });
 
@@ -48,9 +48,9 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
       ],
       message: 'HELP ME'
     };
-  };
+  }, [storyData]);
 
-  const puzzleData = useMemo(() => getStoryPuzzleData(), [storyData]);
+  const puzzleData = useMemo(() => getStoryPuzzleData(), [getStoryPuzzleData]);
   const puzzleItems: PuzzleItem[] = puzzleData.items;
   const hiddenMessage = puzzleData.message;
 
@@ -60,7 +60,7 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
 
     // Generate revealed message from first letters of correct answers
     let message = '';
-    puzzleItems.forEach((item, index) => {
+    puzzleItems.forEach((item) => {
       const userAnswer = itemNumber === item.number ? value : responses[`item-${item.number}`] || '';
       const isCorrect = userAnswer.toUpperCase().trim() === item.answer.toUpperCase();
       message += isCorrect ? item.firstLetter : '_';

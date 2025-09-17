@@ -53,7 +53,7 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
     }).join('');
   };
 
-  const encodeMessage = (message: string, cipher: string): string => {
+  const encodeMessage = useCallback((message: string, cipher: string): string => {
     switch (cipher) {
       case 'caesar-3':
         return encodeCaesar(message, 3);
@@ -64,7 +64,7 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
       default:
         return message;
     }
-  };
+  }, []);
 
   const getCipherDescription = (cipher: string): string => {
     switch (cipher) {
@@ -90,7 +90,7 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
       answer: messageData.message,
       hint: `Hidden message from the story`
     }));
-  }, [storyData]);
+  }, [storyData, encodeMessage]);
 
   const handleInputChange = useCallback((cryptogramId: string, value: string) => {
     const newResponses = { ...responses, [cryptogramId]: value };

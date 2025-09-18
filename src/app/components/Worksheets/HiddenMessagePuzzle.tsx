@@ -23,6 +23,8 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [revealedMessage, setRevealedMessage] = useState<string>('');
+  const [hasCheckedAnswers, setHasCheckedAnswers] = useState(false);
+  const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
 
   // Get story-specific puzzle data or fallback to default
   const getStoryPuzzleData = useCallback((): { items: PuzzleItem[], message: string } => {
@@ -58,34 +60,12 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
     const newResponses = { ...responses, [`item-${itemNumber}`]: value };
     setResponses(newResponses);
 
-    // Generate revealed message from first letters of correct answers
-    let message = '';
-    puzzleItems.forEach((item) => {
-      const userAnswer = itemNumber === item.number ? value : responses[`item-${item.number}`] || '';
-      const isCorrect = userAnswer.toUpperCase().trim() === item.answer.toUpperCase();
-      message += isCorrect ? item.firstLetter : '_';
-
-      // Add spaces based on the hidden message structure
-      if (hiddenMessage.includes(' ')) {
-        // Find where spaces should be by checking the position in the target message
-        const currentLength = message.length;
-        const targetChar = hiddenMessage[currentLength];
-        if (targetChar === ' ') {
-          message += ' ';
-        }
-      }
-    });
-
-    setRevealedMessage(message);
-
-    onResponseChange?.(sectionId, {
-      ...newResponses,
-      'revealed-message': message,
-      'puzzle-complete': message === hiddenMessage ? 'true' : 'false'
-    });
-  }, [responses, sectionId, onResponseChange, puzzleItems, hiddenMessage]);
+    onResponseChange?.(sectionId, newResponses);
+  }, [responses, sectionId, onResponseChange]);
 
   const checkAnswer = (itemNumber: number): 'correct' | 'incorrect' | 'none' => {
+    if (!hasCheckedAnswers || !checkedItems.has(itemNumber)) return 'none';
+
     const response = responses[`item-${itemNumber}`];
     if (!response || response.trim() === '') return 'none';
 
@@ -94,6 +74,25 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
 
     return response.toUpperCase().trim() === item.answer.toUpperCase() ? 'correct' : 'incorrect';
   };
+
+  const updateRevealedMessage = useCallback(() => {
+    let message = '';
+    puzzleItems.forEach((item) => {
+      const userAnswer = responses[`item-${item.number}`] || '';
+      const isCorrect = userAnswer.toUpperCase().trim() === item.answer.toUpperCase();
+      message += isCorrect ? item.firstLetter : '_';
+
+      // Add spaces based on the hidden message structure
+      if (hiddenMessage.includes(' ')) {
+        const currentLength = message.length;
+        const targetChar = hiddenMessage[currentLength];
+        if (targetChar === ' ') {
+          message += ' ';
+        }
+      }
+    });
+    setRevealedMessage(message);
+  }, [responses, puzzleItems, hiddenMessage]);
 
   const getStatusColor = (status: 'correct' | 'incorrect' | 'none') => {
     switch (status) {
@@ -144,7 +143,7 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
 
 
       {/* Puzzle Items */}
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
         {puzzleItems.map((item) => {
           const status = checkAnswer(item.number);
           const statusColor = getStatusColor(status);
@@ -153,43 +152,63 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
           return (
             <div
               key={item.number}
-              className={`puzzle-item flex items-center gap-4 p-4 rounded-lg border-2 transition-all ${statusColor}`}
+              className={`puzzle-item flex flex-col gap-3 p-4 rounded-lg border-2 transition-all ${statusColor}`}
             >
-              <div className="number font-bold text-gray-800 text-xl min-w-[30px]">
-                {item.number}.
+              <div className="flex items-start gap-2">
+                <div className="number font-bold text-gray-800 text-xl min-w-[30px]">
+                  {item.number}.
+                </div>
+                <div className="question flex-1 text-gray-700">
+                  {item.question}
+                  {item.hint && (
+                    <div className="text-sm text-gray-500 italic mt-1">
+                      💡 {item.hint}
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <div className="question flex-1 text-gray-700">
-                {item.question}
-                {item.hint && (
-                  <div className="text-sm text-gray-500 italic mt-1">
-                    💡 {item.hint}
-                  </div>
-                )}
-              </div>
-
-              <div className="answer-section flex items-center gap-3">
+              <div className="answer-section">
                 <input
                   type="text"
                   value={responses[`item-${item.number}`] || ''}
                   onChange={(e) => handleInputChange(item.number, e.target.value)}
                   placeholder="Your answer..."
-                  className="answer-input px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  className="answer-input w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gray-500 mb-2"
                 />
-
-                <div className="online-controls print:hidden text-xl min-w-[30px]">
-                  {statusIcon}
+                <div className="flex items-center justify-between">
+                  <div className="online-controls print:hidden text-xl">
+                    {statusIcon}
+                  </div>
+                  <div className="online-controls print:hidden flex gap-2">
+                    <button
+                      onClick={() => {
+                        setCheckedItems(prev => new Set([...prev, item.number]));
+                        setHasCheckedAnswers(true);
+                        updateRevealedMessage();
+                      }}
+                      disabled={!responses[`item-${item.number}`] || responses[`item-${item.number}`].trim() === ''}
+                      className={`px-3 py-2 rounded text-sm transition-colors min-h-[44px] ${
+                        responses[`item-${item.number}`] && responses[`item-${item.number}`].trim() !== ''
+                          ? "bg-gray-700 text-white hover:bg-gray-800"
+                          : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      }`}
+                    >
+                      Check Answer
+                    </button>
+                    <button
+                      onClick={() => handleInputChange(item.number, item.answer)}
+                      disabled={!hasCheckedAnswers}
+                      className={`px-3 py-2 rounded text-sm transition-colors min-h-[44px] ${
+                        hasCheckedAnswers
+                          ? "bg-gray-600 text-white hover:bg-gray-700"
+                          : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      }`}
+                    >
+                      Show
+                    </button>
+                  </div>
                 </div>
-              </div>
-
-              {/* Online Controls */}
-              <div className="online-controls print:hidden">
-                <button
-                  onClick={() => handleInputChange(item.number, item.answer)}
-                  className="px-2 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700 transition-colors"
-                >
-                  Show
-                </button>
               </div>
             </div>
           );

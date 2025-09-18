@@ -23,6 +23,8 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
   storyData
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
+  const [hasCheckedAnswers, setHasCheckedAnswers] = useState(false);
+  const [checkedCryptograms, setCheckedCryptograms] = useState<Set<string>>(new Set());
 
   // Cipher encoding functions
   const encodeCaesar = (text: string, shift: number = 3): string => {
@@ -96,17 +98,12 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
     const newResponses = { ...responses, [cryptogramId]: value };
     setResponses(newResponses);
 
-    // Check if answer is correct
-    const cryptogram = cryptograms.find(c => c.id === cryptogramId);
-    const isCorrect = cryptogram && value.toUpperCase().replace(/[^A-Z]/g, '') === cryptogram.answer.replace(/[^A-Z]/g, '');
-
-    onResponseChange?.(sectionId, {
-      ...newResponses,
-      [`${cryptogramId}-correct`]: isCorrect ? 'true' : 'false'
-    });
-  }, [responses, sectionId, onResponseChange, cryptograms]);
+    onResponseChange?.(sectionId, newResponses);
+  }, [responses, sectionId, onResponseChange]);
 
   const checkAnswer = (cryptogramId: string): 'correct' | 'incorrect' | 'none' => {
+    if (!hasCheckedAnswers || !checkedCryptograms.has(cryptogramId)) return 'none';
+
     const response = responses[cryptogramId];
     if (!response || response.trim() === '') return 'none';
 
@@ -227,20 +224,34 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
             <div className="online-controls print:hidden mt-4 flex gap-2">
               <button
                 onClick={() => {
-                  const newResponses = { ...responses, [crypto.id]: crypto.answer };
-                  setResponses(newResponses);
-                  onResponseChange?.(sectionId, {
-                    ...newResponses,
-                    [`${crypto.id}-correct`]: 'true'
-                  });
+                  setCheckedCryptograms(prev => new Set([...prev, crypto.id]));
+                  setHasCheckedAnswers(true);
                 }}
-                className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700 transition-colors"
+                className="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors min-h-[44px]"
+              >
+                Check Answer
+              </button>
+              <button
+                onClick={() => handleInputChange(crypto.id, crypto.answer)}
+                disabled={!hasCheckedAnswers}
+                className={`px-4 py-2 rounded text-sm transition-colors min-h-[44px] ${
+                  hasCheckedAnswers
+                    ? "bg-gray-600 text-white hover:bg-gray-700"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
               >
                 Show Answer
               </button>
               <button
-                onClick={() => handleInputChange(crypto.id, '')}
-                className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600 transition-colors"
+                onClick={() => {
+                  handleInputChange(crypto.id, '');
+                  setCheckedCryptograms(prev => {
+                    const newSet = new Set(prev);
+                    newSet.delete(crypto.id);
+                    return newSet;
+                  });
+                }}
+                className="px-4 py-2 bg-gray-500 text-white rounded text-sm hover:bg-gray-600 transition-colors min-h-[44px]"
               >
                 Clear
               </button>

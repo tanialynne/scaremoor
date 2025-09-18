@@ -439,11 +439,11 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
   };
 
   const rawClues = getStoryCrosswordClues();
-  const clues: Clue[] = generateCrosswordLayout(rawClues);
+  const placedWords = generateCrosswordLayout(rawClues);
 
   const gridSize = 20; // Match the grid size used in generation
 
-  const generateGrid = () => {
+  const generateGridAndRenumberClues = () => {
     // Create empty grid
     const grid: (string | null)[][] = Array(gridSize)
       .fill(null)
@@ -452,9 +452,9 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
       .fill(null)
       .map(() => Array(gridSize).fill(null));
 
-    // Place words and numbers
-    clues.forEach((clue) => {
-      const { answer, startRow, startCol, direction, number } = clue;
+    // First pass: Place all words on the grid
+    placedWords.forEach((word) => {
+      const { answer, startRow, startCol, direction } = word;
 
       // Bounds check before accessing arrays
       if (
@@ -463,11 +463,6 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
         startCol >= 0 &&
         startCol < gridSize
       ) {
-        // Place number at start position
-        if (!numbers[startRow][startCol]) {
-          numbers[startRow][startCol] = number;
-        }
-
         // Place letters
         for (let i = 0; i < answer.length; i++) {
           const row = direction === "across" ? startRow : startRow + i;
@@ -477,17 +472,60 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
             grid[row][col] = answer[i];
           }
         }
-      } else {
-        console.warn(
-          `Clue out of bounds: ${answer} at (${startRow}, ${startCol})`
-        );
       }
     });
 
-    return { grid, numbers };
+    // Second pass: Assign numbers based on grid positions (top-to-bottom, left-to-right)
+    let currentNumber = 1;
+    const wordPositions = new Map<string, number>();
+
+    // Create a list of all word start positions
+    const startPositions: Array<{row: number, col: number, words: typeof placedWords}> = [];
+
+    placedWords.forEach((word) => {
+      const key = `${word.startRow}-${word.startCol}`;
+      const existing = startPositions.find(p => p.row === word.startRow && p.col === word.startCol);
+      if (existing) {
+        existing.words.push(word);
+      } else {
+        startPositions.push({
+          row: word.startRow,
+          col: word.startCol,
+          words: [word]
+        });
+      }
+    });
+
+    // Sort positions by row, then by column (reading order)
+    startPositions.sort((a, b) => {
+      if (a.row !== b.row) return a.row - b.row;
+      return a.col - b.col;
+    });
+
+    // Assign numbers and update clues
+    const finalClues: Clue[] = [];
+
+    startPositions.forEach(position => {
+      const positionKey = `${position.row}-${position.col}`;
+      if (!wordPositions.has(positionKey)) {
+        const assignedNumber = currentNumber++;
+        wordPositions.set(positionKey, assignedNumber);
+        numbers[position.row][position.col] = assignedNumber;
+
+        // Update all words at this position with the new number
+        position.words.forEach(word => {
+          finalClues.push({
+            ...word,
+            number: assignedNumber
+          });
+        });
+      }
+    });
+
+    return { grid, numbers, clues: finalClues };
   };
 
-  const { grid, numbers } = generateGrid();
+  const { grid, numbers, clues } = generateGridAndRenumberClues();
 
   const handleInputChange = useCallback(
     (row: number, col: number, value: string) => {

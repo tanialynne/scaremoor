@@ -1154,7 +1154,7 @@ The soft, scratchy whisper of something drawing.
       {
         number: 4,
         direction: "across",
-        clue: "Where the narrator found the pencil: '___ & Found' (11)",
+        clue: "Where the narrator found the pencil: ___ (11)",
         answer: "LOSTANDFOUND",
       },
       {
@@ -1198,19 +1198,19 @@ The soft, scratchy whisper of something drawing.
       {
         number: 1,
         direction: "down",
-        clue: "The pencil made a '___ whisper' sound (10)",
+        clue: "The pencil made a ___ whisper sound (10)",
         answer: "SCRATCHING",
       },
       {
         number: 2,
         direction: "down",
-        clue: "'Pencils are ___ to other dimensions' (7)",
+        clue: "Pencils are ___ to other dimensions (7)",
         answer: "PORTALS",
       },
       {
         number: 3,
         direction: "down",
-        clue: "The pencil had a 'silvery shimmer' in the ___ grain (6)",
+        clue: "The pencil had a silvery shimmer in the ___ grain (6)",
         answer: "WOODEN",
       },
       {

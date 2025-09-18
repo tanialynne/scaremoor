@@ -6,6 +6,8 @@ interface WordScrambleProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
   storyData?: Record<string, unknown>;
+  showInstructionsModal?: boolean;
+  onCloseInstructions?: () => void;
 }
 
 interface ScrambledWord {
@@ -18,7 +20,9 @@ interface ScrambledWord {
 const WordScramble: React.FC<WordScrambleProps> = ({
   sectionId,
   onResponseChange,
-  storyData
+  storyData,
+  showInstructionsModal = false,
+  onCloseInstructions,
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [checkedWords, setCheckedWords] = useState<Set<string>>(new Set());
@@ -114,6 +118,49 @@ const WordScramble: React.FC<WordScrambleProps> = ({
         }
       `}</style>
 
+
+
+      {showInstructionsModal && (
+        <div
+          className="fixed inset-0 w-full h-full backdrop-blur-sm flex items-center justify-center z-50 print:hidden"
+          style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(107, 114, 128, 0.3)'}}
+          onClick={onCloseInstructions}
+        >
+          <div
+            className="bg-white rounded-lg p-6 w-full max-w-2xl h-auto max-h-[80vh] mx-4 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-gray-800 text-lg">
+                🔤 How to Unscramble Words:
+              </h3>
+              <button
+                onClick={onCloseInstructions}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="text-gray-700 space-y-2">
+              <p className="text-sm">
+                <strong>1. Look at the scrambled letters:</strong> Each box shows mixed-up letters from a story word.
+              </p>
+              <p className="text-sm">
+                <strong>2. Use the hint:</strong> Read the 💡 hint to help you figure out the word.
+              </p>
+              <p className="text-sm">
+                <strong>3. Type your guess:</strong> Write what you think the unscrambled word is.
+              </p>
+              <p className="text-sm">
+                <strong>4. Check your answer:</strong> Click "Check Answer" to see if you're right (✅) or wrong (❌).
+              </p>
+              <p className="text-sm">
+                <strong>5. Need help?</strong> Click "Show Answer" after checking to see the correct word.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Scrambled Words Grid */}
       <div className="scramble-grid grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -218,6 +265,30 @@ const WordScramble: React.FC<WordScrambleProps> = ({
               width: `${(scrambledWords.filter(w => checkAnswer(w.id) === 'correct').length / scrambledWords.length) * 100}%`
             }}
           />
+        </div>
+      </div>
+
+      {/* Print Instructions */}
+      <div className="hidden print:block mt-8">
+        <h3 className="font-semibold text-gray-800 text-lg mb-4">
+          🔤 How to Unscramble Words:
+        </h3>
+        <div className="text-gray-700 space-y-2">
+          <p className="text-sm">
+            <strong>1. Look at the scrambled letters:</strong> Each box shows mixed-up letters from a story word.
+          </p>
+          <p className="text-sm">
+            <strong>2. Use the hint:</strong> Read the 💡 hint to help you figure out the word.
+          </p>
+          <p className="text-sm">
+            <strong>3. Type your guess:</strong> Write what you think the unscrambled word is.
+          </p>
+          <p className="text-sm">
+            <strong>4. Check your answer:</strong> Click "Check Answer" to see if you're right (✅) or wrong (❌).
+          </p>
+          <p className="text-sm">
+            <strong>5. Need help?</strong> Click "Show Answer" after checking to see the correct word.
+          </p>
         </div>
       </div>
     </div>

@@ -9,6 +9,8 @@ interface WordSearchPuzzleProps {
     responses: Record<string, string>
   ) => void;
   storyData?: Record<string, unknown>;
+  showInstructionsModal?: boolean;
+  onCloseInstructions?: () => void;
 }
 
 interface WordPlacement {
@@ -23,6 +25,8 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
   sectionId,
   onResponseChange,
   storyData,
+  showInstructionsModal = false,
+  onCloseInstructions,
 }) => {
   const [foundWords, setFoundWords] = useState<Set<string>>(new Set());
   const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
@@ -428,6 +432,49 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
         }
       `}</style>
 
+
+      {showInstructionsModal && (
+        <div
+          className="fixed inset-0 w-full h-full backdrop-blur-sm flex items-center justify-center z-50 print:hidden"
+          style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(107, 114, 128, 0.3)'}}
+          onClick={onCloseInstructions}
+        >
+          <div
+            className="bg-white rounded-lg p-6 w-full max-w-2xl h-auto max-h-[80vh] mx-4 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-gray-800 text-lg">
+                🔍 How to Play Word Search:
+              </h3>
+              <button
+                onClick={onCloseInstructions}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="text-gray-700 space-y-2">
+              <p className="text-sm">
+                <strong>1. Find the words:</strong> Look for the words from the list in the letter grid.
+              </p>
+              <p className="text-sm">
+                <strong>2. Words can go:</strong> Across (→), down (↓), or diagonal (↘).
+              </p>
+              <p className="text-sm">
+                <strong>3. Click and drag:</strong> Click the first letter, then click the last letter of the word.
+              </p>
+              <p className="text-sm">
+                <strong>4. Found words turn green:</strong> Successfully found words will be highlighted.
+              </p>
+              <p className="text-sm">
+                <strong>5. Use the ✓ button:</strong> If you can't find a word, mark it found with the checkmark.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Word Search Container */}
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Word Search Grid */}
@@ -518,6 +565,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
         </div>
       </div>
 
+
       {/* Progress Display */}
       <div className="bg-gray-50 p-4 rounded">
         <div className="flex items-center justify-between">
@@ -540,6 +588,30 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
               width: `${(foundWords.size / targetWords.length) * 100}%`,
             }}
           />
+        </div>
+      </div>
+
+      {/* Print Instructions */}
+      <div className="hidden print:block mt-8">
+        <h3 className="font-semibold text-gray-800 text-lg mb-4">
+          🔍 How to Play Word Search:
+        </h3>
+        <div className="text-gray-700 space-y-2">
+          <p className="text-sm">
+            <strong>1. Find the words:</strong> Look for the words from the list in the letter grid.
+          </p>
+          <p className="text-sm">
+            <strong>2. Words can go:</strong> Across (→), down (↓), or diagonal (↘).
+          </p>
+          <p className="text-sm">
+            <strong>3. Click and drag:</strong> Click the first letter, then click the last letter of the word.
+          </p>
+          <p className="text-sm">
+            <strong>4. Found words turn green:</strong> Successfully found words will be highlighted.
+          </p>
+          <p className="text-sm">
+            <strong>5. Use the ✓ button:</strong> If you can't find a word, mark it found with the checkmark.
+          </p>
         </div>
       </div>
     </div>

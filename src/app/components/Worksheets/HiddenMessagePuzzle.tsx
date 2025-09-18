@@ -6,6 +6,8 @@ interface HiddenMessagePuzzleProps {
   sectionId: string;
   onResponseChange?: (sectionId: string, responses: Record<string, string>) => void;
   storyData?: Record<string, unknown>;
+  showInstructionsModal?: boolean;
+  onCloseInstructions?: () => void;
 }
 
 interface PuzzleItem {
@@ -19,7 +21,9 @@ interface PuzzleItem {
 const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
   sectionId,
   onResponseChange,
-  storyData
+  storyData,
+  showInstructionsModal = false,
+  onCloseInstructions,
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [revealedMessage, setRevealedMessage] = useState<string>('');
@@ -141,6 +145,52 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
       `}</style>
 
 
+
+      {showInstructionsModal && (
+        <div
+          className="fixed inset-0 w-full h-full backdrop-blur-sm flex items-center justify-center z-50 print:hidden"
+          style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(107, 114, 128, 0.3)'}}
+          onClick={onCloseInstructions}
+        >
+          <div
+            className="bg-white rounded-lg p-6 w-full max-w-2xl h-auto max-h-[80vh] mx-4 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-gray-800 text-lg">
+                🔍 How to Find the Hidden Message:
+              </h3>
+              <button
+                onClick={onCloseInstructions}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="text-gray-700 space-y-2">
+              <p className="text-sm">
+                <strong>1. Answer each question:</strong> Read the questions about the story and type your answers.
+              </p>
+              <p className="text-sm">
+                <strong>2. Use the hints:</strong> Look for 💡 hints if you need help with any question.
+              </p>
+              <p className="text-sm">
+                <strong>3. Check your work:</strong> Click "Check Answer" for each question to see if you're right.
+              </p>
+              <p className="text-sm">
+                <strong>4. Watch the message appear:</strong> The first letter of each correct answer will spell out a secret message!
+              </p>
+              <p className="text-sm">
+                <strong>5. Example:</strong> If answers are "PENCIL", "ERASER", "NOTEBOOK" → Hidden message: "P-E-N"
+              </p>
+              <p className="text-sm">
+                <strong>Step-by-step process:</strong> Answer correctly → Take first letter → Put letters together → Reveal message!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Puzzle Items */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
         {puzzleItems.map((item) => {
@@ -250,13 +300,31 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
         </div>
       </div>
 
-      {/* Explanation */}
-      <div className="bg-gray-100 border-l-4 border-gray-400 p-4 rounded">
-        <p className="text-sm text-gray-700">
-          <strong>How it works:</strong> The first letter of each correct answer spells out the hidden message.
-          For example, if the answer to question 1 is &quot;PENCIL&quot;, circle the &quot;P&quot;.
-          When you put all the first letters together, they reveal an important message from the story!
-        </p>
+      {/* Print Instructions */}
+      <div className="hidden print:block mt-8">
+        <h3 className="font-semibold text-gray-800 text-lg mb-4">
+          🔍 How to Find the Hidden Message:
+        </h3>
+        <div className="text-gray-700 space-y-2">
+          <p className="text-sm">
+            <strong>1. Answer each question:</strong> Read the questions about the story and type your answers.
+          </p>
+          <p className="text-sm">
+            <strong>2. Use the hints:</strong> Look for 💡 hints if you need help with any question.
+          </p>
+          <p className="text-sm">
+            <strong>3. Check your work:</strong> Click "Check Answer" for each question to see if you're right.
+          </p>
+          <p className="text-sm">
+            <strong>4. Watch the message appear:</strong> The first letter of each correct answer will spell out a secret message!
+          </p>
+          <p className="text-sm">
+            <strong>5. Example:</strong> If answers are "PENCIL", "ERASER", "NOTEBOOK" → Hidden message: "P-E-N"
+          </p>
+          <p className="text-sm">
+            <strong>Step-by-step process:</strong> Answer correctly → Take first letter → Put letters together → Reveal message!
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -9,12 +9,16 @@ interface StoryBingoProps {
     responses: Record<string, string>
   ) => void;
   storyData?: Record<string, unknown>;
+  showInstructionsModal?: boolean;
+  onCloseInstructions?: () => void;
 }
 
 const StoryBingo: React.FC<StoryBingoProps> = ({
   sectionId,
   onResponseChange,
   storyData,
+  showInstructionsModal = false,
+  onCloseInstructions,
 }) => {
   const [markedCells, setMarkedCells] = useState<Set<number>>(new Set());
   const [bingoAchieved, setBingoAchieved] = useState<string[]>([]);
@@ -148,6 +152,9 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
           user-select: none;
           transition: all 0.2s ease;
           cursor: pointer;
+        }
+
+        .bingo-cell:not(.bingo-header) {
           aspect-ratio: 1;
         }
 
@@ -238,22 +245,65 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
         }
       `}</style>
 
+
+      {showInstructionsModal && (
+        <div
+          className="fixed inset-0 w-full h-full backdrop-blur-sm flex items-center justify-center z-50 print:hidden"
+          style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(107, 114, 128, 0.3)'}}
+          onClick={onCloseInstructions}
+        >
+          <div
+            className="bg-white rounded-lg p-6 w-full max-w-2xl h-auto max-h-[80vh] mx-4 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-gray-800 text-lg">
+                🎯 How to Play Story Bingo:
+              </h3>
+              <button
+                onClick={onCloseInstructions}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="text-gray-700 space-y-2">
+              <p className="text-sm">
+                <strong>1. Listen or read carefully:</strong> As you go through the story, look for the items on your bingo card.
+              </p>
+              <p className="text-sm">
+                <strong>2. Click to mark squares:</strong> When you find a story element, click on that square to mark it.
+              </p>
+              <p className="text-sm">
+                <strong>3. FREE space is automatic:</strong> The center square is already marked for you!
+              </p>
+              <p className="text-sm">
+                <strong>4. Get five in a row:</strong> Try to get 5 marked squares in a row (across →, down ↓, or diagonal ↘).
+              </p>
+              <p className="text-sm">
+                <strong>5. Shout "BINGO!"</strong> when you get five in a row - the game will celebrate with you! 🎉
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Bingo Card */}
       <div className="bingo-card grid grid-cols-5 gap-1 max-w-xl mx-auto p-4 bg-white border-3 border-gray-600 rounded-lg">
         {/* Header Row */}
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square min-h-[44px] min-w-[44px]" aria-hidden="true">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 h-16 min-w-[44px]" aria-hidden="true">
           B
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square min-h-[44px] min-w-[44px]" aria-hidden="true">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 h-16 min-w-[44px]" aria-hidden="true">
           I
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square min-h-[44px] min-w-[44px]" aria-hidden="true">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 h-16 min-w-[44px]" aria-hidden="true">
           N
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square min-h-[44px] min-w-[44px]" aria-hidden="true">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 h-16 min-w-[44px]" aria-hidden="true">
           G
         </div>
-        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 aspect-square min-h-[44px] min-w-[44px]" aria-hidden="true">
+        <div className="bingo-cell bingo-header bg-gray-600 text-white font-bold text-2xl flex items-center justify-center p-2 h-16 min-w-[44px]" aria-hidden="true">
           O
         </div>
 
@@ -327,6 +377,30 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
               Reset Card
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Print Instructions */}
+      <div className="hidden print:block mt-8">
+        <h3 className="font-semibold text-gray-800 text-lg mb-4">
+          🎯 How to Play Story Bingo:
+        </h3>
+        <div className="text-gray-700 space-y-2">
+          <p className="text-sm">
+            <strong>1. Listen or read carefully:</strong> As you go through the story, look for the items on your bingo card.
+          </p>
+          <p className="text-sm">
+            <strong>2. Click to mark squares:</strong> When you find a story element, click on that square to mark it.
+          </p>
+          <p className="text-sm">
+            <strong>3. FREE space is automatic:</strong> The center square is already marked for you!
+          </p>
+          <p className="text-sm">
+            <strong>4. Get five in a row:</strong> Try to get 5 marked squares in a row (across →, down ↓, or diagonal ↘).
+          </p>
+          <p className="text-sm">
+            <strong>5. Shout "BINGO!"</strong> when you get five in a row - the game will celebrate with you! 🎉
+          </p>
         </div>
       </div>
     </div>

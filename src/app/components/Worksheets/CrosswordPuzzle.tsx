@@ -9,6 +9,8 @@ interface CrosswordPuzzleProps {
     responses: Record<string, string>
   ) => void;
   storyData?: Record<string, unknown>;
+  showInstructionsModal?: boolean;
+  onCloseInstructions?: () => void;
 }
 
 interface Clue {
@@ -24,6 +26,8 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
   sectionId,
   onResponseChange,
   storyData,
+  showInstructionsModal = false,
+  onCloseInstructions,
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [hasCheckedAnswers, setHasCheckedAnswers] = useState(false);
@@ -710,6 +714,49 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
         }
       `}</style>
 
+
+      {showInstructionsModal && (
+        <div
+          className="fixed inset-0 w-full h-full backdrop-blur-sm flex items-center justify-center z-50 print:hidden"
+          style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(107, 114, 128, 0.3)'}}
+          onClick={onCloseInstructions}
+        >
+          <div
+            className="bg-white rounded-lg p-6 w-full max-w-2xl h-auto max-h-[80vh] mx-4 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-gray-800 text-lg">
+                📝 How to Complete the Crossword:
+              </h3>
+              <button
+                onClick={onCloseInstructions}
+                className="text-gray-500 hover:text-gray-700 text-xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="text-gray-700 space-y-2">
+              <p className="text-sm">
+                <strong>1. Read the clues:</strong> Look at the "Across" and "Down" clues below the puzzle.
+              </p>
+              <p className="text-sm">
+                <strong>2. Find the numbers:</strong> Each clue has a number that matches a numbered square on the grid.
+              </p>
+              <p className="text-sm">
+                <strong>3. Type your answers:</strong> Click on any white square and type one letter per box.
+              </p>
+              <p className="text-sm">
+                <strong>4. Use arrow keys:</strong> Press ← → ↑ ↓ to move between squares quickly.
+              </p>
+              <p className="text-sm">
+                <strong>5. Check your work:</strong> Click "Check Answers" when you're ready to see how you did!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Crossword Container */}
       <div className="flex flex-col xl:flex-row gap-6">
         {/* Crossword Grid */}
@@ -942,6 +989,30 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
         >
           Clear All
         </button>
+      </div>
+
+      {/* Print Instructions */}
+      <div className="hidden print:block mt-8">
+        <h3 className="font-semibold text-gray-800 text-lg mb-4">
+          📝 How to Complete the Crossword:
+        </h3>
+        <div className="text-gray-700 space-y-2">
+          <p className="text-sm">
+            <strong>1. Read the clues:</strong> Look at the "Across" and "Down" clues below the puzzle.
+          </p>
+          <p className="text-sm">
+            <strong>2. Find the numbers:</strong> Each clue has a number that matches a numbered square on the grid.
+          </p>
+          <p className="text-sm">
+            <strong>3. Type your answers:</strong> Click on any white square and type one letter per box.
+          </p>
+          <p className="text-sm">
+            <strong>4. Use arrow keys:</strong> Press ← → ↑ ↓ to move between squares quickly.
+          </p>
+          <p className="text-sm">
+            <strong>5. Check your work:</strong> Click "Check Answers" when you're ready to see how you did!
+          </p>
+        </div>
       </div>
     </div>
   );

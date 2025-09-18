@@ -738,7 +738,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
             </div>
             <div className="text-gray-700 space-y-2">
               <p className="text-sm">
-                <strong>1. Read the clues:</strong> Look at the "Across" and "Down" clues below the puzzle.
+                <strong>1. Read the clues:</strong> Look at the &ldquo;Across&rdquo; and &ldquo;Down&rdquo; clues below the puzzle.
               </p>
               <p className="text-sm">
                 <strong>2. Find the numbers:</strong> Each clue has a number that matches a numbered square on the grid.
@@ -750,7 +750,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
                 <strong>4. Use arrow keys:</strong> Press ← → ↑ ↓ to move between squares quickly.
               </p>
               <p className="text-sm">
-                <strong>5. Check your work:</strong> Click "Check Answers" when you're ready to see how you did!
+                <strong>5. Check your work:</strong> Click &ldquo;Check Answers&rdquo; when you&rsquo;re ready to see how you did!
               </p>
             </div>
           </div>
@@ -998,7 +998,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
         </h3>
         <div className="text-gray-700 space-y-2">
           <p className="text-sm">
-            <strong>1. Read the clues:</strong> Look at the "Across" and "Down" clues below the puzzle.
+            <strong>1. Read the clues:</strong> Look at the &ldquo;Across&rdquo; and &ldquo;Down&rdquo; clues below the puzzle.
           </p>
           <p className="text-sm">
             <strong>2. Find the numbers:</strong> Each clue has a number that matches a numbered square on the grid.
@@ -1010,7 +1010,7 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
             <strong>4. Use arrow keys:</strong> Press ← → ↑ ↓ to move between squares quickly.
           </p>
           <p className="text-sm">
-            <strong>5. Check your work:</strong> Click "Check Answers" when you're ready to see how you did!
+            <strong>5. Check your work:</strong> Click &ldquo;Check Answers&rdquo; when you&rsquo;re ready to see how you did!
           </p>
         </div>
       </div>

@@ -468,7 +468,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
                 <strong>4. Found words turn green:</strong> Successfully found words will be highlighted.
               </p>
               <p className="text-sm">
-                <strong>5. Use the ✓ button:</strong> If you can't find a word, mark it found with the checkmark.
+                <strong>5. Use the ✓ button:</strong> If you can&rsquo;t find a word, mark it found with the checkmark.
               </p>
             </div>
           </div>
@@ -610,7 +610,7 @@ const WordSearchPuzzle: React.FC<WordSearchPuzzleProps> = ({
             <strong>4. Found words turn green:</strong> Successfully found words will be highlighted.
           </p>
           <p className="text-sm">
-            <strong>5. Use the ✓ button:</strong> If you can't find a word, mark it found with the checkmark.
+            <strong>5. Use the ✓ button:</strong> If you can&rsquo;t find a word, mark it found with the checkmark.
           </p>
         </div>
       </div>

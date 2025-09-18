@@ -22,7 +22,6 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
 }) => {
   const [markedCells, setMarkedCells] = useState<Set<number>>(new Set());
   const [bingoAchieved, setBingoAchieved] = useState<string[]>([]);
-  const [shuffleKey, setShuffleKey] = useState(0);
 
   // Shuffle array utility function
   const shuffleArray = <T,>(array: T[]): T[] => {
@@ -35,7 +34,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
   };
 
   // Get story-specific bingo items or fallback to default
-  const getStoryBingoItems = (): string[] => {
+  const getStoryBingoItems = useCallback((): string[] => {
     const storyItems =
       (storyData?.bingoItems as string[]) ||
       (storyData?.items as string[]) ||
@@ -63,9 +62,9 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
     result.splice(12, 0, "🆓 FREE");
 
     return result;
-  };
+  }, [storyData]);
 
-  const bingoItems = React.useMemo(() => getStoryBingoItems(), [storyData, shuffleKey]);
+  const bingoItems = React.useMemo(() => getStoryBingoItems(), [getStoryBingoItems]);
 
   const checkForBingo = useCallback((marked: Set<number>) => {
     const bingos: string[] = [];
@@ -281,7 +280,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
                 <strong>4. Get five in a row:</strong> Try to get 5 marked squares in a row (across →, down ↓, or diagonal ↘).
               </p>
               <p className="text-sm">
-                <strong>5. Shout "BINGO!"</strong> when you get five in a row - the game will celebrate with you! 🎉
+                <strong>5. Shout &ldquo;BINGO!&rdquo;</strong> when you get five in a row - the game will celebrate with you! 🎉
               </p>
             </div>
           </div>
@@ -364,7 +363,6 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
               onClick={() => {
                 setMarkedCells(new Set([17])); // Reset to just free space
                 setBingoAchieved([]);
-                setShuffleKey(prev => prev + 1); // Trigger re-shuffle
                 onResponseChange?.(sectionId, {
                   "marked-cells": "17",
                   "bingo-achieved": "No",
@@ -399,7 +397,7 @@ const StoryBingo: React.FC<StoryBingoProps> = ({
             <strong>4. Get five in a row:</strong> Try to get 5 marked squares in a row (across →, down ↓, or diagonal ↘).
           </p>
           <p className="text-sm">
-            <strong>5. Shout "BINGO!"</strong> when you get five in a row - the game will celebrate with you! 🎉
+            <strong>5. Shout &ldquo;BINGO!&rdquo;</strong> when you get five in a row - the game will celebrate with you! 🎉
           </p>
         </div>
       </div>

@@ -152,10 +152,10 @@ const WordScramble: React.FC<WordScrambleProps> = ({
                 <strong>3. Type your guess:</strong> Write what you think the unscrambled word is.
               </p>
               <p className="text-sm">
-                <strong>4. Check your answer:</strong> Click "Check Answer" to see if you're right (✅) or wrong (❌).
+                <strong>4. Check your answer:</strong> Click &ldquo;Check Answer&rdquo; to see if you&rsquo;re right (✅) or wrong (❌).
               </p>
               <p className="text-sm">
-                <strong>5. Need help?</strong> Click "Show Answer" after checking to see the correct word.
+                <strong>5. Need help?</strong> Click &ldquo;Show Answer&rdquo; after checking to see the correct word.
               </p>
             </div>
           </div>
@@ -284,10 +284,10 @@ const WordScramble: React.FC<WordScrambleProps> = ({
             <strong>3. Type your guess:</strong> Write what you think the unscrambled word is.
           </p>
           <p className="text-sm">
-            <strong>4. Check your answer:</strong> Click "Check Answer" to see if you're right (✅) or wrong (❌).
+            <strong>4. Check your answer:</strong> Click &ldquo;Check Answer&rdquo; to see if you&rsquo;re right (✅) or wrong (❌).
           </p>
           <p className="text-sm">
-            <strong>5. Need help?</strong> Click "Show Answer" after checking to see the correct word.
+            <strong>5. Need help?</strong> Click &ldquo;Show Answer&rdquo; after checking to see the correct word.
           </p>
         </div>
       </div>

@@ -175,13 +175,13 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
                 <strong>2. Use the hints:</strong> Look for 💡 hints if you need help with any question.
               </p>
               <p className="text-sm">
-                <strong>3. Check your work:</strong> Click "Check Answer" for each question to see if you're right.
+                <strong>3. Check your work:</strong> Click &ldquo;Check Answer&rdquo; for each question to see if you&rsquo;re right.
               </p>
               <p className="text-sm">
                 <strong>4. Watch the message appear:</strong> The first letter of each correct answer will spell out a secret message!
               </p>
               <p className="text-sm">
-                <strong>5. Example:</strong> If answers are "PENCIL", "ERASER", "NOTEBOOK" → Hidden message: "P-E-N"
+                <strong>5. Example:</strong> If answers are &ldquo;PENCIL&rdquo;, &ldquo;ERASER&rdquo;, &ldquo;NOTEBOOK&rdquo; → Hidden message: &ldquo;P-E-N&rdquo;
               </p>
               <p className="text-sm">
                 <strong>Step-by-step process:</strong> Answer correctly → Take first letter → Put letters together → Reveal message!
@@ -313,13 +313,13 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
             <strong>2. Use the hints:</strong> Look for 💡 hints if you need help with any question.
           </p>
           <p className="text-sm">
-            <strong>3. Check your work:</strong> Click "Check Answer" for each question to see if you're right.
+            <strong>3. Check your work:</strong> Click &ldquo;Check Answer&rdquo; for each question to see if you&rsquo;re right.
           </p>
           <p className="text-sm">
             <strong>4. Watch the message appear:</strong> The first letter of each correct answer will spell out a secret message!
           </p>
           <p className="text-sm">
-            <strong>5. Example:</strong> If answers are "PENCIL", "ERASER", "NOTEBOOK" → Hidden message: "P-E-N"
+            <strong>5. Example:</strong> If answers are &ldquo;PENCIL&rdquo;, &ldquo;ERASER&rdquo;, &ldquo;NOTEBOOK&rdquo; → Hidden message: &ldquo;P-E-N&rdquo;
           </p>
           <p className="text-sm">
             <strong>Step-by-step process:</strong> Answer correctly → Take first letter → Put letters together → Reveal message!

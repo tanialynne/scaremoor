@@ -209,7 +209,7 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
                 <strong>4. Decode step by step:</strong> Try to figure out what each coded letter represents.
               </p>
               <p className="text-sm">
-                <strong>5. Example:</strong> In Caesar Cipher (shift 3), A→D, B→E, C→F, so "KHOOR" becomes "HELLO".
+                <strong>5. Example:</strong> In Caesar Cipher (shift 3), A→D, B→E, C→F, so &ldquo;KHOOR&rdquo; becomes &ldquo;HELLO&rdquo;.
               </p>
             </div>
           </div>
@@ -353,7 +353,7 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
             <strong>4. Decode step by step:</strong> Try to figure out what each coded letter represents.
           </p>
           <p className="text-sm">
-            <strong>5. Example:</strong> In Caesar Cipher (shift 3), A→D, B→E, C→F, so "KHOOR" becomes "HELLO".
+            <strong>5. Example:</strong> In Caesar Cipher (shift 3), A→D, B→E, C→F, so &ldquo;KHOOR&rdquo; becomes &ldquo;HELLO&rdquo;.
           </p>
         </div>
       </div>

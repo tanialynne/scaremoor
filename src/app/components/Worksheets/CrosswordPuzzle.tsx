@@ -483,7 +483,6 @@ const CrosswordPuzzle: React.FC<CrosswordPuzzleProps> = ({
     const startPositions: Array<{row: number, col: number, words: typeof placedWords}> = [];
 
     placedWords.forEach((word) => {
-      const key = `${word.startRow}-${word.startCol}`;
       const existing = startPositions.find(p => p.row === word.startRow && p.col === word.startCol);
       if (existing) {
         existing.words.push(word);

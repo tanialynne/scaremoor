@@ -23,7 +23,6 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [revealedMessage, setRevealedMessage] = useState<string>('');
-  const [hasCheckedAnswers, setHasCheckedAnswers] = useState(false);
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
 
   // Get story-specific puzzle data or fallback to default
@@ -64,7 +63,7 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
   }, [responses, sectionId, onResponseChange]);
 
   const checkAnswer = (itemNumber: number): 'correct' | 'incorrect' | 'none' => {
-    if (!hasCheckedAnswers || !checkedItems.has(itemNumber)) return 'none';
+    if (!checkedItems.has(itemNumber)) return 'none';
 
     const response = responses[`item-${itemNumber}`];
     if (!response || response.trim() === '') return 'none';
@@ -184,7 +183,6 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
                     <button
                       onClick={() => {
                         setCheckedItems(prev => new Set([...prev, item.number]));
-                        setHasCheckedAnswers(true);
                         updateRevealedMessage();
                       }}
                       disabled={!responses[`item-${item.number}`] || responses[`item-${item.number}`].trim() === ''}
@@ -198,9 +196,9 @@ const HiddenMessagePuzzle: React.FC<HiddenMessagePuzzleProps> = ({
                     </button>
                     <button
                       onClick={() => handleInputChange(item.number, item.answer)}
-                      disabled={!hasCheckedAnswers}
+                      disabled={!checkedItems.has(item.number)}
                       className={`px-3 py-2 rounded text-sm transition-colors min-h-[44px] ${
-                        hasCheckedAnswers
+                        checkedItems.has(item.number)
                           ? "bg-gray-600 text-white hover:bg-gray-700"
                           : "bg-gray-300 text-gray-500 cursor-not-allowed"
                       }`}

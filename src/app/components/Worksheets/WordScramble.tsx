@@ -21,7 +21,6 @@ const WordScramble: React.FC<WordScrambleProps> = ({
   storyData
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
-  const [hasCheckedAnswers, setHasCheckedAnswers] = useState(false);
   const [checkedWords, setCheckedWords] = useState<Set<string>>(new Set());
 
   // Function to scramble a word
@@ -53,7 +52,7 @@ const WordScramble: React.FC<WordScrambleProps> = ({
   }, [responses, sectionId, onResponseChange]);
 
   const checkAnswer = (wordId: string): 'correct' | 'incorrect' | 'none' => {
-    if (!hasCheckedAnswers || !checkedWords.has(wordId)) return 'none';
+    if (!checkedWords.has(wordId)) return 'none';
 
     const response = responses[wordId];
     if (!response || response.trim() === '') return 'none';
@@ -158,7 +157,6 @@ const WordScramble: React.FC<WordScrambleProps> = ({
                 <button
                   onClick={() => {
                     setCheckedWords(prev => new Set([...prev, word.id]));
-                    setHasCheckedAnswers(true);
                   }}
                   disabled={!responses[word.id] || responses[word.id].trim() === ''}
                   className={`px-4 py-2 rounded text-sm transition-colors min-h-[44px] ${
@@ -171,9 +169,9 @@ const WordScramble: React.FC<WordScrambleProps> = ({
                 </button>
                 <button
                   onClick={() => handleInputChange(word.id, word.answer)}
-                  disabled={!hasCheckedAnswers}
+                  disabled={!checkedWords.has(word.id)}
                   className={`px-4 py-2 rounded text-sm transition-colors min-h-[44px] ${
-                    hasCheckedAnswers
+                    checkedWords.has(word.id)
                       ? "bg-gray-600 text-white hover:bg-gray-700"
                       : "bg-gray-300 text-gray-500 cursor-not-allowed"
                   }`}

@@ -23,7 +23,6 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
   storyData
 }) => {
   const [responses, setResponses] = useState<Record<string, string>>({});
-  const [hasCheckedAnswers, setHasCheckedAnswers] = useState(false);
   const [checkedCryptograms, setCheckedCryptograms] = useState<Set<string>>(new Set());
 
   // Cipher encoding functions
@@ -102,7 +101,7 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
   }, [responses, sectionId, onResponseChange]);
 
   const checkAnswer = (cryptogramId: string): 'correct' | 'incorrect' | 'none' => {
-    if (!hasCheckedAnswers || !checkedCryptograms.has(cryptogramId)) return 'none';
+    if (!checkedCryptograms.has(cryptogramId)) return 'none';
 
     const response = responses[cryptogramId];
     if (!response || response.trim() === '') return 'none';
@@ -225,17 +224,21 @@ const CryptogramPuzzles: React.FC<CryptogramPuzzlesProps> = ({
               <button
                 onClick={() => {
                   setCheckedCryptograms(prev => new Set([...prev, crypto.id]));
-                  setHasCheckedAnswers(true);
                 }}
-                className="px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition-colors min-h-[44px]"
+                disabled={!responses[crypto.id] || responses[crypto.id].trim() === ''}
+                className={`px-4 py-2 rounded text-sm transition-colors min-h-[44px] ${
+                  responses[crypto.id] && responses[crypto.id].trim() !== ''
+                    ? "bg-gray-700 text-white hover:bg-gray-800"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
               >
                 Check Answer
               </button>
               <button
                 onClick={() => handleInputChange(crypto.id, crypto.answer)}
-                disabled={!hasCheckedAnswers}
+                disabled={!checkedCryptograms.has(crypto.id)}
                 className={`px-4 py-2 rounded text-sm transition-colors min-h-[44px] ${
-                  hasCheckedAnswers
+                  checkedCryptograms.has(crypto.id)
                     ? "bg-gray-600 text-white hover:bg-gray-700"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}

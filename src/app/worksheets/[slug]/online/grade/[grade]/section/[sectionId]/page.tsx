@@ -102,14 +102,14 @@ const SingleSectionPage = ({ params }: Props) => {
       {/* Navigation breadcrumb */}
       <div className="bg-white border-b border-gray-200 print:hidden">
         <div className="max-w-6xl mx-auto px-4 py-3">
-          <nav className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link href="/worksheets" className="hover:text-orange-600">Worksheets</Link>
-            <span>›</span>
-            <Link href={`/worksheets/${story.slug}`} className="hover:text-orange-600">{story.title}</Link>
-            <span>›</span>
-            <Link href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}`} className="hover:text-orange-600">Grade {worksheet.grade}</Link>
-            <span>›</span>
-            <span className="text-gray-900 font-medium">{section.title}</span>
+          <nav className="flex flex-wrap items-baseline text-sm text-gray-600">
+            <Link href="/worksheets" className="hover:text-orange-600 whitespace-nowrap breadcrumb">Worksheets</Link>
+            <span className="mx-2">›</span>
+            <Link href={`/worksheets/${story.slug}`} className="hover:text-orange-600 whitespace-nowrap breadcrumb">{story.title}</Link>
+            <span className="mx-2">›</span>
+            <Link href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}`} className="hover:text-orange-600 whitespace-nowrap breadcrumb">Grade {worksheet.grade}</Link>
+            <span className="mx-2">›</span>
+            <span className="text-gray-900 font-medium whitespace-nowrap breadcrumb">{section.title}</span>
           </nav>
         </div>
       </div>
@@ -123,42 +123,98 @@ const SingleSectionPage = ({ params }: Props) => {
         />
 
         {/* Navigation between sections */}
-        <div className="mt-8 flex justify-between items-center print:hidden">
-          <div>
-            {prevSection ? (
-              <Link
-                href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}/section/${prevSection.id}`}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
-                ← Previous: {prevSection.title.replace(/[📖🔢🧠⛰️🎨🔍➡️✍️]/g, '').trim()}
-              </Link>
-            ) : (
-              <div></div>
-            )}
+        <div className="mt-8 print:hidden">
+          {/* Desktop layout */}
+          <div className="hidden md:flex justify-between items-center">
+            <div>
+              {prevSection ? (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}/section/${prevSection.id}`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  ← Previous: {prevSection.title.replace(/[📖🔢🧠⛰️🎨🔍➡️✍️]/g, '').trim()}
+                </Link>
+              ) : (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  ← Back to Grade {worksheet.grade}
+                </Link>
+              )}
+            </div>
+
+            <div className="text-center">
+              <p className="text-sm text-gray-500">
+                Section {currentSectionIndex + 1} of {allSections.length}
+              </p>
+            </div>
+
+            <div>
+              {nextSection ? (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}/section/${nextSection.id}`}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700"
+                >
+                  Next: {nextSection.title.replace(/[📖🔢🧠⛰️🎨🔍➡️✍️]/g, '').trim()} →
+                </Link>
+              ) : (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  View All Sections
+                </Link>
+              )}
+            </div>
           </div>
 
-          <div className="text-center">
-            <p className="text-sm text-gray-500">
-              Section {currentSectionIndex + 1} of {allSections.length}
-            </p>
-          </div>
+          {/* Mobile layout - 3 lines */}
+          <div className="md:hidden space-y-3">
+            {/* Line 1: Next button */}
+            <div className="text-center">
+              {nextSection ? (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}/section/${nextSection.id}`}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700"
+                >
+                  Next: {nextSection.title.replace(/[📖🔢🧠⛰️🎨🔍➡️✍️]/g, '').trim()} →
+                </Link>
+              ) : (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  View All Sections
+                </Link>
+              )}
+            </div>
 
-          <div>
-            {nextSection ? (
-              <Link
-                href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}/section/${nextSection.id}`}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700"
-              >
-                Next: {nextSection.title.replace(/[📖🔢🧠⛰️🎨🔍➡️✍️]/g, '').trim()} →
-              </Link>
-            ) : (
-              <Link
-                href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}`}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
-                View All Sections
-              </Link>
-            )}
+            {/* Line 2: Section counter */}
+            <div className="text-center">
+              <p className="text-sm text-gray-500">
+                Section {currentSectionIndex + 1} of {allSections.length}
+              </p>
+            </div>
+
+            {/* Line 3: Previous button */}
+            <div className="text-center">
+              {prevSection ? (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}/section/${prevSection.id}`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  ← Previous: {prevSection.title.replace(/[📖🔢🧠⛰️🎨🔍➡️✍️]/g, '').trim()}
+                </Link>
+              ) : (
+                <Link
+                  href={`/worksheets/${story.slug}/online/grade/${worksheet.grade}`}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  ← Back to Grade {worksheet.grade}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </main>

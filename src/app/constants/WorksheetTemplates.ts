@@ -38,10 +38,31 @@ export const GRADE_3_TEMPLATES: WorksheetTemplate[] = [
     grade: 3,
     title: 'Story Elements',
     description: 'Identify characters, setting, problem, and solution',
-    instructions: 'Complete the story elements chart by identifying who, where, what problem, and how it was solved.',
+    instructions: 'Every story has important parts called story elements. Complete the story elements chart by identifying who is in the story (characters), where and when it happens (setting), what goes wrong (problem), and how it gets fixed (solution). Use details from the story to support your answers.',
     timeEstimate: '15 minutes',
     solStandards: ['3.5'],
-    activityType: 'comprehension'
+    activityType: 'comprehension',
+    customProps: {
+      templateText: 'Story elements are the building blocks of every story. They help us understand what happens and why. When you read any story, you can find these four important parts:',
+      examples: {
+        characters: {
+          definition: 'The people, animals, or creatures in the story',
+          examples: ['The main character who the story is about', 'Friends or family members', 'Animals that can talk', 'Villains or people causing problems']
+        },
+        setting: {
+          definition: 'Where and when the story takes place',
+          examples: ['A magical forest in ancient times', 'A modern school during the school year', 'A house during a thunderstorm', 'A spaceship in the future']
+        },
+        problem: {
+          definition: 'The main trouble or challenge that needs to be solved',
+          examples: ['A character is lost and needs to find their way home', 'Friends have an argument and stop talking', 'A magical object is stolen', 'Someone is being bullied at school']
+        },
+        solution: {
+          definition: 'How the problem gets solved or what happens at the end',
+          examples: ['The character asks for help and finds their way', 'Friends apologize and make up', 'The hero recovers the stolen object', 'Adults help stop the bullying']
+        }
+      }
+    }
   },
   {
     id: 'sequencing-3',

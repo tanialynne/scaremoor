@@ -327,7 +327,7 @@ const SingleSectionRenderer: React.FC<SingleSectionRendererProps> = ({
       {/* Instructions Section */}
       <div className="bg-gray-50 border-l-4 border-gray-400 p-3 rounded mb-4 print:bg-white print:border-black print:p-2">
         <h4 className="font-semibold text-gray-800 mb-2 text-sm">Instructions:</h4>
-        <p className="text-gray-700 text-sm">{section.instructions}</p>
+        <p className="text-gray-700 text-sm leading-5">{section.instructions}</p>
       </div>
 
       {/* Section Content */}

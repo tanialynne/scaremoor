@@ -1,37 +1,64 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Books from '../../constants/Books';
 import { getAllActiveProducts, getProductsByCategory } from '../../constants/Products';
 import ProductCard from '../ProductCard';
 import GenericProductCard from '../GenericProductCard';
+import PrintfulProductCard from '../PrintfulProductCard';
 
 const ProductGrid: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [printfulProducts, setPrintfulProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
   // Get books with direct sales enabled
   const availableBooks = Books.filter(book => book.directSales?.enabled);
-  
+
   // Get all other products
   const otherProducts = getAllActiveProducts();
+
+  // Fetch Printful products
+  useEffect(() => {
+    const fetchPrintfulProducts = async () => {
+      if (selectedCategory === 'printful' || selectedCategory === 'all') {
+        setLoading(true);
+        try {
+          const response = await fetch('/api/products/printful');
+          if (response.ok) {
+            const products = await response.json();
+            setPrintfulProducts(products);
+          }
+        } catch (error) {
+          console.error('Failed to fetch Printful products:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchPrintfulProducts();
+  }, [selectedCategory]);
 
   // Filter products based on selected category
   const getFilteredProducts = () => {
     switch (selectedCategory) {
       case 'books':
-        return { books: availableBooks, products: [] };
+        return { books: availableBooks, products: [], printful: [] };
       case 'worksheets':
-        return { books: [], products: getProductsByCategory('worksheets') };
+        return { books: [], products: getProductsByCategory('worksheets'), printful: [] };
       case 'merchandise':
-        return { books: [], products: getProductsByCategory('merchandise') };
+        return { books: [], products: getProductsByCategory('merchandise'), printful: [] };
+      case 'printful':
+        return { books: [], products: [], printful: printfulProducts };
       case 'all':
       default:
-        return { books: availableBooks, products: otherProducts };
+        return { books: availableBooks, products: otherProducts, printful: printfulProducts };
     }
   };
 
-  const { books, products } = getFilteredProducts();
-  const totalProducts = books.length + products.length;
+  const { books, products, printful } = getFilteredProducts();
+  const totalProducts = books.length + products.length + printful.length;
 
   if (totalProducts === 0) {
     return (
@@ -52,7 +79,8 @@ const ProductGrid: React.FC = () => {
           { key: 'all', label: 'All Products' },
           { key: 'books', label: 'Books' },
           { key: 'worksheets', label: 'Worksheets' },
-          { key: 'merchandise', label: 'Merchandise' }
+          { key: 'merchandise', label: 'Merchandise' },
+          { key: 'printful', label: 'Print-on-Demand' }
         ].map((category) => (
           <button
             key={category.key}
@@ -69,15 +97,27 @@ const ProductGrid: React.FC = () => {
       </div>
 
       {/* Products Grid */}
+      {loading && (
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-orange-400 border-t-transparent mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading products...</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Books */}
         {books.map((book) => (
           <ProductCard key={book.bookSlug} book={book} />
         ))}
-        
+
         {/* Other Products */}
         {products.map((product) => (
           <GenericProductCard key={product.id} product={product} />
+        ))}
+
+        {/* Printful Products */}
+        {printful.map((product) => (
+          <PrintfulProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>

@@ -22,14 +22,18 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
     // Check if user has already submitted their email through any form
     const hasSubmittedEmail = localStorage.getItem("scaremoor_email_submitted");
 
+    // Check if user has completed a purchase
+    const hasCompletedPurchase = localStorage.getItem("scaremoor_purchase_completed");
+
     // Check if popup was shown recently (24 hour cooldown)
     const lastShown = localStorage.getItem("exitIntentShown");
     const now = Date.now();
     const oneDayInMs = 24 * 60 * 60 * 1000; // 24 hours
 
-    // Don't show if user already submitted email or popup shown recently
+    // Don't show if user already submitted email, completed purchase, or popup shown recently
     if (
       hasSubmittedEmail ||
+      hasCompletedPurchase ||
       (lastShown && now - parseInt(lastShown) < oneDayInMs)
     ) {
       setHasShown(true);
@@ -43,11 +47,14 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
     const handleMouseLeave = (e: MouseEvent) => {
       if (hasTriggered || hasShown) return;
 
-      // Check again if user has submitted email since component mounted
+      // Check again if user has submitted email or completed purchase since component mounted
       const hasSubmittedEmailNow = localStorage.getItem(
         "scaremoor_email_submitted"
       );
-      if (hasSubmittedEmailNow) return;
+      const hasCompletedPurchaseNow = localStorage.getItem(
+        "scaremoor_purchase_completed"
+      );
+      if (hasSubmittedEmailNow || hasCompletedPurchaseNow) return;
 
       if (e.clientY <= 0) {
         hasTriggered = true;

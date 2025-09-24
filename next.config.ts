@@ -73,12 +73,13 @@ const nextConfig: NextConfig = {
     // Base CSP without upgrade-insecure-requests for development
     const cspDirectives = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.clarity.ms https://cdn.jsdelivr.net https://va.vercel-scripts.com https://connect.facebook.net",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.clarity.ms https://cdn.jsdelivr.net https://va.vercel-scripts.com https://connect.facebook.net https://js.stripe.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: https: blob: https://www.facebook.com",
       "media-src 'self' https:",
-      "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://vitals.vercel-analytics.com https://vercel-vitals.axiom.co https://va.vercel-scripts.com https://www.facebook.com",
+      "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://vitals.vercel-analytics.com https://vercel-vitals.axiom.co https://va.vercel-scripts.com https://www.facebook.com https://api.stripe.com https://js.stripe.com",
+      "frame-src 'self' https://js.stripe.com https://hooks.stripe.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",

@@ -17,6 +17,7 @@ const ContactForm = () => {
     name: "",
     email: "",
     message: "",
+    website: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -38,6 +39,15 @@ const ContactForm = () => {
       spookyToast.error(
         "That email looks cursed! Check your magical address! 📧✨"
       );
+      return;
+    }
+
+    // Honeypot check — bots will fill this hidden field
+    if (formData.website) {
+      spookyToast.success(
+        "Your message has been sent through the ether! We'll respond soon! 👻📬"
+      );
+      setFormData({ name: "", email: "", message: "", website: "" });
       return;
     }
 
@@ -66,6 +76,7 @@ const ContactForm = () => {
           name: "",
           email: "",
           message: "",
+          website: "",
         });
       } else {
         spookyToast.error(
@@ -102,6 +113,19 @@ const ContactForm = () => {
           onSubmit={handleSubmit}
           className="shrink-0 max-w-[600px] md:max-w-full"
         >
+          {/* Honeypot field — hidden from real users, bots will fill it */}
+          <input
+            type="text"
+            name="website"
+            value={formData.website}
+            onChange={(e) =>
+              setFormData({ ...formData, website: e.target.value })
+            }
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: "absolute", left: "-9999px", opacity: 0 }}
+          />
           <div className="grid grid-cols-1 gap-y-8 w-full">
             <InputField
               labelText="Name"

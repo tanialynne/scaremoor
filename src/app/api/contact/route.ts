@@ -65,7 +65,15 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    
+
+    // Honeypot check — silently reject bot submissions
+    if (body.website) {
+      return NextResponse.json(
+        { message: 'Message sent successfully! We\'ll get back to you soon.' },
+        { status: 200 }
+      );
+    }
+
     // Comprehensive validation
     const validationResult = validateContactForm(body);
     if (!validationResult.isValid) {

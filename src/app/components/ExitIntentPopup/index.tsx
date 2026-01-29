@@ -13,6 +13,8 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
   const [hasShown, setHasShown] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [honeypot, setHoneypot] = useState(""); // Bot trap field
+  const [formLoadedAt, setFormLoadedAt] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Kit form ID for exit intent popup lead magnet
@@ -53,6 +55,7 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
         hasTriggered = true;
         setIsVisible(true);
         setHasShown(true);
+        setFormLoadedAt(Date.now()); // Track when popup was shown for timing check
         localStorage.setItem("exitIntentShown", Date.now().toString());
       }
     };
@@ -107,6 +110,8 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
             first_name: name,
             email_address: email,
             referrer: "exit-intent-popup",
+            honeypot: honeypot, // Bot trap - should be empty
+            formLoadedAt: formLoadedAt, // Timing check
           },
         }),
       });
@@ -198,6 +203,29 @@ export default function ExitIntentPopup({ onClose }: ExitIntentPopupProps) {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Honeypot field - hidden from humans, bots will fill it */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                left: '-9999px',
+                top: '-9999px',
+                opacity: 0,
+                pointerEvents: 'none',
+              }}
+            >
+              <label htmlFor="popup_website">Website</label>
+              <input
+                type="text"
+                id="popup_website"
+                name="popup_website"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             <div>
               <label htmlFor="name-input" className="sr-only">
                 Your name for personalization

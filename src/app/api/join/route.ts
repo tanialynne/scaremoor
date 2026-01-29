@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { newsletterRateLimit } from "../../lib/rateLimit";
-import { validateEmail } from "../../lib/validation";
+import { validateLeadMagnetForm, isHoneypotFilled } from "../../lib/validation";
 
 const baseURL = "https://api.kit.com/v4";
 
@@ -17,15 +17,34 @@ export const POST = async (request: NextRequest) => {
 
     const { form_id, subscriber_data } = await request.json();
 
-    // Validate email if provided in subscriber_data
-    if (subscriber_data?.email_address) {
-      const emailValidation = validateEmail(subscriber_data.email_address);
-      if (!emailValidation.isValid) {
-        return NextResponse.json(
-          { error: emailValidation.errors.join(', ') },
-          { status: 400 }
-        );
-      }
+    // Silent rejection for honeypot (return success but don't process)
+    if (isHoneypotFilled(subscriber_data?.honeypot)) {
+      console.log("Bot detected via honeypot:", subscriber_data?.email_address);
+      // Return fake success to not alert the bot
+      return NextResponse.json(
+        { subscriber: { id: "blocked" }, message: "Success" },
+        { status: 201 }
+      );
+    }
+
+    // Comprehensive form validation (email, name, timing)
+    const formValidation = validateLeadMagnetForm({
+      first_name: subscriber_data?.first_name || '',
+      email_address: subscriber_data?.email_address || '',
+      honeypot: subscriber_data?.honeypot,
+      formLoadedAt: subscriber_data?.formLoadedAt,
+      referrer: subscriber_data?.referrer,
+    });
+
+    if (!formValidation.isValid) {
+      console.log("Form validation failed:", formValidation.errors, "Data:", {
+        name: subscriber_data?.first_name,
+        email: subscriber_data?.email_address,
+      });
+      return NextResponse.json(
+        { error: formValidation.errors.join(', ') },
+        { status: 400 }
+      );
     }
 
     // Log the request for debugging

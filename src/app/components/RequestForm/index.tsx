@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Button from "../Button";
 import InputField from "../Inputs";
@@ -30,8 +30,15 @@ const RequestForm: React.FC<RequestFormProp> = ({
 }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [honeypot, setHoneypot] = useState(""); // Bot trap field
+  const [formLoadedAt, setFormLoadedAt] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+
+  // Track when form was loaded (for timing-based bot detection)
+  useEffect(() => {
+    setFormLoadedAt(Date.now());
+  }, []);
 
   const handleFieldFocus = () => {
     if (!hasStarted) {
@@ -74,6 +81,8 @@ const RequestForm: React.FC<RequestFormProp> = ({
           subscriber_data: {
             first_name: name,
             email_address: email,
+            honeypot: honeypot, // Bot trap - should be empty
+            formLoadedAt: formLoadedAt, // Timing check
           },
         }),
       });
@@ -121,6 +130,29 @@ const RequestForm: React.FC<RequestFormProp> = ({
 
   return (
     <form onSubmit={handleSubmit} className="relative z-20">
+      {/* Honeypot field - hidden from humans, bots will fill it */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          top: '-9999px',
+          opacity: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <label htmlFor="website_url">Website</label>
+        <input
+          type="text"
+          id="website_url"
+          name="website_url"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       {layout === "inline" ? (
         // Inline layout - button on same row (for book pages with shorter text)
         <div className="flex flex-col md:flex-row pt-8 gap-4 w-full items-end">
